@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://bd7cby2332qux"]
+
+[ext_resource type="Script" uid="uid://crdmbm5hbar0j" path="res://scripts/HeartPickup.cs" id="1_m16xc"]
+[ext_resource type="Texture2D" uid="uid://cea3lxnvf3xdr" path="res://assets/sprites/heart.png" id="2_yk5un"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_llnj3"]
+size = Vector2(30, 25)
+
+[node name="HeartPickup" type="Area2D" unique_id=532313464]
+script = ExtResource("1_m16xc")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1475635276]
+texture = ExtResource("2_yk5un")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1834280157]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_llnj3")
