@@ -23,6 +23,7 @@ public partial class Player : CharacterBody2D
 			velocity.Y = direction.Y * Speed;
 		}
 	}
+	
 
 	public override void _PhysicsProcess(double delta)
 	{
