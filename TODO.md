@@ -1,51 +1,53 @@
 # TODO List
 
-### Environment
 - [ ] Starting zone
-    - [ ] Scene
-    - [ ] Background
-    - [ ] Player spawn
-    - [ ] Enemy spawn(?)
+	- [ ] Scene
+	- [ ] Background
+	- [ ] Player spawn
+	- [ ] Enemy spawn(?)
 - [ ] Camera
-    - [ ] Viewport into the game
-    - [ ] Movement physics (delayed/smoothed centering)
-        - [ ] Camera2D position smoothing and drag
+	- [ ] Viewport into the game
+	- [ ] Movement physics (delayed/smoothed centering)
+		- [ ] Camera2D position smoothing and drag
 - [ ] Player
-    - [ ] Sprite
-        - [ ] Front
-        - [ ] Back
-        - [ ] Left/right side
-        - [ ] Animation
-    - [ ] Attributes
-        - [ ] Health, ammo, armor, level(?)
-        - [ ] Collision shape
-    - [ ] Logic
-        - [ ] Movement
-        - [ ] Collision / node interactions
-        - [ ] Physics
+	- [ ] Sprite
+		- [ ] Front
+		- [ ] Back
+		- [ ] Left/right side
+		- [ ] Animation
+	- [ ] Attributes
+		- [ ] Health, ammo, armor, level(?)
+		- [ ] Collision shape
+	- [ ] Logic
+		- [ ] Movement
+		- [ ] Collision / node interactions
+		- [ ] Physics
 - [ ] Enemy entities
-    - [ ] Unique Sprites for each zone
-        - [ ] Zone 1
-        - [ ] Zone 2
-        - [ ] Zone 3
-        - [ ] Zone 4
+	- [ ] Unique Sprites for each zone
+		- [ ] Zone 1
+		- [ ] Zone 2
+		- [ ] Zone 3
+		- [ ] Zone 4
 - [ ] Boss entities
-    - [ ] Zone 1
-    - [ ] Zone 2
-    - [ ] Zone 3
-    - [ ] Zone 4
+	- [ ] Zone 1
+	- [ ] Zone 2
+	- [ ] Zone 3
+	- [ ] Zone 4
 - [ ] Items
-    - [ ] Hearts
-        - [ ] Sprite
-        - [ ] Logic
-    - [ ] Armor
-        - [ ] Sprite
-        - [ ] Logic
-    - [ ] Ammo
-        - [ ] Sprite
-        - [ ] Logic
+	- [ ] Hearts
+		- [ ] Sprite
+		- [ ] Logic
+	- [ ] Armor
+		- [ ] Sprite
+		- [ ] Logic
+	- [ ] Ammo
+		- [ ] Sprite
+		- [ ] Logic
 - [ ] Tilemap
-    - [ ] Interactable objects
-    - [ ] Background
-    - [ ] Player/entity animations
-- [ ] 
+	- [ ] Interactable objects
+	- [ ] Background
+	- [ ] Player/entity animations
+- [ ] Start menu
+- [ ] Pause menu
+- [ ] Save system
+- [ ] Game over screen
