@@ -15,6 +15,5 @@ public partial class HeartPickup : Area2D
 
     public void OnBodyEntered(PhysicsBody2D body)
     {
-
     }
 }
