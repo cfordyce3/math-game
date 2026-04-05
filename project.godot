@@ -26,7 +26,7 @@ project/assembly_name="math-game"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/GodotTogether/plugin.cfg")
+enabled=PackedStringArray("res://addons/addons/godot-neovim/plugin.cfg")
 
 [input]
 
@@ -68,3 +68,7 @@ jump={
 
 textures/canvas_textures/default_texture_filter=0
 rendering_device/driver.windows="d3d12"
+
+[vimdow]
+
+path_to_nvim="/home/chas/.local/nvim/bin/nvim"

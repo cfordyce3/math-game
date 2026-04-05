@@ -11,6 +11,6 @@ scale = Vector2(3, 3)
 
 [node name="HeartPickup" parent="." unique_id=532313464 instance=ExtResource("2_yqjtg")]
 position = Vector2(340, 125)
-scale = Vector2(3, 3)
+scale = Vector2(2, 2)
 
 [node name="GameManager" type="Node" parent="." unique_id=1132278487]

@@ -6,7 +6,7 @@ public partial class Player : CharacterBody2D
 	// Camera screensize
 	public Vector2 ScreenSize { get; set; }
 	// Speed attributes
-	[Export]
+	[Export] // <- shows up in the inspector sidebar
 	public int Speed { get; set; } = 400;
 	// Player gameplay attributes
 	public int Lives { get; set; } = 3;
