@@ -3,23 +3,23 @@
 - [ ] Starting zone
 	- [ ] Scene
 	- [ ] Background
-	- [ ] Player spawn
+	- [x] Player spawn
 	- [ ] Enemy spawn(?)
 - [ ] Camera
 	- [ ] Viewport into the game
 	- [ ] Movement physics (delayed/smoothed centering)
 		- [ ] Camera2D position smoothing and drag
 - [ ] Player
-	- [ ] Sprite
-		- [ ] Front
+	- [x] Sprite
+		- [x] Front
 		- [ ] Back
 		- [ ] Left/right side
 		- [ ] Animation
 	- [ ] Attributes
-		- [ ] Health, ammo, armor, level(?)
+		- [x] Health, ammo, armor, level(?)
 		- [ ] Collision shape
 	- [ ] Logic
-		- [ ] Movement
+		- [x] Movement
 		- [ ] Collision / node interactions
 		- [ ] Physics
 - [ ] Enemy entities
