@@ -16,7 +16,7 @@ position_smoothing_speed = 10.0
 [node name="GameManager" type="Node" parent="." unique_id=1132278487]
 
 [node name="HeartPickup" parent="." unique_id=532313464 instance=ExtResource("2_yqjtg")]
-position = Vector2(171, 73)
+position = Vector2(154, 24)
 scale = Vector2(0.75, 0.75)
 
 [connection signal="body_entered" from="HeartPickup" to="Player" method="OnHeartPickupBodyEnteredSignal"]
