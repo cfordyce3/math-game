@@ -2,6 +2,7 @@ using Godot;
 using System;
 
 public partial class Player : CharacterBody2D
+
 {
 	// Get Player Child Nodes
 	private AnimatedSprite2D _playerSprite;
@@ -49,23 +50,23 @@ public partial class Player : CharacterBody2D
 		{
 			velocity.X -= 1;
 			_playerSprite.FlipH = true;
-			_playerSprite.Play("idle");
+			_playerSprite.Play("run_side");
 		}
 		if (Input.IsActionPressed("move_right"))
 		{
 			velocity.X += 1;
 			_playerSprite.FlipH = false;
-			_playerSprite.Play("idle");
+			_playerSprite.Play("run_side");
 		}
 		if (Input.IsActionPressed("move_up"))
 		{
 			velocity.Y -= 1;
-			_playerSprite.Play("going_up");
+			_playerSprite.Play("run_up");
 		}
 		if (Input.IsActionPressed("move_down"))
 		{
 			velocity.Y += 1;
-			_playerSprite.Play("idle");
+			_playerSprite.Play("run_down");
 		}
 
 		if (velocity.Length() > 0)
