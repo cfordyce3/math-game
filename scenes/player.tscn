@@ -4,6 +4,14 @@
 [ext_resource type="Script" uid="uid://ctdac6gxdlwcb" path="res://scripts/Player.cs" id="1_g2els"]
 [ext_resource type="Texture2D" uid="uid://oodthllt3jnf" path="res://assets/sprites/knight_back.png" id="3_qhqgy"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_qhqgy"]
+atlas = ExtResource("1_3vyb7")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dqkch"]
+atlas = ExtResource("1_3vyb7")
+region = Rect2(16, 0, 16, 16)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_g2els"]
 animations = [{
 "frames": [{
@@ -16,7 +24,10 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_3vyb7")
+"texture": SubResource("AtlasTexture_qhqgy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dqkch")
 }],
 "loop": true,
 "name": &"idle",
@@ -32,8 +43,9 @@ script = ExtResource("1_g2els")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1828036840]
 sprite_frames = SubResource("SpriteFrames_g2els")
-animation = &"going_up"
+animation = &"idle"
 autoplay = "idle"
+frame_progress = 0.6528658
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=916413204]
 position = Vector2(0, 1)
