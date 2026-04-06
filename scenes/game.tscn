@@ -6,11 +6,13 @@
 [node name="Game" type="Node2D" unique_id=1427372036]
 
 [node name="Player" parent="." unique_id=979533561 instance=ExtResource("1_uwrxv")]
-position = Vector2(119, 120)
-scale = Vector2(3, 3)
+position = Vector2(128, 72)
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=1152455644]
+zoom = Vector2(5, 5)
+position_smoothing_enabled = true
 
 [node name="HeartPickup" parent="." unique_id=532313464 instance=ExtResource("2_yqjtg")]
-position = Vector2(340, 125)
-scale = Vector2(2, 2)
+position = Vector2(171, 73)
 
 [node name="GameManager" type="Node" parent="." unique_id=1132278487]
