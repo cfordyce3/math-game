@@ -4,72 +4,77 @@ using System;
 public partial class Player : CharacterBody2D
 
 {
-	// Get Sprite
+	// Get Player Child Nodes
 	private AnimatedSprite2D _playerSprite;
+	private CollisionShape2D _playerCollisionBox;
 	
-	// Camera screensize
+	// HeartPickup Node
+	private Area2D _heartPickup;
+	
+	// Camera ScreenSize
 	public Vector2 ScreenSize { get; set; }
 	
-	// Speed attributes
+	// Player Attributes
 	[ExportGroup("Attributes")]
-	[Export] public int Speed { get; set; } = 200;
-	// Player gameplay attributes
-	[Export] public int Lives { get; set; } = 3;
-	[Export] public int Armor { get; set; } = 0;
-	[Export] public int Level { get; set; } = 0;
-	[Export] public int Ammo { get; set; } = 10;
+	[Export] private int _speed = 200;
+	[Export] private int _lives = 3;
+	[Export] private int _armor = 0;
+	[Export] private int _level = 0;
+	[Export] private int _ammo  = 10;
 
-	[ExportGroup("References")]
-	[Export] private CollisionShape2D _collisionBox;
+	private Vector2 _velocity;
 
 	// Methods
 	public override void _Ready()
 	{
 		ScreenSize = GetViewportRect().Size;
-		_playerSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+		_playerSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D"); // gets AnimatedSprite child node
+		
+		// Heart pickup
+		_heartPickup = GetNode<Area2D>("HeartPickup");
+		_heartPickup.BodyEntered += OnHeartPickupBodyEnteredSignal;
+	}
+
+	private void OnHeartPickupBodyEnteredSignal(Node2D body)
+	{
+		_lives++;
+		GD.Print("got pickup, lives: " + _lives);
 	}
 
 	public override void _Process(double delta)
 	{
-		Vector2 velocity = Vector2.Zero;
-
+		// Movement logic
+		_velocity = Vector2.Zero;
 		if (Input.IsActionPressed("move_left"))
 		{
-			velocity.X -= 1;
+			_velocity.X -= 1;
 			_playerSprite.FlipH = true;
 			_playerSprite.Play("run_side");
 		}
 		if (Input.IsActionPressed("move_right"))
 		{
-			velocity.X += 1;
+			_velocity.X += 1;
 			_playerSprite.FlipH = false;
 			_playerSprite.Play("run_side");
 		}
 		if (Input.IsActionPressed("move_up"))
 		{
-			velocity.Y -= 1;
+			_velocity.Y -= 1;
 			_playerSprite.Play("run_up");
 		}
 		if (Input.IsActionPressed("move_down"))
 		{
-			velocity.Y += 1;
+			_velocity.Y += 1;
 			_playerSprite.Play("run_down");
 		}
 
-		if (velocity.Length() > 0)
-		{
-			velocity = velocity.Normalized() * Speed;
-		}
-		else 
-		{
-			_playerSprite.Play("idle");
-		}
+		if (_velocity.Length() > 0) _velocity = _velocity.Normalized() * _speed;
+		else _playerSprite.Play("idle");
 
-		Position += velocity * (float)delta;
+		Position += _velocity * (float)delta;
 		Position = new Vector2(
 			x: Mathf.Clamp(Position.X, 0, ScreenSize.X),
 			y: Mathf.Clamp(Position.Y, 0, ScreenSize.Y)
 		);
 	}
-
 }

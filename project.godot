@@ -26,7 +26,7 @@ project/assembly_name="math-game"
 
 [editor_plugins]
 
-enabled=PackedStringArray()
+enabled=PackedStringArray("res://addons/GitGodot/plugin.cfg", "res://addons/vimdow/plugin.cfg")
 
 [input]
 
