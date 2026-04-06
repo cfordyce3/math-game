@@ -18,9 +18,8 @@ animations = [{
 radius = 11.0
 height = 32.0
 
-[node name="Player" type="CharacterBody2D" unique_id=979533561 node_paths=PackedStringArray("_collisionBox")]
+[node name="Player" type="CharacterBody2D" unique_id=979533561]
 script = ExtResource("1_g2els")
-_collisionBox = NodePath("CollisionShape2D")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1828036840]
 sprite_frames = SubResource("SpriteFrames_g2els")
