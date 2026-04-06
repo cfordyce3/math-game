@@ -3,35 +3,48 @@ using System;
 
 public partial class Player : CharacterBody2D
 {
-	// Get Sprite
+	// Get Player Child Nodes
 	private AnimatedSprite2D _playerSprite;
+	private CollisionShape2D _playerCollisionBox;
 	
-	// Camera screensize
+	// Heart Node
+	private Area2D _heartPickup;
+	
+	// Camera ScreenSize
 	public Vector2 ScreenSize { get; set; }
 	
-	// Speed attributes
+	// Player Attributes
 	[ExportGroup("Attributes")]
 	[Export] public int Speed { get; set; } = 200;
-	// Player gameplay attributes
 	[Export] public int Lives { get; set; } = 3;
 	[Export] public int Armor { get; set; } = 0;
 	[Export] public int Level { get; set; } = 0;
 	[Export] public int Ammo { get; set; } = 10;
-
-	[ExportGroup("References")]
-	[Export] private CollisionShape2D _collisionBox;
+	
 
 	// Methods
+	
 	public override void _Ready()
 	{
 		ScreenSize = GetViewportRect().Size;
-		_playerSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+		_playerSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D"); // gets AnimatedSprite child node
+		
+		// Heart pickup
+		_heartPickup = GetNode<Area2D>("HeartPickup");
+		_heartPickup.BodyEntered += OnHeartPickupBodyEnteredSignal;
+	}
+
+	private void OnHeartPickupBodyEnteredSignal(Node2D body)
+	{
+		Lives++;
+		GD.Print("got pickup, lives: " + Lives);
 	}
 
 	public override void _Process(double delta)
 	{
+		
+		// Movement logic
 		Vector2 velocity = Vector2.Zero;
-
 		if (Input.IsActionPressed("move_left"))
 		{
 			velocity.X -= 1;
@@ -70,5 +83,4 @@ public partial class Player : CharacterBody2D
 			y: Mathf.Clamp(Position.Y, 0, ScreenSize.Y)
 		);
 	}
-
 }
