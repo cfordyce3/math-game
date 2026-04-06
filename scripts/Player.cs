@@ -2,7 +2,6 @@ using Godot;
 using System;
 
 public partial class Player : CharacterBody2D
-
 {
 	// Get Sprite
 	private AnimatedSprite2D _playerSprite;
