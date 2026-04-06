@@ -15,8 +15,7 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g2els"]
-radius = 12.0
-height = 32.0
+radius = 11.0
 
 [node name="Player" type="CharacterBody2D" unique_id=979533561]
 script = ExtResource("1_g2els")
@@ -25,4 +24,5 @@ script = ExtResource("1_g2els")
 sprite_frames = SubResource("SpriteFrames_g2els")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=916413204]
+position = Vector2(0, 1)
 shape = SubResource("CapsuleShape2D_g2els")
