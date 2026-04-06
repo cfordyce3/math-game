@@ -4,11 +4,13 @@ using System;
 public partial class Player : CharacterBody2D
 
 {
-	public AnimatedSprite2D _playerSprite;
+	// Get Sprite
+	private AnimatedSprite2D _playerSprite;
+	
 	// Camera screensize
 	public Vector2 ScreenSize { get; set; }
+	
 	// Speed attributes
-
 	[ExportGroup("Attributes")]
 	[Export] public int Speed { get; set; } = 400;
 	// Player gameplay attributes
