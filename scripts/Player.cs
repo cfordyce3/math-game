@@ -49,29 +49,45 @@ public partial class Player : CharacterBody2D
 		{
 			_velocity.X -= 1;
 			_playerSprite.FlipH = true;
-			_playerSprite.Play("run_side");
 		}
 		if (Input.IsActionPressed("move_right"))
 		{
 			_velocity.X += 1;
 			_playerSprite.FlipH = false;
-			_playerSprite.Play("run_side");
 		}
 		if (Input.IsActionPressed("move_up"))
 		{
 			_velocity.Y -= 1;
-			_playerSprite.Play("run_up");
 		}
 		if (Input.IsActionPressed("move_down"))
 		{
 			_velocity.Y += 1;
+		}
+
+		// Animate player
+		if ((_velocity.X == 1) && (_velocity.Y == 0))
+		{
+			_playerSprite.Play("run_side");
+		}
+		if ((_velocity.X == -1) && (_velocity.Y == 0))
+		{
+			_playerSprite.Play("run_side");
+		}
+		if (_velocity.Y == 1)
+		{
 			_playerSprite.Play("run_down");
+		}
+		if (_velocity.Y == -1)
+		{
+			_playerSprite.Play("run_up");
 		}
 
 		if (_velocity.Length() > 0) _velocity = _velocity.Normalized() * _speed;
 		else _playerSprite.Play("idle");
 
 		Position += _velocity * (float)delta;
+
+		// Clamp player to play area
 		Position = new Vector2(
 			x: Mathf.Clamp(Position.X, 0, ScreenSize.X),
 			y: Mathf.Clamp(Position.Y, 0, ScreenSize.Y)
