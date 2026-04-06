@@ -26,7 +26,7 @@ project/assembly_name="math-game"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/addons/godot-neovim/plugin.cfg", "res://addons/godot-neovim/plugin.cfg")
+enabled=PackedStringArray()
 
 [input]
 
