@@ -12,7 +12,7 @@ public partial class Player : CharacterBody2D
 	
 	// Speed attributes
 	[ExportGroup("Attributes")]
-	[Export] public int Speed { get; set; } = 400;
+	[Export] public int Speed { get; set; } = 200;
 	// Player gameplay attributes
 	[Export] public int Lives { get; set; } = 3;
 	[Export] public int Armor { get; set; } = 0;
