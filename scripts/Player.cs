@@ -96,6 +96,7 @@ public partial class Player : CharacterBody2D
 	{
 		if (_weapon == EquippedWeapon.Sword && !_playerSprite.IsPlaying()) _playerSprite.Play("sword_attack");
 		// bow animation here
+		if (_weapon == EquippedWeapon.Bow) _state = State.Idle; // temporary until bow animation is finished
 	}
 	
 	private void AttackFinished()
