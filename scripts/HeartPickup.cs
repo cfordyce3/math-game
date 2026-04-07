@@ -11,8 +11,12 @@ public partial class HeartPickup : Area2D
 
 	private void OnBodyEnteredSignal(Node2D body)
 	{
-		GD.Print("body entered");
-		QueueFree();
+		if (body is Player player)
+		{
+			player.Lives++;
+			GD.Print(player.Lives);
+			QueueFree();
+		}
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
