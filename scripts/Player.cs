@@ -32,6 +32,9 @@ public partial class Player : CharacterBody2D
 	[Export] private EquippedWeapon _weapon = EquippedWeapon.Sword; // defaults to sword
 	[Export] private int _ammo  = 100;
 	
+	// Attack delay timer
+	private int _stateCounter = 0;
+	
 	// Public attributes
 	[Export] public int Lives = 3;
 	[Export] public int Armor = 0;
@@ -93,10 +96,10 @@ public partial class Player : CharacterBody2D
 	{
 		if (_weapon == EquippedWeapon.Sword && !_playerSprite.IsPlaying()) _playerSprite.Play("sword_attack");
 		// bow animation here
-		// TODO: fix bow glitch with animations
+		if (_weapon == EquippedWeapon.Bow) _state = State.Idle; // temporary until bow animation is finished
 	}
 	
-	private void AttackFinished() // this gets called via signal at the end of EVERY animation
+	private void AttackFinished()
 	{
 		if (_state == State.Attacking) _state = State.Idle;
 	}
