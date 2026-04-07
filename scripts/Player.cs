@@ -3,6 +3,14 @@ using System;
 
 public partial class Player : CharacterBody2D
 {
+	// Stateful player states
+	private enum State 
+	{
+		Idle,
+		Attacking,
+	}
+
+	
 	// Get Player Child Nodes
 	private AnimatedSprite2D _playerSprite;
 	private CollisionShape2D _playerCollisionBox;
@@ -12,9 +20,12 @@ public partial class Player : CharacterBody2D
 	
 	// Private attributes
 	[ExportGroup("Attributes")]
+	[Export] private State _state = State.Idle; // stateful player
 	[Export] private int _speed = 100;
 	[Export] private int _level = 0;
 	[Export] private int _ammo  = 10;
+	
+	private int _stateCounter = 0;
 	
 	// Public attributes
 	[Export] public int Lives = 3;
@@ -31,42 +42,67 @@ public partial class Player : CharacterBody2D
 		_playerSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D"); // gets AnimatedSprite child node
 	}
 
-	private Vector2 GetMovement()
+	private void GetMovement()
 	{
 		_inputDirection = Input.GetVector("move_left", "move_right", "move_up", "move_down");
 		Velocity = _inputDirection * _speed;
-		return _inputDirection;
 	}
 
-	private void AnimateMovement(Vector2 direction)
+	private void AnimateMovement()
 	{
-		if (direction.X > 0) // go right
+		if (_inputDirection.X > 0) // go right
 		{
 			_playerSprite.FlipH = false;
-			if (direction.Y < 0) _playerSprite.Play("run_up"); // up right
-			else if (direction.Y > 0) _playerSprite.Play("run_down"); // down right
+			if (_inputDirection.Y < 0) _playerSprite.Play("run_up"); // up right
+			else if (_inputDirection.Y > 0) _playerSprite.Play("run_down"); // down right
 			else _playerSprite.Play("run_side");
 		}
 
-		if (direction.X < 0) // go left
+		if (_inputDirection.X < 0) // go left
 		{
 			_playerSprite.FlipH = true;
-			if (direction.Y < 0) _playerSprite.Play("run_up"); // up left
-			else if (direction.Y > 0) _playerSprite.Play("run_down"); // down left
+			if (_inputDirection.Y < 0) _playerSprite.Play("run_up"); // up left
+			else if (_inputDirection.Y > 0) _playerSprite.Play("run_down"); // down left
 			else _playerSprite.Play("run_side");
 		}
 
-		if (direction.Y < 0) { _playerSprite.Play("run_up"); } // go up
+		if (_inputDirection.Y < 0) { _playerSprite.Play("run_up"); } // go up
 
-		if (direction.Y > 0) { _playerSprite.Play("run_down"); } // go down
+		if (_inputDirection.Y > 0) { _playerSprite.Play("run_down"); } // go down
 
-		if (direction.Length() == 0) { _playerSprite.Play("idle"); } // no movement
+		if (_inputDirection.Length() == 0 && _state == State.Idle) { _playerSprite.Play("idle"); } // no movement
 	}
 
+	private void AnimateAttack()
+	{
+		
+	}
+	
 	public override void _Process(double delta)
 	{
-		// Movement logic
-		AnimateMovement(GetMovement());
+		if (Input.IsActionJustPressed("jump") && _stateCounter == 0)
+		{
+			_playerSprite.Stop();
+			_state = State.Attacking;
+			_stateCounter = 50;
+		}
+		else if (_state > 0)
+		{
+			_stateCounter--;
+		}
+		if (_state == State.Attacking && _stateCounter == 0)
+		{
+			_state = State.Idle;
+		}
+		
+		// Get movement
+		GetMovement();
+		
+		// Animation logic
+		if (_state != State.Attacking) AnimateMovement();
+		else AnimateAttack();
+		
+		// Move player
 		MoveAndSlide();
 	}
 }
