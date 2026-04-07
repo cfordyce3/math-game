@@ -42,9 +42,3 @@ layer_0/tile_data = PackedInt32Array(589824, 0, 1, 589825, 65536, 1, 589826, 0, 
 [node name="HeartPickup" parent="." unique_id=532313464 instance=ExtResource("2_yqjtg")]
 position = Vector2(154, 24)
 scale = Vector2(0.75, 0.75)
-
-[node name="HeartPickup2" parent="." unique_id=981365408 instance=ExtResource("2_yqjtg")]
-position = Vector2(43, 102)
-
-[node name="HeartPickup3" parent="." unique_id=1367351455 instance=ExtResource("2_yqjtg")]
-position = Vector2(189, 111)

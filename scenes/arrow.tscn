@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://6ft1eov7285f"]
+
+[ext_resource type="Script" uid="uid://uj3xfyf28f35" path="res://scripts/Arrow.cs" id="1_q8ifc"]
+[ext_resource type="Texture2D" uid="uid://dwf4jdoresdjp" path="res://assets/sprites/PLACEHOLDER_arrow.png" id="1_umosx"]
+[ext_resource type="AudioStream" uid="uid://dgsebn7qhugvm" path="res://assets/sounds/arrow_shoot.wav" id="3_7ckq1"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_q8ifc"]
+radius = 3.0
+height = 20.0
+
+[node name="Arrow" type="Area2D" unique_id=337556458]
+script = ExtResource("1_q8ifc")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1776392703]
+texture = ExtResource("1_umosx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=125978243]
+position = Vector2(1, 0)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_q8ifc")
+
+[node name="ShootSound" type="AudioStreamPlayer" parent="." unique_id=906056670]
+stream = ExtResource("3_7ckq1")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1139353767]
+position = Vector2(1, 0)
+rect = Rect2(-10, -3, 20, 6)
