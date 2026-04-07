@@ -75,7 +75,7 @@ public partial class Player : CharacterBody2D
 
 	private void AnimateAttack()
 	{
-		
+		_playerSprite.Play("attack");
 	}
 	
 	public override void _Process(double delta)
@@ -84,7 +84,7 @@ public partial class Player : CharacterBody2D
 		{
 			_playerSprite.Stop();
 			_state = State.Attacking;
-			_stateCounter = 50;
+			_stateCounter = 80;
 		}
 		else if (_state > 0)
 		{
