@@ -226,11 +226,20 @@ public partial class Player : CharacterBody2D
 	public int GetPlayerWeapon()
 	{
 		return (int)_weapon; // returns the private _weapon variable as an int in a public manner
+		// the reason why is because the enum itself is private and we don't need to pass it to anyone else
+		
         // all enums are basically ints so the enumeration above is just shorthand for this:
 		// enum EquippedWeapon
 		//{
 		//     Sword = 0,
 		//     Bow = 1,
+		//}
+		// BUT you can also set whatever value you want like if you are explicit:
+		// enum EquippedWeapon
+		//{
+		//     Sword = 9,
+		//     Bow = 123,
+		//     MagicStaff = 0,
 		//}
 	} 
 }
