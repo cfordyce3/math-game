@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://7m7c48kn44lk" path="res://assets/sprites/Knight.png" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://ctdac6gxdlwcb" path="res://scripts/Player.cs" id="1_g2els"]
+[ext_resource type="Texture2D" uid="uid://kkls4sasytx7" path="res://assets/sprites/Knight_new.png" id="3_qhqgy"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g2els"]
 atlas = ExtResource("1_3vyb7")
@@ -36,20 +37,20 @@ atlas = ExtResource("1_3vyb7")
 region = Rect2(256, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_y4r1p"]
-atlas = ExtResource("1_3vyb7")
-region = Rect2(288, 0, 32, 32)
+atlas = ExtResource("3_qhqgy")
+region = Rect2(416, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_d2wvv"]
-atlas = ExtResource("1_3vyb7")
-region = Rect2(320, 0, 32, 32)
+atlas = ExtResource("3_qhqgy")
+region = Rect2(448, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3v2ag"]
-atlas = ExtResource("1_3vyb7")
-region = Rect2(352, 0, 32, 32)
+atlas = ExtResource("3_qhqgy")
+region = Rect2(480, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jej6c"]
-atlas = ExtResource("1_3vyb7")
-region = Rect2(384, 0, 32, 32)
+atlas = ExtResource("3_qhqgy")
+region = Rect2(512, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_g2els"]
 animations = [{
@@ -127,8 +128,6 @@ script = ExtResource("1_g2els")
 sprite_frames = SubResource("SpriteFrames_g2els")
 animation = &"sword_attack"
 autoplay = "idle"
-frame = 3
-frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=916413204]
 position = Vector2(0, 1)
