@@ -11,13 +11,21 @@ public partial class Arrow : Area2D
 	
 	public override void _Ready()
 	{
-		Player player = GetParent() as Player;
-		flip = player.ShootDirection;
+		Player _player = GetNode<Player>("../Player");
+		Node2D _arrowSpawnLocation = GetNode<Node2D>("../Player/ArrowSpawnLocation");
+		GlobalPosition = _arrowSpawnLocation.GlobalPosition;
+		
+		// Flip arrow if player is flipped
+		flip = _player.ShootDirection;
+		
+		// If arrow collides with something
 		BodyEntered += OnBodyEnteredSignal;
 		
+		// If arrow leaves screen
 		_visibleOnScreenNotifier2D = GetNode<VisibleOnScreenNotifier2D>("VisibleOnScreenNotifier2D");
 		_visibleOnScreenNotifier2D.ScreenExited += OnScreenExitedSignal;
 		
+		// Get resources and play shoot sound
 		_arrowSprite = GetNode<Sprite2D>("Sprite2D");
 		GetNode<AudioStreamPlayer>("ShootSound").Play(); // you're welcome lol
 	}

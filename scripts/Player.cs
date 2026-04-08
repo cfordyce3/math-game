@@ -20,23 +20,27 @@ public partial class Player : CharacterBody2D
 	// Get Player Child Nodes
 	private AnimatedSprite2D _playerSprite;
 	private CollisionShape2D _playerCollisionBox;
+	private Node2D _arrowSpawnLocation;
 	
 	// Camera ScreenSize
-	public Vector2 ScreenSize { get; set; }
+	public Vector2 ScreenSize;
+
+	[ExportGroup("Debugging")] // variables for testing
+	[Export] private bool _moveOnAttack = true;
 	
 	// Private attributes
 	[ExportGroup("Attributes")]
 	[Export] private State _state = State.Idle; // stateful player
 	[Export] private int _speed = 100;
-	[Export] private int _level = 0;
 	[Export] private EquippedWeapon _weapon = EquippedWeapon.Sword; // defaults to sword
-	[Export] private int _ammo  = 100;
 	
 	// Attack delay timer
 	private int _stateCounter = 0;
 	
 	// Public attributes
 	[Export] public int Lives = 3;
+	[Export] public int Ammo = 100;
+	[Export] public int Level = 0;
 	[Export] public int Armor = 0;
 
 	// Velocity and direction
@@ -47,16 +51,21 @@ public partial class Player : CharacterBody2D
 	// Load arrow scene for shooting
 	private PackedScene _arrowPreload;
 	public int ShootDirection;
+	private Node _arrowInstance;
 
 	// Methods
 	
 	// On Ready (one shot)
 	public override void _Ready()
 	{
+		// Set variables
 		ScreenSize = GetViewportRect().Size;
 		_playerSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D"); // gets AnimatedSprite child node
 		_arrowPreload = GD.Load<PackedScene>("res://scenes/arrow.tscn"); // load arrow scene to be spawned (instantiated)
-		_playerSprite.AnimationFinished += AttackFinished;
+		_arrowSpawnLocation = GetNode<Node2D>("ArrowSpawnLocation"); // loads arrow spawn point
+		
+		// Signals
+		_playerSprite.AnimationFinished += AnimationFinished;
 	} 
 	
 
@@ -64,7 +73,15 @@ public partial class Player : CharacterBody2D
 	private void GetMovement()
 	{
 		_inputDirection = Input.GetVector("move_left", "move_right", "move_up", "move_down");
-		Velocity = _inputDirection * _speed;
+		if (!_moveOnAttack) // if false
+		{
+			if (_state == State.Attacking)
+			{
+				Velocity = Vector2.Zero;
+			}
+			else Velocity = _inputDirection * _speed;
+		}
+		else Velocity = _inputDirection * _speed;
 	}
 
 	// Movement animation
@@ -99,7 +116,7 @@ public partial class Player : CharacterBody2D
 		if (_weapon == EquippedWeapon.Bow) _state = State.Idle; // temporary until bow animation is finished
 	}
 	
-	private void AttackFinished()
+	private void AnimationFinished()
 	{
 		if (_state == State.Attacking) _state = State.Idle;
 	}
@@ -107,16 +124,35 @@ public partial class Player : CharacterBody2D
 	// Flips sprite regardless of state
 	private void FlipSprite()
 	{
-		if (_inputDirection.X > 0)
+		if (_state != State.Attacking)
 		{
-			_flipped = false;
-			_playerSprite.FlipH = false;
+			if (_inputDirection.X > 0)
+			{
+				_flipped = false;
+				_playerSprite.FlipH = false;
+			}
+			if (_inputDirection.X < 0)
+			{
+				_flipped = true;
+				_playerSprite.FlipH = true;
+			}
+			
 		}
-		if (_inputDirection.X < 0)
+	}
+
+	// Flips the arrow spawn
+	private void FlipArrowSpawn()
+	{
+		Vector2 _pos = _arrowSpawnLocation.Position;
+		if (!_flipped) // facing right
 		{
-			_flipped = true;
-			_playerSprite.FlipH = true;
+			_pos = new Vector2(6, 0);
 		}
+		else // facing left
+		{
+			_pos = new Vector2(-6, 0);
+		}
+		_arrowSpawnLocation.Position = _pos;
 	}
 
 	// Gets current state every frame
@@ -133,16 +169,8 @@ public partial class Player : CharacterBody2D
 
 	public void EquipWeapon()
 	{
-		if (Input.IsActionJustPressed("equip_sword") && _weapon != EquippedWeapon.Sword)
-		{
-			_weapon = EquippedWeapon.Sword;
-			GD.Print("sword equipped");
-		}
-		else if (Input.IsActionJustPressed("equip_bow") && _weapon != EquippedWeapon.Bow)
-		{
-			_weapon = EquippedWeapon.Bow;
-			GD.Print("bow equipped");
-		}
+		if (Input.IsActionJustPressed("equip_sword") && _weapon != EquippedWeapon.Sword) _weapon = EquippedWeapon.Sword;
+		else if (Input.IsActionJustPressed("equip_bow") && _weapon != EquippedWeapon.Bow) _weapon = EquippedWeapon.Bow;
 	}
 
 	public void Attack()
@@ -156,19 +184,18 @@ public partial class Player : CharacterBody2D
 				break; // have to "break out" of the switch statement after matching otherwise the game will 
 					   // go down to the next case
 			case EquippedWeapon.Bow:
-				if (_ammo > 0) // only shoot if there's ammo
+				if (Ammo > 0) // only shoot if there's ammo
 				{
-					Node _arrowInstance = _arrowPreload.Instantiate(); // creates a new arrow in-game
-					AddChild(_arrowInstance);
-					_ammo--;
-					GD.Print("ammo remaining: " + _ammo);
+					_arrowInstance = _arrowPreload.Instantiate(); // creates a new arrow in-game
+					AddSibling(_arrowInstance);
+					Ammo--;
 				}
 				else
 				{
 					_weapon = EquippedWeapon.Sword; // swap to sword when out of ammo
-					GD.Print("out of ammo"); // eventually UI alert to player that they're out of ammo
 				}
 				break;
+			// more weapons? magic staff?
 		}
 	}
 	
@@ -185,14 +212,25 @@ public partial class Player : CharacterBody2D
 		
 		// Animation logic
 		FlipSprite();
+		FlipArrowSpawn();
 		
-		if (_state == State.Attacking)
-		{
-			AnimateAttack();
-		}
+		if (_state == State.Attacking) AnimateAttack();
 		else AnimateMovement();
 		
 		// Move player
 		MoveAndSlide();
+		// MoveAndCollide(Velocity * (float)delta); // causes the player to freeze when going into a wall
 	}
+	
+	// EVERYTHING AFTER THIS LINE IS TEMPORARY WHILE WAITING FOR FUTURE WORK
+	public int GetPlayerWeapon()
+	{
+		return (int)_weapon; // returns the private _weapon variable as an int in a public manner
+        // all enums are basically ints so the enumeration above is just shorthand for this:
+		// enum EquippedWeapon
+		//{
+		//     Sword = 0,
+		//     Bow = 1,
+		//}
+	} 
 }

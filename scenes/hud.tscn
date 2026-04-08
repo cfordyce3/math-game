@@ -1,18 +1,37 @@
 [gd_scene format=3 uid="uid://ciqdes1sxo810"]
 
+[ext_resource type="Script" uid="uid://dckbrjyk5tbpl" path="res://scripts/Hud.cs" id="1_6fi6k"]
 [ext_resource type="FontFile" uid="uid://dg1jjbl6pta4w" path="res://assets/fonts/JetBrainsMonoNerdFont-Regular.ttf" id="1_ahhtf"]
+[ext_resource type="FontFile" uid="uid://bvk65r6013jnb" path="res://assets/fonts/Code New Roman.otf" id="3_uo2fv"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_toqtt"]
 font = ExtResource("1_ahhtf")
+font_size = 18
+
+[sub_resource type="LabelSettings" id="LabelSettings_5pdws"]
+font = ExtResource("3_uo2fv")
 font_size = 24
 
 [node name="HUD" type="CanvasLayer" unique_id=1603450803]
+script = ExtResource("1_6fi6k")
 
-[node name="Label" type="Label" parent="." unique_id=1018899171]
+[node name="UpdateNotes" type="Label" parent="." unique_id=1018899171]
 offset_left = 8.0
 offset_top = 7.0
 offset_right = 238.0
 offset_bottom = 76.0
-text = "1 or E for sword
-2 or Q for bow"
+text = "Added a \"Debug\" section to Player inspector for testing variables
+
+You can test whether or not you prefer freezing the player while attacking
+Note: currently only works for sword cuz there is no bow animation
+
+Arrow work as expected now :)"
 label_settings = SubResource("LabelSettings_toqtt")
+
+[node name="StatsCounter" type="Label" parent="." unique_id=1533990124]
+offset_left = 1062.0
+offset_top = 6.0
+offset_right = 1273.0
+offset_bottom = 31.0
+text = "Arrows Left: 100"
+label_settings = SubResource("LabelSettings_5pdws")
