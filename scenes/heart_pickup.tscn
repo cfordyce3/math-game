@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://crdmbm5hbar0j" path="res://scripts/HeartPickup.cs" id="1_m16xc"]
 [ext_resource type="Texture2D" uid="uid://cea3lxnvf3xdr" path="res://assets/sprites/heart.png" id="2_yk5un"]
+[ext_resource type="AudioStream" uid="uid://x8ndo7g1hree" path="res://assets/sounds/heart_pickup.wav" id="3_yk5un"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_m16xc"]
 atlas = ExtResource("2_yk5un")
@@ -73,3 +74,6 @@ shape = SubResource("CircleShape2D_m16xc")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1394855457]
 libraries/ = SubResource("AnimationLibrary_jrn4y")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=556173585]
+stream = ExtResource("3_yk5un")

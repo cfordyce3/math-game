@@ -3,22 +3,28 @@ using System;
 
 public partial class HeartPickup : Area2D
 {
-	// Called when the node enters the scene tree for the first time.
+	// Child nodes
+	private AudioStreamPlayer _pickupSound;
+	
 	public override void _Ready()
 	{
+		_pickupSound = GetNode<AudioStreamPlayer>("AudioStreamPlayer");
+		
 		BodyEntered += OnBodyEnteredSignal;
 	}
 
-	private void OnBodyEnteredSignal(Node2D body)
+	private async void OnBodyEnteredSignal(Node2D body)
 	{
 		if (body is Player player)
 		{
+			_pickupSound.Play();
 			player.Lives++;
+			Hide();
+			await ToSignal(_pickupSound, "finished");
 			QueueFree();
 		}
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
 	}
