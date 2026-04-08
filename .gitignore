@@ -6,5 +6,5 @@ addons/
 .idea/
 
 # Audacity working project files
-*.aup3-shm
-*.aup3-wal
+*/*.aup3-shm
+*/*.aup3-wal
