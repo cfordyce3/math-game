@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://ciqdes1sxo810" path="res://scenes/hud.tscn" id="2_lnu2h"]
 [ext_resource type="PackedScene" uid="uid://bd7cby2332qux" path="res://scenes/heart_pickup.tscn" id="2_yqjtg"]
 [ext_resource type="Texture2D" uid="uid://b5gpl4bmggmls" path="res://assets/sprites/bg_tileset.png" id="3_lbhrr"]
-[ext_resource type="PackedScene" uid="uid://buvikx17ous3y" path="res://scenes/invisible_wall.tscn" id="5_iywne"]
+[ext_resource type="PackedScene" path="res://scenes/invisible_wall.tscn" id="5_iywne"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_iywne"]
 texture = ExtResource("3_lbhrr")
