@@ -38,6 +38,7 @@ follow_viewport_scale = 1.19
 [node name="Player" parent="." unique_id=979533561 instance=ExtResource("1_uwrxv")]
 z_index = 1
 position = Vector2(128, 72)
+_moveOnAttack = false
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1152455644]
 zoom = Vector2(5, 5)
