@@ -38,7 +38,7 @@ public partial class Arrow : Area2D
 
 	private void OnBodyEnteredSignal(Node body)
 	{
-		// TODO: if hitting enemy logic here
+		// if hitting enemy logic here
 	}
 
 	public override void _Process(double delta)

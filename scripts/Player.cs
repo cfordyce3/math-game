@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class Player : CharacterBody2D
 {
@@ -20,6 +21,7 @@ public partial class Player : CharacterBody2D
 	// Get Player Child Nodes
 	private AnimatedSprite2D _playerSprite;
 	private CollisionShape2D _playerCollisionBox;
+	private AudioStreamPlayer _playerSound;
 	private Node2D _arrowSpawnLocation;
 	
 	// Camera ScreenSize
@@ -27,12 +29,14 @@ public partial class Player : CharacterBody2D
 
 	[ExportGroup("Debugging")] // variables for testing
 	[Export] private bool _moveOnAttack = true;
+	[Export] private int _footstepVolume = -14;
 	
 	// Private attributes
 	[ExportGroup("Attributes")]
 	[Export] private State _state = State.Idle; // stateful player
 	[Export] private int _speed = 100;
 	[Export] private EquippedWeapon _weapon = EquippedWeapon.Sword; // defaults to sword
+	private bool _moving = false;
 	
 	// Attack delay timer
 	private int _stateCounter = 0;
@@ -48,10 +52,15 @@ public partial class Player : CharacterBody2D
 	private Vector2 _inputDirection = Vector2.Zero;
 	private bool _flipped = false;
 
+	// Load all sounds
+	private List<AudioStreamWav> _soundPreload = new List<AudioStreamWav>();
+	private AudioStreamWav _footstepSound;
+	private Timer _footstepTimer;
+	
 	// Load arrow scene for shooting
 	private PackedScene _arrowPreload;
-	public int ShootDirection;
 	private Node _arrowInstance;
+	public int ShootDirection;
 
 	// Methods
 	
@@ -61,11 +70,27 @@ public partial class Player : CharacterBody2D
 		// Set variables
 		ScreenSize = GetViewportRect().Size;
 		_playerSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D"); // gets AnimatedSprite child node
+		
+		// Load sounds
+		_playerSound = GetNode<AudioStreamPlayer>("AudioStreamPlayer"); // gets AudioStreamPlayer child node
+		_footstepTimer = GetNode<Timer>("AudioStreamPlayer/FootstepTimer");
+		foreach (string file in DirAccess.Open("res://assets/sounds/footsteps").GetFiles())
+		{
+			if (!file.Contains("import"))
+			{
+				_soundPreload.Add(GD.Load<AudioStreamWav>("res://assets/sounds/footsteps/" + file));
+			}
+		}
+		_footstepSound = _soundPreload[GD.RandRange(0, _soundPreload.Count-1)]; // Get first random sound
+		_playerSound.Stream = _footstepSound; // Load first random sound into AudioStreamPlayer
+		
+		// Load arrow
 		_arrowPreload = GD.Load<PackedScene>("res://scenes/arrow.tscn"); // load arrow scene to be spawned (instantiated)
 		_arrowSpawnLocation = GetNode<Node2D>("ArrowSpawnLocation"); // loads arrow spawn point
 		
 		// Signals
-		_playerSprite.AnimationFinished += AnimationFinished;
+		_playerSprite.AnimationFinished += OnAnimationFinishedSignal;
+		_footstepTimer.Timeout += OnFootstepsAudioTimerTimeoutSignal;
 	} 
 	
 
@@ -82,6 +107,9 @@ public partial class Player : CharacterBody2D
 			else Velocity = _inputDirection * _speed;
 		}
 		else Velocity = _inputDirection * _speed;
+
+		if (Velocity != Vector2.Zero) _moving = true;
+		else _moving = false;
 	}
 
 	// Movement animation
@@ -107,6 +135,29 @@ public partial class Player : CharacterBody2D
 
 		if (_inputDirection.Length() == 0 && _state == State.Idle) { _playerSprite.Play("idle"); } // no movement
 	}
+	
+	private void OnFootstepsAudioTimerTimeoutSignal()
+	{
+		PlayFootstepsAudio();
+	}
+
+	private AudioStream _lastFootstepSound;
+	private int _randomSoundChoice;
+	private void PlayFootstepsAudio()
+	{
+		if (_moving) _playerSound.VolumeDb = _footstepVolume;
+		if (_moving && _footstepTimer.TimeLeft == 0)
+		{
+			_lastFootstepSound = _footstepSound;
+			do
+			{
+				_footstepSound = _soundPreload[GD.RandRange(0, _soundPreload.Count - 1)];
+			} while (_footstepSound == _lastFootstepSound);
+			_playerSound.Stream = _footstepSound;
+			_playerSound.Play();
+			_footstepTimer.Start();
+		}
+	}
 
 	// Attack animation
 	private void AnimateAttack()
@@ -116,7 +167,7 @@ public partial class Player : CharacterBody2D
 		if (_weapon == EquippedWeapon.Bow) _state = State.Idle; // temporary until bow animation is finished
 	}
 	
-	private void AnimationFinished()
+	private void OnAnimationFinishedSignal()
 	{
 		if (_state == State.Attacking) _state = State.Idle;
 	}
@@ -213,6 +264,9 @@ public partial class Player : CharacterBody2D
 		// Animation logic
 		FlipSprite();
 		FlipArrowSpawn();
+		
+		// Audio logic
+		PlayFootstepsAudio(); // TODO: refactor audio processing to AudioStreamPlayer child node
 		
 		if (_state == State.Attacking) AnimateAttack();
 		else AnimateMovement();
