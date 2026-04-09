@@ -15,8 +15,6 @@ public partial class FootstepAudioPlayer : AudioStreamPlayer
 	private AudioStreamWav _footstepSound;
 	private AudioStreamWav _previousFootstepSound;
 	private int _randomSoundChoice;
-
-	private bool _firstStep = true;
 	
 	public override void _Ready()
 	{
@@ -41,7 +39,14 @@ public partial class FootstepAudioPlayer : AudioStreamPlayer
 		Stream = _footstepSound;
 	}
 
-	private void OnPlayerMovingSignal(int volume)
+	private void SetRandomFootstepSound()
+	{
+		do { _footstepSound = _footstepSoundListPreload[GD.RandRange(0, _footstepSoundListPreload.Count - 1)];
+		} while (_footstepSound == _previousFootstepSound);
+		Stream = _footstepSound;
+	}
+
+	private void OnPlayerMovingSignal(int volume, bool wait)
 	{
 		VolumeDb = volume;
 		_footstepTimer.Start();
@@ -54,6 +59,7 @@ public partial class FootstepAudioPlayer : AudioStreamPlayer
 	}
 	private void OnFootstepTimerTimeoutSignal()
 	{
+		SetRandomFootstepSound();
 		Play();
 	}
 

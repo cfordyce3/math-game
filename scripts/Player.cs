@@ -64,7 +64,7 @@ public partial class Player : CharacterBody2D
 	public int ShootDirection;
 
 	// Custom Events (Signals)
-	[Signal] public delegate void MovingEventHandler(int volume); // ALL custom signals must include EventHandler suffix
+	[Signal] public delegate void MovingEventHandler(int volume, bool wait); // ALL custom signals must include EventHandler suffix
 	[Signal] public delegate void StoppingEventHandler();
 	
 	// On Ready (one shot)
@@ -109,16 +109,16 @@ public partial class Player : CharacterBody2D
 		}
 		else Velocity = _inputDirection * _speed;
 
-		if (!_moving && _inputDirection.Length() > 0)
+		if (!_moving && Velocity.Length() > 0)
 		{
 			EmitSignal(SignalName.Moving, _footstepVolume);
 		} 
-		else if (_moving && _inputDirection == Vector2.Zero)
+		else if (_moving && Velocity == Vector2.Zero)
 		{
 			EmitSignalStopping();
 		}
 		
-		if (_inputDirection != Vector2.Zero) _moving = true;
+		if (Velocity != Vector2.Zero) _moving = true;
 		else _moving = false;
 	}
 
