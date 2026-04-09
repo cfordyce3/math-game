@@ -77,5 +77,5 @@ scale = Vector2(1, 7.2000012)
 position = Vector2(266, 72)
 scale = Vector2(1, 7.2000012)
 
-[node name="skeleton" parent="." unique_id=955896727 instance=ExtResource("6_p57ef")]
+[node name="Skeleton" parent="." unique_id=955896727 instance=ExtResource("6_p57ef")]
 position = Vector2(218, 71)

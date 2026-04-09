@@ -1,12 +1,12 @@
 [gd_scene format=3 uid="uid://6ft1eov7285f"]
 
 [ext_resource type="Script" uid="uid://uj3xfyf28f35" path="res://scripts/Arrow.cs" id="1_q8ifc"]
-[ext_resource type="Texture2D" uid="uid://7m7c48kn44lk" path="res://assets/sprites/Knight.png" id="2_q8ifc"]
+[ext_resource type="Texture2D" uid="uid://b4ieqivi1v6cc" path="res://assets/sprites/bow_arrow.png" id="2_q8ifc"]
 [ext_resource type="AudioStream" uid="uid://dgsebn7qhugvm" path="res://assets/sounds/arrow_shoot.wav" id="3_7ckq1"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7ckq1"]
 atlas = ExtResource("2_q8ifc")
-region = Rect2(64, 288, 32, 32)
+region = Rect2(0, 64, 32, 32)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q8ifc"]
 size = Vector2(3, 7.9999995)
