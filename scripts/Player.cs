@@ -213,18 +213,19 @@ public partial class Player : CharacterBody2D
 	}
 
 	// Flips the arrow spawn
+	private Vector2 _arrowSpawnPosition;
 	private void FlipArrowSpawn()
 	{
-		Vector2 _pos = _arrowSpawnLocation.Position;
 		if (!_flipped) // facing right
 		{
-			_pos = new Vector2(3, 1);
+			_arrowSpawnPosition = new Vector2(5, 1);
 		}
 		else // facing left
 		{
-			_pos = new Vector2(-3, 1);
+			_arrowSpawnPosition = new Vector2(-5, 1);
 		}
-		_arrowSpawnLocation.Position = _pos;
+
+		_arrowSpawnLocation.Position = _arrowSpawnPosition;
 	}
 
 	// Gets current state every frame

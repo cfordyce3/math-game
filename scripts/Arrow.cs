@@ -8,12 +8,20 @@ public partial class Arrow : Area2D
 	
 	private VisibleOnScreenNotifier2D _visibleOnScreenNotifier2D;
 	private Sprite2D _arrowSprite;
+
+	private AnimatedSprite2D _arrowSpawnTimeFromAnimation;
+	private Node2D _arrowSpawnLocation;
+
+	public override void _EnterTree()
+	{
+		Hide(); // wait for correct animation frame
+		_arrowSpawnTimeFromAnimation = GetNode<AnimatedSprite2D>("../Player/AnimatedSprite2D");
+		_arrowSpawnLocation = GetNode<Node2D>("../Player/ArrowSpawnLocation");
+	}
 	
 	public override void _Ready()
 	{
 		Player _player = GetNode<Player>("../Player");
-		Node2D _arrowSpawnLocation = GetNode<Node2D>("../Player/ArrowSpawnLocation");
-		GlobalPosition = _arrowSpawnLocation.GlobalPosition;
 		
 		// Flip arrow if player is flipped
 		flip = _player.ShootDirection;
@@ -27,7 +35,7 @@ public partial class Arrow : Area2D
 		
 		// Get resources and play shoot sound
 		_arrowSprite = GetNode<Sprite2D>("Sprite2D");
-		GetNode<AudioStreamPlayer>("ShootSound").Play(); // you're welcome lol
+		GetNode<AudioStreamPlayer>("ShootSound").Play();
 	}
 
 	// When arrow exits the screen
@@ -41,8 +49,14 @@ public partial class Arrow : Area2D
 		// if hitting enemy logic here
 	}
 
+	// bow_attack frame=3
 	public override void _Process(double delta)
 	{
+		if (_arrowSpawnTimeFromAnimation.Animation == "bow_attack" && _arrowSpawnTimeFromAnimation.Frame == 3)
+		{
+			Show();
+			GlobalPosition = _arrowSpawnLocation.GlobalPosition;
+		}
 		var pos = GlobalPosition;
 		if (flip == -1)
 		{

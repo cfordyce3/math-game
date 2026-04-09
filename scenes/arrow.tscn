@@ -12,6 +12,7 @@ region = Rect2(64, 288, 32, 32)
 size = Vector2(3, 7.9999995)
 
 [node name="Arrow" type="Area2D" unique_id=337556458]
+z_index = 1
 script = ExtResource("1_q8ifc")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1776392703]
