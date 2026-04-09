@@ -65,7 +65,7 @@ public partial class Player : CharacterBody2D
 	public int ShootDirection;
 
 	// Custom Events (Signals)
-	[Signal] public delegate void MovingEventHandler(int volume, bool wait); // ALL custom signals must include EventHandler suffix
+	[Signal] public delegate void MovingEventHandler(int volume); // ALL custom signals must include EventHandler suffix
 	[Signal] public delegate void StoppingEventHandler();
 	
 	// On Ready (one shot)
@@ -75,7 +75,7 @@ public partial class Player : CharacterBody2D
 		ScreenSize = GetViewportRect().Size;
 		_playerSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D"); // gets AnimatedSprite child node
 		_bowSprite = GetNode<AnimatedSprite2D>("bowAnimations"); // gets AnimatedSprite child node for bow
-
+		
 		// Audio config
 		// Get audio-related nodes
 		_playerSoundPlayer = GetNode<AudioStreamPlayer>("PlayerAudioPlayer"); // gets AudioStreamPlayer child node
@@ -113,7 +113,7 @@ public partial class Player : CharacterBody2D
 
 		if (!_moving && Velocity.Length() > 0)
 		{
-			EmitSignal(SignalName.Moving, _footstepVolume, false);
+			EmitSignal(SignalName.Moving, _footstepVolume);
 		} 
 		else if (_moving && Velocity == Vector2.Zero)
 		{
@@ -284,7 +284,7 @@ public partial class Player : CharacterBody2D
 		return (int)_weapon; // returns the private _weapon variable as an int in a public manner
 		// the reason why is because the enum itself is private and we don't need to pass it to anyone else
 		
-		// all enums are basically ints so the enumeration above is just shorthand for this:
+        // all enums are basically ints so the enumeration above is just shorthand for this:
 		// enum EquippedWeapon
 		//{
 		//     Sword = 0,
