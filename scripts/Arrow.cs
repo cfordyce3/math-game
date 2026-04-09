@@ -5,6 +5,7 @@ public partial class Arrow : Area2D
 {
 	[Export] private float _speed = 200;
 	public int flip;
+	private bool _moving = false;
 	
 	private VisibleOnScreenNotifier2D _visibleOnScreenNotifier2D;
 	private Sprite2D _arrowSprite;
@@ -22,6 +23,8 @@ public partial class Arrow : Area2D
 	public override void _Ready()
 	{
 		Player _player = GetNode<Player>("../Player");
+		
+		GlobalPosition = _arrowSpawnLocation.GlobalPosition;
 		
 		// Flip arrow if player is flipped
 		flip = _player.ShootDirection;
@@ -49,15 +52,9 @@ public partial class Arrow : Area2D
 		// if hitting enemy logic here
 	}
 
-	// bow_attack frame=3
-	public override void _Process(double delta)
+	private void MoveArrow(float delta)
 	{
-		if (_arrowSpawnTimeFromAnimation.Animation == "bow_attack" && _arrowSpawnTimeFromAnimation.Frame == 3)
-		{
-			Show();
-			GlobalPosition = _arrowSpawnLocation.GlobalPosition;
-		}
-		var pos = GlobalPosition;
+		Vector2 pos = GlobalPosition;
 		if (flip == -1)
 		{
 			pos.X -= _speed * (float)delta;
@@ -65,5 +62,16 @@ public partial class Arrow : Area2D
 		}
 		else pos.X += _speed * (float)delta;
 		GlobalPosition = pos;
+	}
+
+	// bow_attack frame=3
+	public override void _Process(double delta)
+	{
+		if (_moving) MoveArrow((float)delta);
+		else if (/*_arrowSpawnTimeFromAnimation.Animation == "bow_attack" &&*/ _arrowSpawnTimeFromAnimation.Frame == 3)
+		{
+			Show();
+			_moving = true;
+		}
 	}
 }

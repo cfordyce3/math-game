@@ -2,7 +2,8 @@
 
 [ext_resource type="Texture2D" uid="uid://7m7c48kn44lk" path="res://assets/sprites/Knight.png" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://ctdac6gxdlwcb" path="res://scripts/Player.cs" id="1_g2els"]
-[ext_resource type="Script" uid="uid://l8e6bkhxcj6h" path="res://scripts/FootstepAudioPlayer.cs" id="3_qhqgy"]
+[ext_resource type="Script" uid="uid://24cr3unajbry" path="res://scenes/PlayerAnimations.cs" id="3_dqkch"]
+[ext_resource type="Script" uid="uid://l8e6bkhxcj6h" path="res://scripts/player/FootstepAudioPlayer.cs" id="3_qhqgy"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qfm1y"]
 atlas = ExtResource("1_3vyb7")
@@ -203,12 +204,14 @@ height = 14.0
 
 [node name="Player" type="CharacterBody2D" unique_id=979533561]
 script = ExtResource("1_g2els")
+_moveOnAttack = false
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1828036840]
 sprite_frames = SubResource("SpriteFrames_g2els")
 animation = &"bow_attack"
 autoplay = "idle"
 frame = 3
+script = ExtResource("3_dqkch")
 
 [node name="bowAnimations" type="AnimatedSprite2D" parent="." unique_id=1313247664]
 z_index = -1

@@ -21,7 +21,7 @@ public partial class Player : CharacterBody2D
 	}
 	
 	// Get Player Child Nodes
-	private AnimatedSprite2D _playerSprite;
+	private PlayerAnimations _playerSprite;
 	private AnimatedSprite2D _bowSprite;
 	private CollisionShape2D _playerCollisionBox;
 	private AudioStreamPlayer _playerSoundPlayer;
@@ -73,7 +73,7 @@ public partial class Player : CharacterBody2D
 	{
 		// Set variables
 		ScreenSize = GetViewportRect().Size;
-		_playerSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D"); // gets AnimatedSprite child node
+		_playerSprite = GetNode<PlayerAnimations>("AnimatedSprite2D"); // gets AnimatedSprite child node
 		_bowSprite = GetNode<AnimatedSprite2D>("bowAnimations"); // gets AnimatedSprite child node for bow
 		
 		// Audio config
@@ -87,7 +87,7 @@ public partial class Player : CharacterBody2D
 		_arrowSpawnLocation = GetNode<Node2D>("ArrowSpawnLocation"); // loads arrow spawn point
 		
 		// Signals
-		_playerSprite.AnimationFinished += OnAnimationFinishedSignal;
+		_playerSprite.AnimationFinishedWithName += OnAnimationFinishedWithNameSignal;
 	}
 
 	private void LoadAudioFiles()
@@ -127,6 +127,7 @@ public partial class Player : CharacterBody2D
 	// Movement animation
 	private void AnimateMovement()
 	{
+		_bowSprite.Visible = true;
 		if (_inputDirection.X > 0) // go right
 		{
 			if (_inputDirection.Y < 0) _playerSprite.Play("run_up"); // up right
@@ -185,10 +186,19 @@ public partial class Player : CharacterBody2D
 		_playerSoundPlayer.VolumeDb = _swordSwingVolume;
 		_playerSoundPlayer.Play();
 	}
-	
-	private void OnAnimationFinishedSignal()
+
+	public bool _readyToShoot = true;
+	private void OnAnimationFinishedWithNameSignal(string animationName)
 	{
-		if (_state == State.Attacking) _state = State.Idle;
+		if (_state == State.Attacking)
+		{
+			_state = State.Idle;
+		}
+
+		if (animationName == "bow_attack")
+		{
+			_readyToShoot = true;
+		}
 	}
 
 	// Flips sprite regardless of state
@@ -265,15 +275,12 @@ public partial class Player : CharacterBody2D
 				break; // have to "break out" of the switch statement after matching otherwise the game will 
 					   // go down to the next case
 			case EquippedWeapon.Bow:
-				if (Ammo > 0) // only shoot if there's ammo
+				if (Ammo > 0 && _readyToShoot) // only shoot if there's ammo
 				{
 					_arrowInstance = _arrowPreload.Instantiate(); // creates a new arrow in-game
 					AddSibling(_arrowInstance);
 					Ammo--;
-				}
-				else
-				{
-					_weapon = EquippedWeapon.Sword; // swap to sword when out of ammo
+					_readyToShoot = false;
 				}
 				break;
 			// more weapons? magic staff?

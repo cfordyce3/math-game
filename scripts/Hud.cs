@@ -15,6 +15,7 @@ public partial class Hud : CanvasLayer
 	[Export] private int _level = 0;
 	[Export] private int _armor = 0;
 	private string _weapon = "sword";
+	private bool _readyToShoot = true;
 	
 	// Public variables
 	
@@ -31,9 +32,11 @@ public partial class Hud : CanvasLayer
 		_level = _player.Level;
 		_armor = _player.Armor;
 		_weapon = (_player.GetPlayerWeapon() == 0) ? "sword" : "bow";
+		_readyToShoot = _player._readyToShoot;
 
 		_statsCounter.Text = String.Format("Lives: {0}\nLevel: {1}\nArrows Left: {2}\nArmor Level:{3}\n\nWeapon: {4}", _lives, _level,
 			_ammo, _armor, _weapon);
+		_statsCounter.Text += String.Format("\nReady to shoot: {0}", _readyToShoot);
 	}
 
 	public override void _Process(double delta)

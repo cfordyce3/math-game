@@ -29,6 +29,10 @@ project/assembly_name="math-game"
 
 enabled=PackedStringArray("res://addons/rider-plugin/plugin.cfg")
 
+[gui]
+
+fonts/dynamic_fonts/use_oversampling=false
+
 [input]
 
 move_right={
