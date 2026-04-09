@@ -27,7 +27,7 @@ project/assembly_name="math-game"
 
 [editor_plugins]
 
-enabled=PackedStringArray()
+enabled=PackedStringArray("res://addons/rider-plugin/plugin.cfg")
 
 [input]
 

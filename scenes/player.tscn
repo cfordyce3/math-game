@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://7m7c48kn44lk" path="res://assets/sprites/Knight.png" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://ctdac6gxdlwcb" path="res://scripts/Player.cs" id="1_g2els"]
+[ext_resource type="Script" uid="uid://l8e6bkhxcj6h" path="res://scripts/FootstepAudioPlayer.cs" id="3_qhqgy"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g2els"]
 atlas = ExtResource("1_3vyb7")
@@ -131,7 +132,7 @@ script = ExtResource("1_g2els")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1828036840]
 sprite_frames = SubResource("SpriteFrames_g2els")
-animation = &"sword_attack"
+animation = &"idle"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=916413204]
@@ -141,8 +142,10 @@ shape = SubResource("CapsuleShape2D_g2els")
 [node name="ArrowSpawnLocation" type="Node2D" parent="." unique_id=1627385822]
 position = Vector2(6, 0)
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1403772693]
+[node name="FootstepAudioPlayer" type="AudioStreamPlayer" parent="." unique_id=1403772693]
+script = ExtResource("3_qhqgy")
 
-[node name="FootstepTimer" type="Timer" parent="AudioStreamPlayer" unique_id=1919788129]
+[node name="FootstepTimer" type="Timer" parent="FootstepAudioPlayer" unique_id=1919788129]
 wait_time = 0.25
-one_shot = true
+
+[node name="PlayerAudioPlayer" type="AudioStreamPlayer" parent="." unique_id=7467038]

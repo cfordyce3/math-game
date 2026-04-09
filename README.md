@@ -49,39 +49,39 @@
 - [ ] XP bar fill / level progress
 
 - [ ] Player
-    - [x] Movement
-        - [x] Animation
-        - [x] Sound
-    - [ ] Sword attack
-        - [x] Animation
-        - [ ] Collision
-        - [ ] Sound
-    - [ ] Bow attack
-        - [ ] Animation
-        - [x] Projectile
-        - [x] Sound (within Arrow)
-    - [ ] Staff attack
-        - [ ] Animation
-        - [ ] Projectile
-        - [ ] Sound(?)
-    - [x] Stats
-    - [ ] Level / XP
+	- [x] Movement
+		- [x] Animation
+		- [x] Sound
+	- [ ] Sword attack
+		- [x] Animation
+		- [ ] Collision
+		- [ ] Sound
+	- [ ] Bow attack
+		- [ ] Animation
+		- [x] Projectile
+		- [x] Sound (within Arrow)
+	- [ ] Staff attack
+		- [ ] Animation
+		- [ ] Projectile
+		- [ ] Sound(?)
+	- [x] Stats
+	- [ ] Level / XP
 - [ ] Arrow
-    - [ ] Movement
-    - [x] Collision
-    - [ ] Animation(?)
+	- [ ] Movement
+	- [x] Collision
+	- [ ] Animation(?)
 - [ ] Enemy
-    - [ ] Animation
-    - [ ] Collision
+	- [ ] Animation
+	- [ ] Collision
 - [ ] Boss 
-    - [ ] Animation
-    - [ ] Collision
-    - [ ] Mechanic(?)
+	- [ ] Animation
+	- [ ] Collision
+	- [ ] Mechanic(?)
 - [ ] UI
-    - [ ] HUD
-        - [ ] Font scaling
-        - [ ] Variable tracking
-    - [ ] Menu buttons
+	- [ ] HUD
+		- [ ] Font scaling
+		- [ ] Variable tracking
+	- [ ] Menu buttons
 - [ ] Zone changes
 
 ### Game Design
