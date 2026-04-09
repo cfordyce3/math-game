@@ -2,6 +2,34 @@
 
 [ext_resource type="Texture2D" uid="uid://m8u5ow3ra3sp" path="res://assets/sprites/skeleton.png" id="1_pbvs3"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_pbvs3"]
+atlas = ExtResource("1_pbvs3")
+region = Rect2(0, 128, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rjsi3"]
+atlas = ExtResource("1_pbvs3")
+region = Rect2(32, 128, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3nhjk"]
+atlas = ExtResource("1_pbvs3")
+region = Rect2(64, 128, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ghshk"]
+atlas = ExtResource("1_pbvs3")
+region = Rect2(96, 128, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e85v8"]
+atlas = ExtResource("1_pbvs3")
+region = Rect2(128, 128, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f63t1"]
+atlas = ExtResource("1_pbvs3")
+region = Rect2(160, 128, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v6rpr"]
+atlas = ExtResource("1_pbvs3")
+region = Rect2(192, 128, 32, 32)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_txkty"]
 atlas = ExtResource("1_pbvs3")
 region = Rect2(0, 0, 32, 32)
@@ -44,6 +72,32 @@ region = Rect2(32, 64, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_rjsi3"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pbvs3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rjsi3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3nhjk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ghshk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e85v8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f63t1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v6rpr")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 12.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_txkty")
@@ -99,5 +153,5 @@ animations = [{
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1122052677]
 sprite_frames = SubResource("SpriteFrames_rjsi3")
-animation = &"run_down"
+animation = &"attack"
 autoplay = "idle"
