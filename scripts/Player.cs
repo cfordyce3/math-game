@@ -146,6 +146,21 @@ public partial class Player : CharacterBody2D
 		if (_inputDirection.Y > 0) { _playerSprite.Play("run_down"); } // just down
 
 		if (_inputDirection.Length() == 0 && _state == State.Idle) { _playerSprite.Play("idle"); } // no movement
+
+	}
+
+	private void AnimateBow()
+	{
+		if (_weapon == EquippedWeapon.Bow)
+		{
+			if (Velocity.Y < 0) _bowSprite.ZIndex = -1;
+			else _bowSprite.ZIndex = 1;
+		}
+		if (_weapon != EquippedWeapon.Bow)
+		{
+			if (Velocity.Y < 0) _bowSprite.ZIndex = 1;
+			else _bowSprite.ZIndex = -1;
+		}
 	}
 
 	// Attack animation
@@ -157,7 +172,11 @@ public partial class Player : CharacterBody2D
 			_playerSprite.Play("sword_attack");
 		}
 		// bow animation here
-		if (_weapon == EquippedWeapon.Bow) _state = State.Idle; // temporary until bow animation is finished
+		if (_weapon == EquippedWeapon.Bow && !_playerSprite.IsPlaying()) //_state = State.Idle; // temporary until bow animation is finished
+		{
+			_playerSprite.Play("bow_attack");
+			_bowSprite.Visible = false;
+		} 
 	}
 
 	private void PlaySwordSwingAudio()
@@ -222,8 +241,16 @@ public partial class Player : CharacterBody2D
 
 	public void EquipWeapon()
 	{
-		if (Input.IsActionJustPressed("equip_sword") && _weapon != EquippedWeapon.Sword) _weapon = EquippedWeapon.Sword;
-		else if (Input.IsActionJustPressed("equip_bow") && _weapon != EquippedWeapon.Bow) _weapon = EquippedWeapon.Bow;
+		if (Input.IsActionJustPressed("equip_sword") && _weapon != EquippedWeapon.Sword) 
+		{
+			_weapon = EquippedWeapon.Sword;
+			_bowSprite.Play("unequipped");
+		}
+		else if (Input.IsActionJustPressed("equip_bow") && _weapon != EquippedWeapon.Bow) 
+		{
+			_weapon = EquippedWeapon.Bow;
+			_bowSprite.Play("equipped");
+		}
 	}
 
 	public void Attack()
@@ -266,7 +293,8 @@ public partial class Player : CharacterBody2D
 		// Animation logic
 		FlipSprite();
 		FlipArrowSpawn();
-		
+		AnimateBow();
+
 		if (_state == State.Attacking) AnimateAttack();
 		else AnimateMovement();
 		
