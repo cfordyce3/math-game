@@ -6,7 +6,7 @@
 - [ ] Player
 	- [x] Walking + idle animation
 	- [x] Sword animation
-	- [ ] Bow animation
+	- [x] Bow animation
 		- [x] Arrow
 	- [ ] Magic staff animation
 	- [ ] XP bar (fills somehow?)
@@ -42,8 +42,8 @@
 - [ ] Grass sound?
 
 ### `Programming`
-- [ ] Relocate player audio
-- [ ] Fix font scaling
+- [x] Relocate player audio
+- [x] Fix font scaling
 - [ ] Enemy interactions
 - [ ] Save system
 - [ ] XP bar fill / level progress
@@ -55,9 +55,9 @@
 	- [ ] Sword attack
 		- [x] Animation
 		- [ ] Collision
-		- [ ] Sound
-	- [ ] Bow attack
-		- [ ] Animation
+		- [x] Sound
+	- [x] Bow attack
+		- [x] Animation
 		- [x] Projectile
 		- [x] Sound (within Arrow)
 	- [ ] Staff attack
@@ -79,7 +79,7 @@
 	- [ ] Mechanic(?)
 - [ ] UI
 	- [ ] HUD
-		- [ ] Font scaling
+		- [x] Font scaling
 		- [ ] Variable tracking
 	- [ ] Menu buttons
 - [ ] Zone changes
