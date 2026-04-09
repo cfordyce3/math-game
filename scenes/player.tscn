@@ -8,13 +8,13 @@
 atlas = ExtResource("1_3vyb7")
 region = Rect2(0, 320, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_fulsm"]
-atlas = ExtResource("1_3vyb7")
-region = Rect2(32, 320, 32, 32)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_4r5pv"]
 atlas = ExtResource("1_3vyb7")
 region = Rect2(64, 320, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fulsm"]
+atlas = ExtResource("1_3vyb7")
+region = Rect2(32, 320, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_60mlk"]
 atlas = ExtResource("1_3vyb7")
@@ -87,10 +87,10 @@ animations = [{
 "texture": SubResource("AtlasTexture_qfm1y")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_fulsm")
+"texture": SubResource("AtlasTexture_4r5pv")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_4r5pv")
+"texture": SubResource("AtlasTexture_fulsm")
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_60mlk")
@@ -208,6 +208,7 @@ script = ExtResource("1_g2els")
 sprite_frames = SubResource("SpriteFrames_g2els")
 animation = &"bow_attack"
 autoplay = "idle"
+frame = 3
 
 [node name="bowAnimations" type="AnimatedSprite2D" parent="." unique_id=1313247664]
 z_index = -1
@@ -220,7 +221,7 @@ position = Vector2(0, 1)
 shape = SubResource("CapsuleShape2D_g2els")
 
 [node name="ArrowSpawnLocation" type="Node2D" parent="." unique_id=1627385822]
-position = Vector2(6, 0)
+position = Vector2(3, 1)
 
 [node name="FootstepAudioPlayer" type="AudioStreamPlayer" parent="." unique_id=1403772693]
 script = ExtResource("3_qhqgy")

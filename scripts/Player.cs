@@ -218,11 +218,11 @@ public partial class Player : CharacterBody2D
 		Vector2 _pos = _arrowSpawnLocation.Position;
 		if (!_flipped) // facing right
 		{
-			_pos = new Vector2(6, 0);
+			_pos = new Vector2(3, 1);
 		}
 		else // facing left
 		{
-			_pos = new Vector2(-6, 0);
+			_pos = new Vector2(-3, 1);
 		}
 		_arrowSpawnLocation.Position = _pos;
 	}
