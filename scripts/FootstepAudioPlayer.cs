@@ -50,12 +50,11 @@ public partial class FootstepAudioPlayer : AudioStreamPlayer
 
 	private void OnPlayerStoppingSignal()
 	{
-		Stop();
 		_footstepTimer.Stop();
 	}
 	private void OnFootstepTimerTimeoutSignal()
 	{
-		
+		Play();
 	}
 
 	public override void _Process(double delta)
