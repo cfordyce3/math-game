@@ -1,16 +1,13 @@
 [gd_scene format=3 uid="uid://ciqdes1sxo810"]
 
 [ext_resource type="Script" uid="uid://dckbrjyk5tbpl" path="res://scripts/Hud.cs" id="1_6fi6k"]
-[ext_resource type="FontFile" uid="uid://dg1jjbl6pta4w" path="res://assets/fonts/JetBrainsMonoNerdFont-Regular.ttf" id="1_ahhtf"]
-[ext_resource type="FontFile" uid="uid://bvk65r6013jnb" path="res://assets/fonts/Code New Roman.otf" id="3_uo2fv"]
+[ext_resource type="FontFile" uid="uid://bvtp60rl2bqae" path="res://assets/fonts/RasterForgeRegular-JpBgm.ttf" id="2_oo0fn"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_toqtt"]
-font = ExtResource("1_ahhtf")
-font_size = 18
+font = ExtResource("2_oo0fn")
 
 [sub_resource type="LabelSettings" id="LabelSettings_5pdws"]
-font = ExtResource("3_uo2fv")
-font_size = 24
+font = ExtResource("2_oo0fn")
 
 [node name="HUD" type="CanvasLayer" unique_id=1603450803]
 script = ExtResource("1_6fi6k")
@@ -29,9 +26,10 @@ Arrow work as expected now :)"
 label_settings = SubResource("LabelSettings_toqtt")
 
 [node name="StatsCounter" type="Label" parent="." unique_id=1533990124]
-offset_left = 1062.0
-offset_top = 6.0
-offset_right = 1273.0
-offset_bottom = 31.0
+offset_left = 1066.0
+offset_top = 4.0
+offset_right = 1277.0
+offset_bottom = 29.0
 text = "Arrows Left: 100"
 label_settings = SubResource("LabelSettings_5pdws")
+horizontal_alignment = 2

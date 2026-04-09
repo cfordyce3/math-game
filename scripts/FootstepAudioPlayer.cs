@@ -30,10 +30,7 @@ public partial class FootstepAudioPlayer : AudioStreamPlayer
 		// Load footstep sounds
 		foreach (string file in DirAccess.Open("res://assets/sounds/footsteps").GetFiles())
 		{
-			if (!file.Contains("import"))
-			{
-				_footstepSoundListPreload.Add(GD.Load<AudioStreamWav>("res://assets/sounds/footsteps/" + file));
-			}
+			if (!file.Contains("import")) _footstepSoundListPreload.Add(GD.Load<AudioStreamWav>("res://assets/sounds/footsteps/" + file));
 		}
 		_footstepSound = _footstepSoundListPreload[GD.RandRange(0, _footstepSoundListPreload.Count-1)]; // Get first random sound
 		Stream = _footstepSound;
@@ -46,7 +43,7 @@ public partial class FootstepAudioPlayer : AudioStreamPlayer
 		Stream = _footstepSound;
 	}
 
-	private void OnPlayerMovingSignal(int volume, bool wait)
+	private void OnPlayerMovingSignal(int volume)
 	{
 		VolumeDb = volume;
 		_footstepTimer.Start();

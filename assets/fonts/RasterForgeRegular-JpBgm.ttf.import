@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://bvk65r6013jnb"
-path="res://.godot/imported/Code New Roman.otf-f041776f593e3acf70a5303efc1b4bbe.fontdata"
+uid="uid://bvtp60rl2bqae"
+path="res://.godot/imported/RasterForgeRegular-JpBgm.ttf-2608330dc036de8ade57b620285ee6fd.fontdata"
 
 [deps]
 
-source_file="res://assets/fonts/Code New Roman.otf"
-dest_files=["res://.godot/imported/Code New Roman.otf-f041776f593e3acf70a5303efc1b4bbe.fontdata"]
+source_file="res://assets/fonts/RasterForgeRegular-JpBgm.ttf"
+dest_files=["res://.godot/imported/RasterForgeRegular-JpBgm.ttf-2608330dc036de8ade57b620285ee6fd.fontdata"]
 
 [params]
 
@@ -22,7 +22,7 @@ msdf_size=48
 allow_system_fallback=true
 force_autohinter=false
 modulate_color_glyphs=false
-hinting=1
+hinting=2
 subpixel_positioning=4
 keep_rounding_remainders=true
 oversampling=0.0
