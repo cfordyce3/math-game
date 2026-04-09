@@ -111,7 +111,7 @@ public partial class Player : CharacterBody2D
 
 		if (!_moving && Velocity.Length() > 0)
 		{
-			EmitSignal(SignalName.Moving, _footstepVolume);
+			EmitSignal(SignalName.Moving, _footstepVolume, false);
 		} 
 		else if (_moving && Velocity == Vector2.Zero)
 		{
