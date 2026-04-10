@@ -195,5 +195,5 @@ animations = [{
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1122052677]
 sprite_frames = SubResource("SpriteFrames_rjsi3")
-animation = &"attack"
+animation = &"idle"
 autoplay = "idle"
