@@ -57,10 +57,10 @@ public partial class Arrow : Area2D
 		Vector2 pos = GlobalPosition;
 		if (flip == -1)
 		{
-			pos.X -= _speed * (float)delta;
+			pos.X -= _speed * delta;
 			_arrowSprite.FlipH = true;
 		}
-		else pos.X += _speed * (float)delta;
+		else pos.X += _speed * delta;
 		GlobalPosition = pos;
 	}
 
@@ -68,7 +68,7 @@ public partial class Arrow : Area2D
 	public override void _Process(double delta)
 	{
 		if (_moving) MoveArrow((float)delta);
-		else if (/*_arrowSpawnTimeFromAnimation.Animation == "bow_attack" &&*/ _arrowSpawnTimeFromAnimation.Frame == 3)
+		else if (_arrowSpawnTimeFromAnimation.Frame == 3)
 		{
 			Show();
 			_moving = true;
