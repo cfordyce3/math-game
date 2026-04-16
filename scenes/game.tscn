@@ -4,8 +4,8 @@
 [ext_resource type="PackedScene" uid="uid://ciqdes1sxo810" path="res://scenes/hud.tscn" id="2_lnu2h"]
 [ext_resource type="PackedScene" uid="uid://bd7cby2332qux" path="res://scenes/heart_pickup.tscn" id="2_yqjtg"]
 [ext_resource type="Texture2D" uid="uid://b5gpl4bmggmls" path="res://assets/sprites/bg_tileset.png" id="3_lbhrr"]
-[ext_resource type="PackedScene" path="res://scenes/invisible_wall.tscn" id="5_iywne"]
-[ext_resource type="PackedScene" uid="uid://dfyafpu6v0ooh" path="res://scenes/skeleton.tscn" id="6_p57ef"]
+[ext_resource type="PackedScene" uid="uid://buvikx17ous3y" path="res://scenes/invisible_wall.tscn" id="5_iywne"]
+[ext_resource type="PackedScene" path="res://scenes/skeleton.tscn" id="6_p57ef"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_iywne"]
 texture = ExtResource("3_lbhrr")
@@ -25,6 +25,7 @@ texture = ExtResource("3_lbhrr")
 6:1/0 = 0
 1:3/0 = 0
 3:3/0 = 0
+6:3/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_iywne"]
 sources/0 = SubResource("TileSetAtlasSource_lbhrr")
@@ -34,6 +35,7 @@ sources/0 = SubResource("TileSetAtlasSource_lbhrr")
 [node name="GameManager" type="Node" parent="." unique_id=1132278487]
 
 [node name="HUD" parent="." unique_id=1603450803 instance=ExtResource("2_lnu2h")]
+visible = false
 follow_viewport_scale = 1.19
 
 [node name="Player" parent="." unique_id=979533561 instance=ExtResource("1_uwrxv")]
@@ -52,7 +54,7 @@ tile_set = SubResource("TileSet_p57ef")
 
 [node name="AccessoriesTilemap" type="TileMapLayer" parent="." unique_id=844678148]
 z_index = 2
-tile_map_data = PackedByteArray("AAACAAYAAAAGAAEAAAAEAAQAAAAGAAEAAAABAAMAAAAGAAEAAAA=")
+tile_map_data = PackedByteArray("AAACAAYAAAAGAAEAAAAEAAQAAAAGAAEAAAABAAMAAAAGAAEAAAAPAAYAAAAGAAMAAAANAAcAAAAGAAMAAAAEAAcAAAAGAAMAAAADAAIAAAAGAAMAAAAOAAEAAAAGAAMAAAA=")
 tile_set = SubResource("TileSet_iywne")
 
 [node name="HeartPickup" parent="." unique_id=532313464 instance=ExtResource("2_yqjtg")]
