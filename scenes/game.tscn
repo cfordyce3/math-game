@@ -4,8 +4,9 @@
 [ext_resource type="PackedScene" uid="uid://ciqdes1sxo810" path="res://scenes/hud.tscn" id="2_lnu2h"]
 [ext_resource type="PackedScene" uid="uid://bd7cby2332qux" path="res://scenes/heart_pickup.tscn" id="2_yqjtg"]
 [ext_resource type="Texture2D" uid="uid://b5gpl4bmggmls" path="res://assets/sprites/bg_tileset.png" id="3_lbhrr"]
-[ext_resource type="PackedScene" path="res://scenes/invisible_wall.tscn" id="5_iywne"]
+[ext_resource type="PackedScene" uid="uid://buvikx17ous3y" path="res://scenes/invisible_wall.tscn" id="5_iywne"]
 [ext_resource type="PackedScene" uid="uid://dfyafpu6v0ooh" path="res://scenes/skeleton.tscn" id="6_p57ef"]
+[ext_resource type="PackedScene" uid="uid://mkvhg87bx05t" path="res://scenes/orc.tscn" id="7_u5sy4"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_iywne"]
 texture = ExtResource("3_lbhrr")
@@ -42,11 +43,15 @@ texture = ExtResource("3_lbhrr")
 1:4/0 = 0
 2:5/0 = 0
 6:4/0 = 0
+6:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6.802211, -1.6244087, -2.741189, -4.670175, 0.60915375, -4.5686493, 8, 0.20305157, 8, 3.2488174, 4.467125, 6.193059, -4.6701746, 6.193059, -8, 3.3503428)
 7:5/0 = 0
 7:6/0 = 0
+7:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(5.888481, 8, 5.786957, 5.786956, 1.8274603, 2.9442406, -1.9289846, 2.8427153, -5.9900064, 5.888482, -5.9900064, 8)
 8:4/0 = 0
+8:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(3.756446, 8, 3.6549206, 4.6701746, -3.9594955, 4.6701746, -4.061022, 8)
 
 [sub_resource type="TileSet" id="TileSet_iywne"]
+physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_lbhrr")
 
 [node name="Game" type="Node2D" unique_id=1427372036]
@@ -73,7 +78,7 @@ tile_set = SubResource("TileSet_p57ef")
 
 [node name="AccessoriesTilemap" type="TileMapLayer" parent="." unique_id=844678148]
 z_index = 2
-tile_map_data = PackedByteArray("AAAEAAQAAAAHAAUAAAAPAAYAAAAGAAQAAAANAAcAAAAGAAQAAAAEAAcAAAAIAAQAAAAOAAEAAAAGAAQAAAAGAAYAAAAIAAQAAAABAAUAAAAHAAUAAAABAAYAAAAHAAYAAAACAAIAAAAHAAUAAAACAAMAAAAHAAYAAAAEAAUAAAAHAAYAAAAGAAEAAAAIAAQAAAACAAcAAAAGAAQAAAAEAAIAAAAGAAQAAAAIAAYAAAAGAAQAAAA=")
+tile_map_data = PackedByteArray("AAAEAAQAAAAHAAUAAAAPAAYAAAAGAAQAAAANAAcAAAAGAAQAAAAEAAcAAAAIAAQAAAAOAAEAAAAGAAQAAAAGAAYAAAAIAAQAAAABAAUAAAAHAAUAAAABAAYAAAAHAAYAAAACAAIAAAAHAAUAAAACAAMAAAAHAAYAAAAEAAUAAAAHAAYAAAAGAAEAAAAIAAQAAAACAAcAAAAGAAQAAAAEAAIAAAAGAAQAAAAIAAYAAAAGAAQAAAAGAAoAAAAJAAUAAAA=")
 tile_set = SubResource("TileSet_iywne")
 
 [node name="HeartPickup" parent="." unique_id=532313464 instance=ExtResource("2_yqjtg")]
@@ -100,3 +105,6 @@ scale = Vector2(1, 7.2000012)
 
 [node name="Skeleton" parent="." unique_id=955896727 instance=ExtResource("6_p57ef")]
 position = Vector2(218, 71)
+
+[node name="Orc" parent="." unique_id=2076559756 instance=ExtResource("7_u5sy4")]
+position = Vector2(48, 94)
