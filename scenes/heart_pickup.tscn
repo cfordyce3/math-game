@@ -59,7 +59,7 @@ _data = {
 }
 
 [node name="HeartPickup" type="Area2D" unique_id=532313464]
-collision_layer = 2
+collision_layer = 16
 script = ExtResource("1_m16xc")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=880990730]

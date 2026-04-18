@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://mkvhg87bx05t"]
 
 [ext_resource type="Texture2D" uid="uid://b5qrjy3767uxy" path="res://assets/sprites/orc.png" id="1_2byfh"]
+[ext_resource type="Script" uid="uid://g3y2tr1nvyhq" path="res://scripts/Orc.cs" id="1_bfp0d"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2byfh"]
 atlas = ExtResource("1_2byfh")
@@ -57,6 +58,7 @@ height = 18.0
 [node name="Orc" type="CharacterBody2D" unique_id=2076559756]
 collision_layer = 8
 collision_mask = 7
+script = ExtResource("1_bfp0d")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1656830099]
 sprite_frames = SubResource("SpriteFrames_s5mlm")

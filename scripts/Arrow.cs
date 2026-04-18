@@ -14,10 +14,13 @@ public partial class Arrow : Area2D
 	private Node2D _arrowSpawnLocation;
 
 	private Timer _shootSoundTimer;
+	
+	// Custom signals
+	[Signal] public delegate void ObjectHitEventHandler(Node body);
 
 	public override void _EnterTree()
 	{
-		Hide(); // wait for correct animation frame
+		// Hide(); // wait for correct animation frame
 		_arrowSpawnTimeFromAnimation = GetNode<AnimatedSprite2D>("../Player/AnimatedSprite2D");
 		_arrowSpawnLocation = GetNode<Node2D>("../Player/ArrowSpawnLocation");
 		_shootSoundTimer = GetNode<Timer>("ShootSoundTimer");
@@ -59,7 +62,20 @@ public partial class Arrow : Area2D
 	private void OnBodyEnteredSignal(Node body)
 	{
 		// if hitting enemy logic here
-		GD.Print(body.Name);
+		GD.Print(body.GetClass());
+		EmitSignal(SignalName.ObjectHit, body);
+		switch (body)
+		{
+			case TileMapLayer:
+				// other logic for hitting tilemap
+				QueueFree();
+				break;
+			case Enemy:
+				// other logic for hitting enemies
+				QueueFree();
+				break;
+			// other cases for other things it can hit
+		}
 	}
 
 	private void MoveArrow(float delta)

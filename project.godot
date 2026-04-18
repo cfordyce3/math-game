@@ -86,6 +86,7 @@ equip_bow={
 2d_physics/layer_2="Arrow"
 2d_physics/layer_3="Environment"
 2d_physics/layer_4="Enemies"
+2d_physics/layer_5="Pickups"
 
 [physics]
 

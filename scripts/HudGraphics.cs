@@ -7,81 +7,45 @@ public partial class HudGraphics : Control
 	private Player _player;
 
 	// Child nodes
-	private TextureRect _heart1;
-	private TextureRect _heart2;
-	private TextureRect _heart3;
-	private TextureRect _heart4;
-	private TextureRect _heart5;
+	private TextureRect[] _hearts = new TextureRect[5];
+	// private TextureRect _heart1;
+	// private TextureRect _heart2;
+	// private TextureRect _heart3;
+	// private TextureRect _heart4;
+	// private TextureRect _heart5;
 
 	// Private variables
 	[Export] private int _lives = 0;
 
 	public override void _Ready()
 	{
-		_player = GetNode<Player>("../../Player");
+		_player = GetNode<Player>("/root/Game/Player");
+		_lives = _player.Lives;
 		
 		// Get all the hearts
-		_heart1 = GetNode<TextureRect>("FullHearts/Heart1");
-		_heart2 = GetNode<TextureRect>("FullHearts/Heart2");
-		_heart3 = GetNode<TextureRect>("FullHearts/Heart3");
-		_heart4 = GetNode<TextureRect>("FullHearts/Heart4");
-		_heart5 = GetNode<TextureRect>("FullHearts/Heart5");
+		for (int i = 0; i < _hearts.Length; i++)
+		{
+			_hearts[i] = GetNode<TextureRect>("FullHearts/Heart" + (i+1)); // add each texture to array
+			
+			// set starting number of hearts to whatever player's hearts is
+			if (i < _player.Lives) _hearts[i].Visible = true; 
+			else _hearts[i].Visible = false;
+		}
+
 	}
 
 	private void UpdateGraphics()
 	{
-		_lives = _player.Lives;
-
-		switch (_lives)
+		for (int i = 0; i < _hearts.Length; i++) 
 		{
-			case 5:
-				_heart1.Visible = true;
-				_heart2.Visible = true;
-				_heart3.Visible = true;
-				_heart4.Visible = true;
-				_heart5.Visible = true;
-				break;
-			case 4:
-				_heart1.Visible = true;
-				_heart2.Visible = true;
-				_heart3.Visible = true;
-				_heart4.Visible = true;
-				_heart5.Visible = false;
-				break;
-			case 3:
-				_heart1.Visible = true;
-				_heart2.Visible = true;
-				_heart3.Visible = true;
-				_heart4.Visible = false;
-				_heart5.Visible = false;
-				break;
-			case 2:
-				_heart1.Visible = true;
-				_heart2.Visible = true;
-				_heart3.Visible = false;
-				_heart4.Visible = false;
-				_heart5.Visible = false;
-				break;
-			case 1:
-				_heart1.Visible = true;
-				_heart2.Visible = false;
-				_heart3.Visible = false;
-				_heart4.Visible = false;
-				_heart5.Visible = false;
-				break;
-			case 0:
-				_heart1.Visible = false;
-				_heart2.Visible = false;
-				_heart3.Visible = false;
-				_heart4.Visible = false;
-				_heart5.Visible = false;
-				break;
+			if (i < _player.Lives) _hearts[i].Visible = true;
+			else _hearts[i].Visible = false;
 		}
+		_lives = _player.Lives; // now set the current known lives to current player lives
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		UpdateGraphics();
+		if (_lives != _player.Lives) UpdateGraphics(); // if locally-known lives != player's lives then update
 	}
 }

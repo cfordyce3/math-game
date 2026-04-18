@@ -69,7 +69,7 @@ public partial class Player : CharacterBody2D
 	// Custom Events (Signals)
 	[Signal] public delegate void MovingEventHandler(int volume); // ALL custom signals must include EventHandler suffix
 	[Signal] public delegate void StoppingEventHandler();
-	
+
 	// On Ready (one shot)
 	public override void _Ready()
 	{
@@ -195,7 +195,9 @@ public partial class Player : CharacterBody2D
 		_playerSoundPlayer.Stream = _bowStringSound;
 		_playerSoundPlayer.VolumeDb = _bowStringVolume;
 		// TO HAVE A TEMPORARY ONE OFF TIMER
-		await ToSignal(GetTree().CreateTimer(0.25), SceneTreeTimer.SignalName.Timeout);
+		// await ToSignal(GetTree().CreateTimer(0.25), SceneTreeTimer.SignalName.Timeout);
+		// Better way: wait for the actual frame of the animation
+		await ToSignal(_playerSprite, PlayerAnimations.SignalName.BowReleased);
 		_playerSoundPlayer.Play();
 	}
 
@@ -276,7 +278,7 @@ public partial class Player : CharacterBody2D
 		}
 	}
 
-	public void Attack()
+	public async void Attack()
 	{
 		ShootDirection = (_flipped) ? -1 : 1; // -1 for left, 1 for right
 		// switch-case statements are perfect for enums!	
@@ -290,8 +292,9 @@ public partial class Player : CharacterBody2D
 				if (Ammo > 0 && _readyToShoot) // only shoot if there's ammo
 				{
 					PlayBowStringAudio();
+					await ToSignal(_playerSprite, PlayerAnimations.SignalName.BowReleased); // creates arrow at right animation frame
 					_arrowInstance = _arrowPreload.Instantiate(); // creates a new arrow in-game
-					AddSibling(_arrowInstance);
+					AddSibling(_arrowInstance, true);
 					Ammo--;
 					_readyToShoot = false;
 				}

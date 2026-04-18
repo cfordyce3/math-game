@@ -6,6 +6,8 @@ public partial class HeartPickup : Area2D
 	// Child nodes
 	private AudioStreamPlayer _pickupSound;
 	
+	[Signal] public delegate void PickedUpEventHandler();
+	
 	public override void _Ready()
 	{
 		_pickupSound = GetNode<AudioStreamPlayer>("AudioStreamPlayer");
@@ -17,6 +19,7 @@ public partial class HeartPickup : Area2D
 	{
 		if (body is Player player)
 		{
+			EmitSignal(SignalName.PickedUp);
 			_pickupSound.Play();
 			player.Lives++;
 			Hide();
