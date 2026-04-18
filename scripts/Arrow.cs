@@ -13,11 +13,14 @@ public partial class Arrow : Area2D
 	private AnimatedSprite2D _arrowSpawnTimeFromAnimation;
 	private Node2D _arrowSpawnLocation;
 
+	private Timer _shootSoundTimer;
+
 	public override void _EnterTree()
 	{
 		Hide(); // wait for correct animation frame
 		_arrowSpawnTimeFromAnimation = GetNode<AnimatedSprite2D>("../Player/AnimatedSprite2D");
 		_arrowSpawnLocation = GetNode<Node2D>("../Player/ArrowSpawnLocation");
+		_shootSoundTimer = GetNode<Timer>("ShootSoundTimer");
 	}
 	
 	public override void _Ready()
@@ -38,6 +41,12 @@ public partial class Arrow : Area2D
 		
 		// Get resources and play shoot sound
 		_arrowSprite = GetNode<Sprite2D>("Sprite2D");
+		_shootSoundTimer.Timeout += PlayShootSound;
+		_shootSoundTimer.Start();
+	}
+
+	private void PlayShootSound()
+	{
 		GetNode<AudioStreamPlayer>("ShootSound").Play();
 	}
 

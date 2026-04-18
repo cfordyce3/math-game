@@ -34,6 +34,7 @@ public partial class Player : CharacterBody2D
 	[Export] private bool _moveOnAttack = true;
 	[Export] private int _footstepVolume = -14;
 	[Export] private int _swordSwingVolume = 0;
+	[Export] private int _bowStringVolume = 0;
 	
 	// Private attributes
 	[ExportGroup("Attributes")]
@@ -58,6 +59,7 @@ public partial class Player : CharacterBody2D
 
 	// Audio variables
 	private AudioStreamWav _swordSwingSound; // sword swinging sound
+	private AudioStreamWav _bowStringSound; // bow string sound
 	
 	// Arrow variables
 	private PackedScene _arrowPreload;
@@ -94,6 +96,7 @@ public partial class Player : CharacterBody2D
 	{
 		// Sword swing sounds
 		_swordSwingSound = GD.Load<AudioStreamWav>("res://assets/sounds/sword_swing.wav");
+		_bowStringSound = GD.Load<AudioStreamWav>("res://assets/sounds/bow_string.wav");
 	}
 	
 
@@ -187,6 +190,15 @@ public partial class Player : CharacterBody2D
 		_playerSoundPlayer.Play();
 	}
 
+	private async void PlayBowStringAudio()
+	{
+		_playerSoundPlayer.Stream = _bowStringSound;
+		_playerSoundPlayer.VolumeDb = _bowStringVolume;
+		// TO HAVE A TEMPORARY ONE OFF TIMER
+		await ToSignal(GetTree().CreateTimer(0.2), SceneTreeTimer.SignalName.Timeout);
+		_playerSoundPlayer.Play();
+	}
+
 	public bool _readyToShoot = true;
 	private void OnAnimationFinishedWithNameSignal(string animationName)
 	{
@@ -277,6 +289,7 @@ public partial class Player : CharacterBody2D
 			case EquippedWeapon.Bow:
 				if (Ammo > 0 && _readyToShoot) // only shoot if there's ammo
 				{
+					PlayBowStringAudio();
 					_arrowInstance = _arrowPreload.Instantiate(); // creates a new arrow in-game
 					AddSibling(_arrowInstance);
 					Ammo--;
