@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://ovrffwn7a0bp"]
+
+[ext_resource type="Texture2D" uid="uid://cea3lxnvf3xdr" path="res://assets/sprites/heart.png" id="1_qpfmq"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_86tpn"]
+atlas = ExtResource("1_qpfmq")
+region = Rect2(0, 0, 16, 16)
+
+[node name="HUDGraphics" type="Control" unique_id=1663265604]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Heart" type="TextureRect" parent="." unique_id=651535598]
+layout_mode = 1
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 24.0
+offset_bottom = 24.0
+texture = SubResource("AtlasTexture_86tpn")
+stretch_mode = 4
+
+[node name="Heart2" type="TextureRect" parent="." unique_id=444092774]
+layout_mode = 1
+offset_left = 24.0
+offset_top = 8.0
+offset_right = 40.0
+offset_bottom = 24.0
+texture = SubResource("AtlasTexture_86tpn")
+stretch_mode = 4
+
+[node name="Heart3" type="TextureRect" parent="." unique_id=1849042670]
+layout_mode = 1
+offset_left = 40.0
+offset_top = 8.0
+offset_right = 56.0
+offset_bottom = 24.0
+texture = SubResource("AtlasTexture_86tpn")
+stretch_mode = 4
+
+[node name="Heart4" type="TextureRect" parent="." unique_id=558542940]
+layout_mode = 1
+offset_left = 56.0
+offset_top = 8.0
+offset_right = 72.0
+offset_bottom = 24.0
+texture = SubResource("AtlasTexture_86tpn")
+stretch_mode = 4
+
+[node name="Heart5" type="TextureRect" parent="." unique_id=1923566465]
+layout_mode = 1
+offset_left = 72.0
+offset_top = 8.0
+offset_right = 88.0
+offset_bottom = 24.0
+texture = SubResource("AtlasTexture_86tpn")
+stretch_mode = 4
