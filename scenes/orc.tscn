@@ -58,7 +58,7 @@ height = 18.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1656830099]
 sprite_frames = SubResource("SpriteFrames_s5mlm")
-animation = &"attack"
+animation = &"idle"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=802610250]

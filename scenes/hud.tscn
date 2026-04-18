@@ -5,14 +5,17 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_toqtt"]
 font = ExtResource("2_oo0fn")
+font_size = 4
 
 [sub_resource type="LabelSettings" id="LabelSettings_5pdws"]
 font = ExtResource("2_oo0fn")
+font_size = 8
 
 [node name="HUD" type="CanvasLayer" unique_id=1603450803]
 script = ExtResource("1_6fi6k")
 
 [node name="UpdateNotes" type="Label" parent="." unique_id=1018899171]
+visible = false
 offset_left = 8.0
 offset_top = 7.0
 offset_right = 238.0
@@ -26,10 +29,10 @@ Arrow work as expected now :)"
 label_settings = SubResource("LabelSettings_toqtt")
 
 [node name="StatsCounter" type="Label" parent="." unique_id=1533990124]
-offset_left = 1066.0
-offset_top = 4.0
-offset_right = 1277.0
-offset_bottom = 29.0
+offset_left = 102.0
+offset_top = 7.0
+offset_right = 313.0
+offset_bottom = 32.0
 text = "Arrows Left: 100"
 label_settings = SubResource("LabelSettings_5pdws")
 horizontal_alignment = 2
