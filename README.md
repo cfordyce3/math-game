@@ -67,7 +67,7 @@
 	- [x] Stats
 	- [ ] Level / XP
 - [ ] Arrow
-	- [ ] Movement
+	- [x] Movement
 	- [x] Collision
 	- [ ] Animation(?)
 - [ ] Enemy

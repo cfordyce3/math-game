@@ -1,14 +1,16 @@
 using Godot;
 using System;
+using System.Collections;
 
 public partial class Arrow : Area2D
 {
 	[Export] private float _speed = 200;
 	public int flip;
 	private bool _moving = false;
+	private bool _broken = false;
 	
 	private VisibleOnScreenNotifier2D _visibleOnScreenNotifier2D;
-	private Sprite2D _arrowSprite;
+	private AnimatedSprite2D _arrowSprite;
 
 	private AnimatedSprite2D _arrowSpawnTimeFromAnimation;
 	private Node2D _arrowSpawnLocation;
@@ -43,7 +45,7 @@ public partial class Arrow : Area2D
 		_visibleOnScreenNotifier2D.ScreenExited += OnScreenExitedSignal;
 		
 		// Get resources and play shoot sound
-		_arrowSprite = GetNode<Sprite2D>("Sprite2D");
+		_arrowSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 		_shootSoundTimer.Timeout += PlayShootSound;
 		_shootSoundTimer.Start();
 	}
@@ -59,16 +61,27 @@ public partial class Arrow : Area2D
 		QueueFree();
 	}
 
+	// Play arrow break animation
+	private async void ArrowBreak()
+	{
+		_broken = true;
+		_arrowSprite.Play("arrowBroken");
+		GD.Print("Arrow Broke");
+		await ToSignal(GetTree().CreateTimer(0.25), SceneTreeTimer.SignalName.Timeout);
+		QueueFree();
+	}
+
 	private void OnBodyEnteredSignal(Node body)
 	{
 		// if hitting enemy logic here
+		_moving = false;
 		GD.Print(body.GetClass());
 		EmitSignal(SignalName.ObjectHit, body);
 		switch (body)
 		{
 			case TileMapLayer:
 				// other logic for hitting tilemap
-				QueueFree();
+				ArrowBreak();
 				break;
 			case Enemy:
 				// other logic for hitting enemies
@@ -97,7 +110,8 @@ public partial class Arrow : Area2D
 		else if (_arrowSpawnTimeFromAnimation.Frame == 3)
 		{
 			Show();
-			_moving = true;
+			// Checks if arrow is colliding before frame 3
+			if (!_broken) _moving = true;
 		}
 	}
 }

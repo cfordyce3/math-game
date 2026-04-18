@@ -4,9 +4,46 @@
 [ext_resource type="Texture2D" uid="uid://b4ieqivi1v6cc" path="res://assets/sprites/bow_arrow.png" id="2_q8ifc"]
 [ext_resource type="AudioStream" uid="uid://dgsebn7qhugvm" path="res://assets/sounds/arrow_shoot.wav" id="3_7ckq1"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_q8ifc"]
+atlas = ExtResource("2_q8ifc")
+region = Rect2(0, 96, 32, 32)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_7ckq1"]
 atlas = ExtResource("2_q8ifc")
+region = Rect2(32, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hmv1p"]
+atlas = ExtResource("2_q8ifc")
+region = Rect2(64, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uvnur"]
+atlas = ExtResource("2_q8ifc")
 region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_j80qw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q8ifc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7ckq1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hmv1p")
+}],
+"loop": false,
+"name": &"arrowBroken",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uvnur")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q8ifc"]
 size = Vector2(3, 7.9999995)
@@ -17,9 +54,11 @@ collision_layer = 2
 collision_mask = 12
 script = ExtResource("1_q8ifc")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1776392703]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1830066450]
 position = Vector2(4, 2)
-texture = SubResource("AtlasTexture_7ckq1")
+sprite_frames = SubResource("SpriteFrames_j80qw")
+animation = &"arrowBroken"
+autoplay = "default"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=125978243]
 position = Vector2(4, 1.5)
