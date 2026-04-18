@@ -32,7 +32,7 @@ public partial class Arrow : Area2D
 		// Flip arrow if player is flipped
 		flip = _player.ShootDirection;
 		
-		// If arrow collides with something
+		// If arrow collides with a body (Node)
 		BodyEntered += OnBodyEnteredSignal;
 		
 		// If arrow leaves screen
@@ -59,6 +59,7 @@ public partial class Arrow : Area2D
 	private void OnBodyEnteredSignal(Node body)
 	{
 		// if hitting enemy logic here
+		GD.Print(body.Name);
 	}
 
 	private void MoveArrow(float delta)

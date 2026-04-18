@@ -195,7 +195,7 @@ public partial class Player : CharacterBody2D
 		_playerSoundPlayer.Stream = _bowStringSound;
 		_playerSoundPlayer.VolumeDb = _bowStringVolume;
 		// TO HAVE A TEMPORARY ONE OFF TIMER
-		await ToSignal(GetTree().CreateTimer(0.2), SceneTreeTimer.SignalName.Timeout);
+		await ToSignal(GetTree().CreateTimer(0.25), SceneTreeTimer.SignalName.Timeout);
 		_playerSoundPlayer.Play();
 	}
 

@@ -11,8 +11,10 @@ region = Rect2(0, 64, 32, 32)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q8ifc"]
 size = Vector2(3, 7.9999995)
 
-[node name="Arrow" type="Area2D" unique_id=337556458]
+[node name="Arrow" type="Area2D" unique_id=705811999]
 z_index = 1
+collision_layer = 2
+collision_mask = 12
 script = ExtResource("1_q8ifc")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1776392703]
@@ -32,5 +34,5 @@ position = Vector2(2, 2)
 rect = Rect2(-2, -2, 8, 3)
 
 [node name="ShootSoundTimer" type="Timer" parent="." unique_id=636555656]
-wait_time = 0.2
+wait_time = 0.3
 one_shot = true

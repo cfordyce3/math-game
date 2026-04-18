@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://7m7c48kn44lk" path="res://assets/sprites/Knight.png" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://ctdac6gxdlwcb" path="res://scripts/Player.cs" id="1_g2els"]
-[ext_resource type="Script" uid="uid://24cr3unajbry" path="res://scenes/PlayerAnimations.cs" id="3_dqkch"]
+[ext_resource type="Script" uid="uid://24cr3unajbry" path="res://scripts/player/PlayerAnimations.cs" id="3_dqkch"]
 [ext_resource type="Script" uid="uid://l8e6bkhxcj6h" path="res://scripts/player/FootstepAudioPlayer.cs" id="3_qhqgy"]
 [ext_resource type="Texture2D" uid="uid://b4ieqivi1v6cc" path="res://assets/sprites/bow_arrow.png" id="4_qlg0r"]
 
@@ -225,6 +225,7 @@ radius = 5.0
 height = 14.0
 
 [node name="Player" type="CharacterBody2D" unique_id=979533561]
+collision_mask = 12
 script = ExtResource("1_g2els")
 _moveOnAttack = false
 _bowStringVolume = -12
