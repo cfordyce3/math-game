@@ -6,6 +6,7 @@ public partial class FootstepAudioPlayer : AudioStreamPlayer
 {
 	// Player parent node
 	private Player _player;
+	private bool _moving = false;
 	
 	// Timer child node
 	private Timer _footstepTimer;
@@ -26,6 +27,9 @@ public partial class FootstepAudioPlayer : AudioStreamPlayer
 		// Timer node and signal
 		_footstepTimer = GetNode<Timer>("FootstepTimer");
 		_footstepTimer.Timeout += OnFootstepTimerTimeoutSignal;
+		
+		// Stream finished
+		Finished += OnFootstepAudioFinishedSignal;
 
 		// Load footstep sounds
 		foreach (string file in DirAccess.Open("res://assets/sounds/footsteps").GetFiles())
@@ -38,6 +42,7 @@ public partial class FootstepAudioPlayer : AudioStreamPlayer
 
 	private void SetRandomFootstepSound()
 	{
+		if (Stream != null) _previousFootstepSound = (AudioStreamWav)Stream;
 		do { _footstepSound = _footstepSoundListPreload[GD.RandRange(0, _footstepSoundListPreload.Count - 1)];
 		} while (_footstepSound == _previousFootstepSound);
 		Stream = _footstepSound;
@@ -45,19 +50,35 @@ public partial class FootstepAudioPlayer : AudioStreamPlayer
 
 	private void OnPlayerMovingSignal(int volume)
 	{
+		_moving = true;
 		VolumeDb = volume;
 		_footstepTimer.Start();
-		Play();
+		if (!Playing) Play();
 	}
 
 	private void OnPlayerStoppingSignal()
 	{
-		_footstepTimer.Stop();
+		_moving = false;
+		// _footstepTimer.Stop();
+		// SetRandomFootstepSound();
 	}
+	
 	private void OnFootstepTimerTimeoutSignal()
 	{
+		switch (_moving)
+		{
+			case false:
+				_footstepTimer.Stop();
+				break;
+			case true:
+				Play();
+				break;
+		}
+	}
+
+	private void OnFootstepAudioFinishedSignal()
+	{
 		SetRandomFootstepSound();
-		Play();
 	}
 
 	public override void _Process(double delta)
