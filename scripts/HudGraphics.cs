@@ -8,11 +8,6 @@ public partial class HudGraphics : Control
 
 	// Child nodes
 	private TextureRect[] _hearts = new TextureRect[5];
-	// private TextureRect _heart1;
-	// private TextureRect _heart2;
-	// private TextureRect _heart3;
-	// private TextureRect _heart4;
-	// private TextureRect _heart5;
 
 	// Private variables
 	[Export] private int _lives = 0;

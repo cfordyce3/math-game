@@ -7,6 +7,10 @@
 atlas = ExtResource("1_qpfmq")
 region = Rect2(0, 16, 16, 16)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_whqf1"]
+atlas = ExtResource("1_qpfmq")
+region = Rect2(0, 0, 16, 16)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_86tpn"]
 atlas = ExtResource("1_qpfmq")
 region = Rect2(0, 0, 16, 16)
@@ -76,7 +80,7 @@ offset_left = 8.0
 offset_top = 8.0
 offset_right = 24.0
 offset_bottom = 24.0
-texture = SubResource("AtlasTexture_86tpn")
+texture = SubResource("AtlasTexture_whqf1")
 stretch_mode = 4
 
 [node name="Heart2" type="TextureRect" parent="FullHearts" unique_id=444092774]

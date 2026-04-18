@@ -40,7 +40,9 @@ public partial class Skeleton : Enemy
             _skeletonSprite.Play("die");
             // Hide();
             GD.Print("Skeleton slain");
-            await ToSignal(_skeletonSoundPlayer, "finished");
+            await ToSignal(_skeletonSprite, "animation_finished");
+            // await ToSignal(_skeletonSoundPlayer, "finished");
+            // await ToSignal(GetTree().CreateTimer(1.0), SceneTreeTimer.SignalName.Timeout);
             QueueFree();
         }
     }
