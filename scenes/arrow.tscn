@@ -30,3 +30,7 @@ stream = ExtResource("3_7ckq1")
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1139353767]
 position = Vector2(2, 2)
 rect = Rect2(-2, -2, 8, 3)
+
+[node name="ShootSoundTimer" type="Timer" parent="." unique_id=636555656]
+wait_time = 0.2
+one_shot = true
