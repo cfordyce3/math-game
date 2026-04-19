@@ -1,50 +1,51 @@
 using Godot;
-using System;
-using System.Collections.Generic;
-using System.Numerics;
 using Vector2 = Godot.Vector2;
 
 public partial class Player : CharacterBody2D
 {
-	// Stateful player states
+	/*******************
+		PLAYER ENUMS
+	*******************/
+	
+	// Player states
 	private enum State 
 	{
 		Idle,
-		Attacking,
+		Attacking
 	}
 
-	// Track which weapon is equipped
+	// Equipped weapon
 	private enum EquippedWeapon
 	{
 		Sword,
-		Bow
+		Bow,
+		MagicStaff
 	}
 	
-	// Get Player Child Nodes
-	private PlayerAnimations _playerSprite;
-	private AnimatedSprite2D _bowSprite;
-	private CollisionShape2D _playerCollisionBox;
-	private AudioStreamPlayer _playerSoundPlayer;
-	private Node2D _arrowSpawnLocation;
 	
-	// Camera ScreenSize
-	public Vector2 ScreenSize;
-
-	[ExportGroup("Debugging")] // variables for testing
-	[Export] private bool _moveOnAttack = true;
-	[Export] private int _footstepVolume = -14;
-	[Export] private int _swordSwingVolume = 0;
-	[Export] private int _bowStringVolume = 0;
+	/***********************
+		PLAYER VARIABLES 
+	***********************/
 	
-	// Private attributes
+	// Debugging (testing) variables
+	[ExportGroup("Debugging")] 
+	[Export] private bool _moveOnAttack = false;			// whether you can move while attacking
+	[Export] private int _footstepVolume = -14;				// dB of footsteps
+	[Export] private int _swordSwingVolume = 0;				// dB of sword swings
+	[Export] private int _bowStringVolume = -12;			// dB of bow string
+	
+	// Declare child nodes
+	private PlayerAnimations _playerSprite;					// main player animations
+	private AnimatedSprite2D _bowSprite;					// determines bow on top or bottom
+	private CollisionShape2D _playerCollisionBox;			// main player collision box
+	private AudioStreamPlayer _playerAudioPlayer;			// main audio stream
+	private Node2D _arrowSpawnLocation;						// where arrow spawns from
+	
+	// Internal variables
 	[ExportGroup("Attributes")]
-	[Export] private State _state = State.Idle; // stateful player
-	[Export] private int _speed = 100;
-	[Export] private EquippedWeapon _weapon = EquippedWeapon.Sword; // defaults to sword
-	private bool _moving = false;
-	
-	// Attack delay timer
-	private int _stateCounter = 0;
+	[Export] private State _state = State.Idle;							// stateful player
+	[Export] private int _speed = 100;									// speed of player
+	[Export] private EquippedWeapon _weapon = EquippedWeapon.Sword;		// defaults to sword
 	
 	// Public attributes
 	[Export] public int Lives = 3;
@@ -53,9 +54,10 @@ public partial class Player : CharacterBody2D
 	[Export] public int Armor = 0;
 
 	// Velocity and direction
-	private Vector2 _velocity = Vector2.Zero;
-	private Vector2 _inputDirection = Vector2.Zero;
-	private bool _flipped = false;
+	private Vector2 _velocity = Vector2.Zero;			// velocity
+	private Vector2 _inputDirection = Vector2.Zero;		// input direction
+	private bool _moving = false;						// if player is moving
+	private bool _flipped = false;						// if player is flipped
 
 	// Audio variables
 	private AudioStreamWav _swordSwingSound; // sword swinging sound
@@ -70,32 +72,13 @@ public partial class Player : CharacterBody2D
 	[Signal] public delegate void MovingEventHandler(int volume); // ALL custom signals must include EventHandler suffix
 	[Signal] public delegate void StoppingEventHandler();
 
-	// On Ready (one shot)
-	public override void _Ready()
-	{
-		// Set variables
-		ScreenSize = GetViewportRect().Size;
-		_playerSprite = GetNode<PlayerAnimations>("AnimatedSprite2D"); // gets AnimatedSprite child node
-		_bowSprite = GetNode<AnimatedSprite2D>("bowAnimations"); // gets AnimatedSprite child node for bow
-		
-		// Audio config
-		// Get audio-related nodes
-		_playerSoundPlayer = GetNode<AudioStreamPlayer>("PlayerAudioPlayer"); // gets AudioStreamPlayer child node
-		// Preload audio files
-		LoadAudioFiles();
-		
-		// Load arrow
-		_arrowPreload = GD.Load<PackedScene>("res://scenes/arrow.tscn"); // load arrow scene to be spawned (instantiated)
-		_arrowSpawnLocation = GetNode<Node2D>("ArrowSpawnLocation"); // loads arrow spawn point
-		
-		// Signals
-		_playerSprite.AnimationFinishedWithName += OnAnimationFinishedWithNameSignal;
-	}
 
+	// Load Audio into AudioStreamWav from asset files
 	private void LoadAudioFiles()
 	{
 		// Sword swing sounds
 		_swordSwingSound = GD.Load<AudioStreamWav>("res://assets/sounds/sword_swing.wav");
+		// Bow string sound
 		_bowStringSound = GD.Load<AudioStreamWav>("res://assets/sounds/bow_string.wav");
 	}
 	
@@ -185,20 +168,20 @@ public partial class Player : CharacterBody2D
 
 	private void PlaySwordSwingAudio()
 	{
-		_playerSoundPlayer.Stream = _swordSwingSound;
-		_playerSoundPlayer.VolumeDb = _swordSwingVolume;
-		_playerSoundPlayer.Play();
+		_playerAudioPlayer.Stream = _swordSwingSound;
+		_playerAudioPlayer.VolumeDb = _swordSwingVolume;
+		_playerAudioPlayer.Play();
 	}
 
 	private async void PlayBowStringAudio()
 	{
-		_playerSoundPlayer.Stream = _bowStringSound;
-		_playerSoundPlayer.VolumeDb = _bowStringVolume;
+		_playerAudioPlayer.Stream = _bowStringSound;
+		_playerAudioPlayer.VolumeDb = _bowStringVolume;
 		// TO HAVE A TEMPORARY ONE OFF TIMER
 		// await ToSignal(GetTree().CreateTimer(0.25), SceneTreeTimer.SignalName.Timeout);
 		// Better way: wait for the actual frame of the animation
 		await ToSignal(_playerSprite, PlayerAnimations.SignalName.BowReleased);
-		_playerSoundPlayer.Play();
+		_playerAudioPlayer.Play();
 	}
 
 	public bool _readyToShoot = true;
@@ -303,6 +286,39 @@ public partial class Player : CharacterBody2D
 		}
 	}
 	
+	
+	/*******************
+		GODOT METHODS
+	*******************/
+
+	// On Entering Tree
+	public override void _EnterTree()
+	{
+		/*************************
+		    Set children nodes
+		*************************/
+		
+		// Animation Nodes
+		_playerSprite = GetNode<PlayerAnimations>("AnimatedSprite2D"); // AnimatedSprite child node
+		_bowSprite = GetNode<AnimatedSprite2D>("bowAnimations"); // Bow Animation Child Node
+		
+		// Audio Nodes
+		_playerAudioPlayer = GetNode<AudioStreamPlayer>("PlayerAudioPlayer"); // gets AudioStreamPlayer child node
+		LoadAudioFiles(); // Load audio files from assets
+	}
+
+	// On Ready
+	public override void _Ready()
+	{
+		// Load arrow
+		_arrowPreload = GD.Load<PackedScene>("res://scenes/arrow.tscn"); // load arrow scene to be spawned (instantiated)
+		_arrowSpawnLocation = GetNode<Node2D>("ArrowSpawnLocation"); // loads arrow spawn point
+		
+		// Signals
+		_playerSprite.AnimationFinishedWithName += OnAnimationFinishedWithNameSignal;
+	}
+	
+	// On Process (every frame)
 	public override void _Process(double delta)
 	{
 		// Get movement
@@ -322,32 +338,14 @@ public partial class Player : CharacterBody2D
 		if (_state == State.Attacking) AnimateAttack();
 		else AnimateMovement();
 		
-		// Audio logic
-		
 		
 		// Move player
 		MoveAndSlide();
-		// MoveAndCollide(Velocity * (float)delta); // causes the player to freeze when going into a wall
 	}
 	
 	// EVERYTHING AFTER THIS LINE IS TEMPORARY WHILE WAITING FOR FUTURE WORK
 	public int GetPlayerWeapon()
 	{
 		return (int)_weapon; // returns the private _weapon variable as an int in a public manner
-		// the reason why is because the enum itself is private and we don't need to pass it to anyone else
-		
-		// all enums are basically ints so the enumeration above is just shorthand for this:
-		// enum EquippedWeapon
-		//{
-		//     Sword = 0,
-		//     Bow = 1,
-		//}
-		// BUT you can also set whatever value you want like if you are explicit:
-		// enum EquippedWeapon
-		//{
-		//     Sword = 9,
-		//     Bow = 123,
-		//     MagicStaff = 0,
-		//}
 	} 
 }

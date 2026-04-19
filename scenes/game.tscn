@@ -1,5 +1,6 @@
 [gd_scene format=4 uid="uid://dvdsaf5ofelrx"]
 
+[ext_resource type="Script" uid="uid://dte58frh8lapv" path="res://scripts/GameManager.cs" id="1_0tnpc"]
 [ext_resource type="PackedScene" uid="uid://sa318ffpgsme" path="res://scenes/player.tscn" id="1_uwrxv"]
 [ext_resource type="PackedScene" uid="uid://ovrffwn7a0bp" path="res://scenes/hud_graphics.tscn" id="2_gee14"]
 [ext_resource type="PackedScene" uid="uid://ciqdes1sxo810" path="res://scenes/hud.tscn" id="2_lnu2h"]
@@ -60,6 +61,7 @@ sources/0 = SubResource("TileSetAtlasSource_lbhrr")
 [node name="Game" type="Node2D" unique_id=1427372036]
 
 [node name="GameManager" type="Node" parent="." unique_id=1132278487]
+script = ExtResource("1_0tnpc")
 
 [node name="HUD" parent="." unique_id=1603450803 instance=ExtResource("2_lnu2h")]
 follow_viewport_scale = 1.19
