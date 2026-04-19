@@ -29,29 +29,29 @@ public partial class Player : CharacterBody2D
 	
 	// Debugging (testing) variables
 	[ExportGroup("Debugging")] 
-	[Export] private bool _moveOnAttack = false;			// whether you can move while attacking
-	[Export] private int _footstepVolume = -14;				// dB of footsteps
-	[Export] private int _swordSwingVolume = 0;				// dB of sword swings
-	[Export] private int _bowStringVolume = -12;			// dB of bow string
+	[Export] private bool _moveOnAttack = false;		// whether you can move while attacking
+	[Export] private int _footstepVolume = -14;			// dB of footsteps
+	[Export] private int _swordSwingVolume = 0;			// dB of sword swings
+	[Export] private int _bowStringVolume = -12;		// dB of bow string
 	
 	// Declare child nodes
-	private PlayerAnimations _playerSprite;					// main player animations
-	private AnimatedSprite2D _bowSprite;					// determines bow on top or bottom
-	private CollisionShape2D _playerCollisionBox;			// main player collision box
-	private AudioStreamPlayer _playerAudioPlayer;			// main audio stream
-	private Node2D _arrowSpawnLocation;						// where arrow spawns from
+	private PlayerAnimations _playerSprite;				// main player animations
+	private AnimatedSprite2D _bowSprite;				// determines bow on top or bottom
+	private CollisionShape2D _playerCollisionBox;		// main player collision box
+	private AudioStreamPlayer _playerAudioPlayer;		// main audio stream
+	private Node2D _arrowSpawnLocation;					// where arrow spawns from
 	
 	// Internal variables
 	[ExportGroup("Attributes")]
-	[Export] private State _state = State.Idle;							// stateful player
+	[Export] private State _state = State.Idle;							// player state
 	[Export] private int _speed = 100;									// speed of player
 	[Export] private EquippedWeapon _weapon = EquippedWeapon.Sword;		// defaults to sword
 	
 	// Public attributes
-	[Export] public int Lives = 3;
-	[Export] public int Ammo = 100;
-	[Export] public int Level = 0;
-	[Export] public int Armor = 0;
+	[Export] public int Lives = 3;						// player lives
+	[Export] public int Ammo = 100;						// player ammo
+	[Export] public int Level = 0;						// player level
+	[Export] public int Armor = 0;						// player armor (currently unused)
 
 	// Velocity and direction
 	private Vector2 _velocity = Vector2.Zero;			// velocity
@@ -60,8 +60,8 @@ public partial class Player : CharacterBody2D
 	private bool _flipped = false;						// if player is flipped
 
 	// Audio variables
-	private AudioStreamWav _swordSwingSound; // sword swinging sound
-	private AudioStreamWav _bowStringSound; // bow string sound
+	private AudioStreamWav _swordSwingSound;			// sword swinging sound
+	private AudioStreamWav _bowStringSound;				// bow string sound
 	
 	// Arrow variables
 	private PackedScene _arrowPreload;
@@ -69,9 +69,14 @@ public partial class Player : CharacterBody2D
 	public int ShootDirection;
 
 	// Custom Events (Signals)
-	[Signal] public delegate void MovingEventHandler(int volume); // ALL custom signals must include EventHandler suffix
-	[Signal] public delegate void StoppingEventHandler();
+	[Signal] public delegate void MovingEventHandler(int volume);								// Player moving signal
+	[Signal] public delegate void StoppingEventHandler();										// Player stopping signal
+	[Signal] public delegate void ShootEventHandler(int shootDirection, Vector2 spawnLocation);	// Player shoot signal
 
+	
+	/**********************
+		PLAYER METHODS
+	**********************/
 
 	// Load Audio into AudioStreamWav from asset files
 	private void LoadAudioFiles()
@@ -83,11 +88,12 @@ public partial class Player : CharacterBody2D
 	}
 	
 
-	// Get input direction / Velocity
-	private void GetMovement() // true for moving, false for not moving
+	// Determine Velocity vector for MoveAndSlide() per frame
+	private void GetMovement()
 	{
+		// Get input direction from Godot inputs
 		_inputDirection = Input.GetVector("move_left", "move_right", "move_up", "move_down");
-		if (!_moveOnAttack) // if false
+		if (!_moveOnAttack) // If moveOnAttack (debug variable) is false
 		{
 			if (_state == State.Attacking)
 			{
@@ -264,25 +270,24 @@ public partial class Player : CharacterBody2D
 	public async void Attack()
 	{
 		ShootDirection = (_flipped) ? -1 : 1; // -1 for left, 1 for right
-		// switch-case statements are perfect for enums!	
-		switch (_weapon) // basically says "inspect this variable", in this case, "_weapon" defined at the top
-		{                // and match it one of the listed options
-			case EquippedWeapon.Sword: // equivalent to if (_weapon == EquippedWeapon.Sword)
-				// sword behavior
-				break; // have to "break out" of the switch statement after matching otherwise the game will 
-					   // go down to the next case
-			case EquippedWeapon.Bow:
+		switch (_weapon)
+		{
+			case EquippedWeapon.Sword:		// Sword attack behavior
+				break;
+			case EquippedWeapon.Bow:		// Bow attack behavior
 				if (Ammo > 0 && _readyToShoot) // only shoot if there's ammo
 				{
 					PlayBowStringAudio();
 					await ToSignal(_playerSprite, PlayerAnimations.SignalName.BowReleased); // creates arrow at right animation frame
-					_arrowInstance = _arrowPreload.Instantiate(); // creates a new arrow in-game
-					AddSibling(_arrowInstance, true);
+					EmitSignal(SignalName.Shoot, ShootDirection, _arrowSpawnPosition);
+					// _arrowInstance = _arrowPreload.Instantiate(); // creates a new arrow in-game
+					// AddSibling(_arrowInstance, true);
 					Ammo--;
 					_readyToShoot = false;
 				}
 				break;
-			// more weapons? magic staff?
+			case EquippedWeapon.MagicStaff:	// Staff attack behavior
+				break;
 		}
 	}
 	
@@ -321,7 +326,7 @@ public partial class Player : CharacterBody2D
 	// On Process (every frame)
 	public override void _Process(double delta)
 	{
-		// Get movement
+		// Determine velocity
 		GetMovement();
 		
 		// Get state

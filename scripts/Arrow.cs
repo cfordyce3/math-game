@@ -23,8 +23,8 @@ public partial class Arrow : Area2D
 	public override void _EnterTree()
 	{
 		// Hide(); // wait for correct animation frame
-		_arrowSpawnTimeFromAnimation = GetNode<AnimatedSprite2D>("../Player/AnimatedSprite2D");
-		_arrowSpawnLocation = GetNode<Node2D>("../Player/ArrowSpawnLocation");
+		_arrowSpawnTimeFromAnimation = GetNode<AnimatedSprite2D>("/root/Game/Player/AnimatedSprite2D");
+		_arrowSpawnLocation = GetNode<Node2D>("/root/Game/Player/ArrowSpawnLocation");
 		_shootSoundTimer = GetNode<Timer>("ShootSoundTimer");
 	}
 	
