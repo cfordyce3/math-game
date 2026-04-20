@@ -34,8 +34,8 @@ public partial class Hud : CanvasLayer
 		_weapon = (_player.GetPlayerWeapon() == 0) ? "sword" : "bow";
 		_readyToShoot = _player._readyToShoot;
 
-		_statsCounter.Text = String.Format("Lives: {0}\nLevel: {1}\nArrows Left: {2}\nArmor Level:{3}\n\nWeapon: {4}", _lives, _level,
-			_ammo, _armor, _weapon);
+		_statsCounter.Text = String.Format("Level: {0}\nArmor Level:{1}\n\nWeapon: {2}", _level,
+			_armor, _weapon);
 		_statsCounter.Text += String.Format("\nReady to shoot: {0}", _readyToShoot);
 	}
 
