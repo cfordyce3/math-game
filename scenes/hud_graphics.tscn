@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://fgddp8qejxa8" path="res://scripts/HudGraphics.cs" id="1_86tpn"]
 [ext_resource type="Texture2D" uid="uid://cea3lxnvf3xdr" path="res://assets/sprites/heart.png" id="1_qpfmq"]
+[ext_resource type="Texture2D" uid="uid://b4ieqivi1v6cc" path="res://assets/sprites/bow_arrow.png" id="3_whqf1"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_86tpn"]
 atlas = ExtResource("1_qpfmq")
@@ -58,6 +59,21 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_6o07l"]
+atlas = ExtResource("3_whqf1")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_86tpn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6o07l")
+}],
+"loop": true,
+"name": &"active",
+"speed": 5.0
+}]
+
 [node name="HUDGraphics" type="Control" unique_id=1663265604]
 layout_mode = 3
 anchors_preset = 15
@@ -106,3 +122,64 @@ scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_6o07l")
 animation = &"idle"
 autoplay = "idle"
+
+[node name="Arrows" type="Control" parent="." unique_id=2015819505]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Arrow1" type="AnimatedSprite2D" parent="Arrows" unique_id=2031823705]
+position = Vector2(16, 32)
+rotation = -1.5707964
+scale = Vector2(1.25, 1.25)
+sprite_frames = SubResource("SpriteFrames_86tpn")
+animation = &"active"
+
+[node name="Arrow2" type="AnimatedSprite2D" parent="Arrows" unique_id=986849034]
+position = Vector2(24.000002, 32)
+rotation = -1.5707964
+scale = Vector2(1.25, 1.25)
+sprite_frames = SubResource("SpriteFrames_86tpn")
+animation = &"active"
+
+[node name="Arrow3" type="AnimatedSprite2D" parent="Arrows" unique_id=1161335281]
+position = Vector2(31.999998, 32)
+rotation = -1.5707964
+scale = Vector2(1.25, 1.25)
+sprite_frames = SubResource("SpriteFrames_86tpn")
+animation = &"active"
+
+[node name="Arrow4" type="AnimatedSprite2D" parent="Arrows" unique_id=1242206524]
+position = Vector2(40, 32)
+rotation = -1.5707964
+scale = Vector2(1.25, 1.25)
+sprite_frames = SubResource("SpriteFrames_86tpn")
+animation = &"active"
+
+[node name="Arrow5" type="AnimatedSprite2D" parent="Arrows" unique_id=1200197608]
+position = Vector2(48, 32.000008)
+rotation = -1.5707964
+scale = Vector2(1.25, 1.25)
+sprite_frames = SubResource("SpriteFrames_86tpn")
+animation = &"active"
+
+[node name="Arrow6" type="AnimatedSprite2D" parent="Arrows" unique_id=674872118]
+position = Vector2(56, 32)
+rotation = -1.5707964
+scale = Vector2(1.25, 1.25)
+sprite_frames = SubResource("SpriteFrames_86tpn")
+animation = &"active"
+
+[node name="Arrow7" type="AnimatedSprite2D" parent="Arrows" unique_id=1522736013]
+position = Vector2(64, 32)
+rotation = -1.5707964
+scale = Vector2(1.25, 1.25)
+sprite_frames = SubResource("SpriteFrames_86tpn")
+animation = &"active"
+
+[node name="Arrow8" type="AnimatedSprite2D" parent="Arrows" unique_id=989016787]
+position = Vector2(72.00001, 32.000004)
+rotation = -1.5707964
+scale = Vector2(1.25, 1.25)
+sprite_frames = SubResource("SpriteFrames_86tpn")
+animation = &"active"

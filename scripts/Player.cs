@@ -49,7 +49,7 @@ public partial class Player : CharacterBody2D
 	
 	// Public attributes
 	[Export] public int Lives = 3;						// player lives
-	[Export] public int Ammo = 100;						// player ammo
+	[Export] public int Ammo = 8;						// player ammo
 	[Export] public int Level = 0;						// player level
 	[Export] public int Armor = 0;						// player armor (currently unused)
 
