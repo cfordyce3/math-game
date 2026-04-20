@@ -31,7 +31,7 @@ public partial class HudGraphics : Control
 			else _hearts[i].Play("empty");
 		}
 
-		// Get all arrows
+		// Get all the arrows
 		for (int i = 0; i < _arrows.Length; i++)
 		{
 			_arrows[i] = GetNode<AnimatedSprite2D>("Arrows/Arrow" + (i+1));
@@ -41,7 +41,7 @@ public partial class HudGraphics : Control
 		}
 	}
 
-	private void UpdateGraphics()
+	private void UpdateHearts()
 	{
 		// Update hearts
 		for (int i = 0; i < _hearts.Length; i++) 
@@ -65,7 +65,7 @@ public partial class HudGraphics : Control
 
 	public override void _Process(double delta)
 	{
-		if (_lives != _player.Lives) UpdateGraphics(); // if locally-known lives != player's lives then update
+		if (_lives != _player.Lives) UpdateHearts(); // if locally-known lives != player's lives then update
 		if (_ammo != _player.Ammo) UpdateAmmo();
 	}
 }
