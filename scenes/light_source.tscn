@@ -1,0 +1,4 @@
+[gd_scene format=3 uid="uid://chfy3fge3vh77"]
+
+[node name="DirectionalLight2D" type="DirectionalLight2D" unique_id=356701553]
+shadow_enabled = true
