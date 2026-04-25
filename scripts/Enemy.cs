@@ -21,7 +21,7 @@ public partial class Enemy : CharacterBody2D
     {
         // on hit
         _health--;
-        if (_health == 0) OnKilled();  // hit and killed
+        if (_health < 1) OnKilled();  // hit and killed
         else // hit but not killed
         {
             // audio
