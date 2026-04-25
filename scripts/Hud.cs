@@ -10,12 +10,10 @@ public partial class Hud : CanvasLayer
 	private Label _statsCounter;
 	
 	// Private variables
-	[Export] private int _lives = 0;
-	[Export] private int _ammo = 0;
-	[Export] private int _level = 0;
-	[Export] private int _armor = 0;
-	private string _weapon = "sword";
-	private bool _readyToShoot = true;
+	[Export] private int _lives;
+	[Export] private int _ammo;
+	[Export] private int _level;
+	[Export] private int _armor;
 	
 	// Public variables
 	
@@ -31,8 +29,6 @@ public partial class Hud : CanvasLayer
 		_ammo = _player.Ammo;
 		_level = _player.Level;
 		_armor = _player.Armor;
-		_weapon = (_player.GetPlayerWeapon() == 0) ? "sword" : "bow";
-		_readyToShoot = _player._readyToShoot;
 
 		_statsCounter.Text = "Level:" + _level + "\nArmor Level:" + _armor;
 		_statsCounter.Text += "\nPress R to reset";

@@ -50,7 +50,7 @@ public partial class PlayerAnimations : AnimatedSprite2D
 	public void HandleSwordSwing()
 	{
 		// Track whether player is flipped or not
-		bool flipped = _player.GetPlayerFlipped();
+		bool flipped = _player.Flipped;
 			
 		// Sets root (rotation point) position
 		_swordSwingHitbox.Position = (flipped) ? new Vector2(-3, 1) : new Vector2(3, 1);

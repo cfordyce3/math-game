@@ -51,11 +51,11 @@ public partial class Player : CharacterBody2D
 	[Export] public int Ammo = 10;
 	[Export] public int Level = 0;
 	[Export] public int Armor = 0;
+	[Export] public bool Flipped = false;
 
 	// Velocity and direction
 	private Vector2 _velocity = Vector2.Zero;
 	private Vector2 _inputDirection = Vector2.Zero;
-	private bool _flipped = false;
 
 	// Audio variables
 	private AudioStreamWav _swordSwingSound; // sword swinging sound
@@ -222,13 +222,13 @@ public partial class Player : CharacterBody2D
 		{
 			if (_inputDirection.X > 0)
 			{
-				_flipped = false;
+				Flipped = false;
 				_playerSprite.FlipH = false;
 				_bowSprite.FlipH = false;
 			}
 			if (_inputDirection.X < 0)
 			{
-				_flipped = true;
+				Flipped = true;
 				_playerSprite.FlipH = true;
 				_bowSprite.FlipH = true;
 			}
@@ -240,7 +240,7 @@ public partial class Player : CharacterBody2D
 	private Vector2 _arrowSpawnPosition;
 	private void FlipArrowSpawn()
 	{
-		if (!_flipped) // facing right
+		if (!Flipped) // facing right
 		{
 			_arrowSpawnPosition = new Vector2(5, 1);
 		}
@@ -280,7 +280,7 @@ public partial class Player : CharacterBody2D
 
 	public async void Attack()
 	{
-		ShootDirection = (_flipped) ? -1 : 1; // -1 for left, 1 for right
+		ShootDirection = (Flipped) ? -1 : 1; // -1 for left, 1 for right
 		// switch-case statements are perfect for enums!	
 		switch (_weapon) // basically says "inspect this variable", in this case, "_weapon" defined at the top
 		{                // and match it one of the listed options
@@ -329,14 +329,4 @@ public partial class Player : CharacterBody2D
 		MoveAndSlide();
 		// MoveAndCollide(Velocity * (float)delta); // causes the player to freeze when going into a wall
 	}
-	
-	// EVERYTHING AFTER THIS LINE IS TEMPORARY WHILE WAITING FOR FUTURE WORK
-	public int GetPlayerWeapon()
-	{
-		return (int)_weapon; // returns the private _weapon variable as an int in a public manner
-	} 
-	public bool GetPlayerFlipped()
-	{
-		return _flipped; // returns the private _weapon variable as an int in a public manner
-	} 
 }
