@@ -231,6 +231,7 @@ height = 14.0
 [node name="Player" type="CharacterBody2D" unique_id=979533561]
 collision_mask = 28
 script = ExtResource("1_g2els")
+_swordSwingVolume = -4
 _bowStringVolume = -12
 Lives = 2
 

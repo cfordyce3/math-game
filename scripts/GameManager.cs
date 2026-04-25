@@ -10,6 +10,6 @@ public partial class GameManager : Node
 
     public override void _Process(double delta)
     {
-        if (Input.IsActionJustPressed("reset_game")) GetTree().ReloadCurrentScene();
+        if (Input.IsActionJustPressed("reset_game")) GetTree().ReloadCurrentScene(); // reset game if R is pressed
     }
 }
