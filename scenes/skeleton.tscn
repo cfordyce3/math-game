@@ -2,6 +2,8 @@
 
 [ext_resource type="Texture2D" uid="uid://m8u5ow3ra3sp" path="res://assets/sprites/skeleton.png" id="1_pbvs3"]
 [ext_resource type="Script" uid="uid://c5pj6x81rs1j7" path="res://scripts/Skeleton.cs" id="1_txkty"]
+[ext_resource type="AudioStream" uid="uid://b0k5pg7e261n2" path="res://assets/sounds/skeleton_hit1.wav" id="2_ivqcw"]
+[ext_resource type="AudioStream" uid="uid://de6oevxbwby2c" path="res://assets/sounds/skeleton_dying.wav" id="3_bnirc"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pbvs3"]
 atlas = ExtResource("1_pbvs3")
@@ -254,10 +256,14 @@ animations = [{
 radius = 7.0
 height = 22.0
 
-[node name="Skeleton" type="CharacterBody2D" unique_id=1203677379]
+[node name="Skeleton" type="CharacterBody2D" unique_id=1203677379 node_paths=PackedStringArray("_audioPlayer")]
 collision_layer = 8
 collision_mask = 7
 script = ExtResource("1_txkty")
+_health = 1
+_hitSound = ExtResource("2_ivqcw")
+_deathSound = ExtResource("3_bnirc")
+_audioPlayer = NodePath("SkeletonAudioStreamPlayer")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1541854412]
 sprite_frames = SubResource("SpriteFrames_6yhqa")
