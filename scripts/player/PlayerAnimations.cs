@@ -9,7 +9,7 @@ public partial class PlayerAnimations : AnimatedSprite2D
 	
 	private Node _sceneTree;
 	
-	private List<ulong> _enemiesList = [];
+	private List<Object> _enemiesList = [];
 	
 	[Signal] public delegate void GetAnimationDetailsEventHandler(string animationName, int frameIndex);
 	[Signal] public delegate void AnimationFinishedWithNameEventHandler(string animationName);
@@ -24,7 +24,7 @@ public partial class PlayerAnimations : AnimatedSprite2D
 		{
 			if (node.Name.ToString().Contains("Skeleton") || node.Name.ToString().Contains("Orc"))
 			{
-				_enemiesList.Add(node.GetInstanceId());
+				_enemiesList.Add(node);
 			}
 		}
 	}
@@ -75,11 +75,12 @@ public partial class PlayerAnimations : AnimatedSprite2D
 
 		if (_swordSwingHitbox.IsColliding())
 		{
-			var collidedWith = _swordSwingHitbox.GetCollider(0).GetInstanceId();
+			var collidedWith = _swordSwingHitbox.GetCollider(0);
 			
 			if (collidedWith != null && _enemiesList.Contains(collidedWith))
 			{
-				GD.Print("collided with " + collidedWith);
+				_enemiesList.Remove(collidedWith); // remove from the list of enemies generated at _EnterTree
+				collidedWith.Call(Enemy.MethodName.OnKilled); // calls the QueueFree function on found enemy
 			}
 		}
 	}

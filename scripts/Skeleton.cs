@@ -32,21 +32,24 @@ public partial class Skeleton : Enemy
         }
     }
 
+    // Handle being killed
+    private async void OnKilled()
+    {
+        _skeletonHitbox.SetDeferred("disabled", true);
+        _skeletonSoundPlayer.Stream = _skeletonDyingSound;
+        _skeletonSoundPlayer.VolumeDb = _deathSoundVolume;
+        _skeletonSoundPlayer.Play();
+        _skeletonSprite.Play("die");
+        await ToSignal(_skeletonSprite, "animation_finished");
+        QueueFree();
+    }
+
+    // Handle getting hit by arrow
     private async void HitByArrow(Node node)
     {
         if (node.Name == Name)
         {
-            _skeletonHitbox.SetDeferred("disabled", true);
-            _skeletonSoundPlayer.Stream = _skeletonDyingSound;
-            _skeletonSoundPlayer.VolumeDb = _deathSoundVolume;
-            _skeletonSoundPlayer.Play();
-            _skeletonSprite.Play("die");
-            // Hide();
-            GD.Print("Skeleton slain");
-            await ToSignal(_skeletonSprite, "animation_finished");
-            // await ToSignal(_skeletonSoundPlayer, "finished");
-            // await ToSignal(GetTree().CreateTimer(1.0), SceneTreeTimer.SignalName.Timeout);
-            QueueFree();
+            OnKilled();
         }
     }
 

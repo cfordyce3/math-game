@@ -17,6 +17,11 @@ public partial class Orc : Enemy
         }
     }
 
+    //private void OnKilled()
+    //{
+    //    QueueFree();
+    //}
+
     private void HitByArrow(Node node)
     {
         if (node.Name == Name)
