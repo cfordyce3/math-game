@@ -47,6 +47,7 @@ public partial class PlayerAnimations : AnimatedSprite2D
 		EmitSignal(SignalName.AnimationFinishedWithName, Animation);
 	}
 
+	private bool _hitAgain = true;
 	public void HandleSwordSwing()
 	{
 		// Track whether player is flipped or not
@@ -77,10 +78,11 @@ public partial class PlayerAnimations : AnimatedSprite2D
 		{
 			var collidedWith = _swordSwingHitbox.GetCollider(0);
 			
-			if (collidedWith != null && _enemiesList.Contains(collidedWith))
+			if (collidedWith != null && _enemiesList.Contains(collidedWith) && _hitAgain)
 			{
-				_enemiesList.Remove(collidedWith); // remove from the list of enemies generated at _EnterTree
-				collidedWith.Call(Enemy.MethodName.OnKilled); // calls the QueueFree function on found enemy
+				//_enemiesList.Remove(collidedWith); // remove from the list of enemies generated at _EnterTree
+				_hitAgain = false;
+				collidedWith.Call(Enemy.MethodName.OnHit); // calls the QueueFree function on found enemy
 			}
 		}
 	}
@@ -95,7 +97,11 @@ public partial class PlayerAnimations : AnimatedSprite2D
 		
 		// When swinging sword
 		if (Animation == "sword_attack") HandleSwordSwing();
-		else _swordSwingHitbox.Enabled = false; // if not attacking, no sword hitbox
+		else
+		{
+			_hitAgain = true;
+			_swordSwingHitbox.Enabled = false; // if not attacking, no sword hitbox
+		}
 
 	}
 }

@@ -85,6 +85,7 @@ public partial class Arrow : Area2D
 				break;
 			case Enemy:
 				// other logic for hitting enemies
+				//body.Call(Enemy.MethodName.OnKilled);
 				QueueFree();
 				break;
 			// other cases for other things it can hit

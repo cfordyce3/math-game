@@ -14,7 +14,18 @@ public partial class Enemy : CharacterBody2D
 
     [Export] private AudioStreamPlayer _audioPlayer;
     
-    // When the enemy is killed
+    // When enemy takes a hit
+    public async void OnHit()
+    {
+        // on hit
+        _audioPlayer.Stream = _hitSound;
+        _audioPlayer.Play();
+        _health--;
+        if (_health == 0) OnKilled();
+        else await ToSignal(_audioPlayer, "finished");
+    }
+    
+    // When enemy is killed
     public async void OnKilled()
     {
         _audioPlayer.Stream = _deathSound;

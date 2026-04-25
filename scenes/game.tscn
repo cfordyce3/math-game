@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://buvikx17ous3y" path="res://scenes/invisible_wall.tscn" id="5_iywne"]
 [ext_resource type="PackedScene" uid="uid://dfyafpu6v0ooh" path="res://scenes/skeleton.tscn" id="6_p57ef"]
 [ext_resource type="PackedScene" uid="uid://mkvhg87bx05t" path="res://scenes/orc.tscn" id="7_u5sy4"]
-[ext_resource type="AudioStream" uid="uid://c63nd3lj6cr2j" path="res://assets/sounds/orc_dying.wav" id="10_vtaks"]
+[ext_resource type="AudioStream" uid="uid://d2yfxbag0dxkt" path="res://assets/sounds/orc_hit1.wav" id="10_vtaks"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_iywne"]
 texture = ExtResource("3_lbhrr")
@@ -84,7 +84,7 @@ tile_set = SubResource("TileSet_p57ef")
 
 [node name="AccessoriesTilemap" type="TileMapLayer" parent="." unique_id=844678148]
 z_index = 2
-tile_map_data = PackedByteArray("AAAEAAQAAAAHAAUAAAAPAAYAAAAGAAQAAAANAAcAAAAGAAQAAAAEAAcAAAAIAAQAAAAOAAEAAAAGAAQAAAAGAAYAAAAIAAQAAAABAAUAAAAHAAUAAAABAAYAAAAHAAYAAAACAAIAAAAHAAUAAAACAAMAAAAHAAYAAAAEAAUAAAAHAAYAAAAGAAEAAAAIAAQAAAACAAcAAAAGAAQAAAAEAAIAAAAGAAQAAAAIAAYAAAAGAAQAAAAGAAoAAAAJAAUAAAA=")
+tile_map_data = PackedByteArray("AAAPAAYAAAAGAAQAAAANAAcAAAAGAAQAAAAEAAcAAAAIAAQAAAAOAAEAAAAGAAQAAAAGAAYAAAAIAAQAAAABAAUAAAAHAAUAAAABAAYAAAAHAAYAAAACAAIAAAAHAAUAAAACAAMAAAAHAAYAAAAGAAEAAAAIAAQAAAACAAcAAAAGAAQAAAAEAAIAAAAGAAQAAAAIAAYAAAAGAAQAAAAGAAoAAAAJAAUAAAA=")
 tile_set = SubResource("TileSet_iywne")
 
 [node name="HeartPickup" parent="." unique_id=532313464 instance=ExtResource("2_yqjtg")]
@@ -113,6 +113,6 @@ scale = Vector2(1, 7.2000012)
 position = Vector2(218, 71)
 
 [node name="Orc" parent="." unique_id=2076559756 instance=ExtResource("7_u5sy4")]
-unique_name_in_owner = true
 position = Vector2(48, 94)
-_deathSound = ExtResource("10_vtaks")
+_health = 2
+_hitSound = ExtResource("10_vtaks")

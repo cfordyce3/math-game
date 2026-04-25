@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://b5qrjy3767uxy" path="res://assets/sprites/orc.png" id="1_2byfh"]
 [ext_resource type="Script" uid="uid://g3y2tr1nvyhq" path="res://scripts/Orc.cs" id="1_bfp0d"]
+[ext_resource type="AudioStream" uid="uid://c63nd3lj6cr2j" path="res://assets/sounds/orc_dying.wav" id="2_hu8b3"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2byfh"]
 atlas = ExtResource("1_2byfh")
@@ -59,6 +60,7 @@ height = 18.0
 collision_layer = 8
 collision_mask = 7
 script = ExtResource("1_bfp0d")
+_deathSound = ExtResource("2_hu8b3")
 _audioPlayer = NodePath("AudioStreamPlayer")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1656830099]
