@@ -20,12 +20,6 @@ offset_left = 8.0
 offset_top = 7.0
 offset_right = 238.0
 offset_bottom = 76.0
-text = "Added a \"Debug\" section to Player inspector for testing variables
-
-You can test whether or not you prefer freezing the player while attacking
-Note: currently only works for sword cuz there is no bow animation
-
-Arrow work as expected now :)"
 label_settings = SubResource("LabelSettings_toqtt")
 
 [node name="StatsCounter" type="Label" parent="." unique_id=1533990124]
@@ -33,6 +27,5 @@ offset_left = 102.0
 offset_top = 7.0
 offset_right = 313.0
 offset_bottom = 32.0
-text = "Arrows Left: 100"
 label_settings = SubResource("LabelSettings_5pdws")
 horizontal_alignment = 2
