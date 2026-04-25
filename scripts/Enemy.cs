@@ -11,6 +11,8 @@ public partial class Enemy : CharacterBody2D
 
     [Export] private AudioStreamWav _hitSound;
     [Export] private AudioStreamWav _deathSound;
+    
+    [Export] private AnimatedSprite2D _animationSprite;
 
     [Export] private AudioStreamPlayer _audioPlayer;
     
@@ -18,11 +20,16 @@ public partial class Enemy : CharacterBody2D
     public async void OnHit()
     {
         // on hit
-        _audioPlayer.Stream = _hitSound;
-        _audioPlayer.Play();
         _health--;
-        if (_health == 0) OnKilled();
-        else await ToSignal(_audioPlayer, "finished");
+        if (_health == 0) OnKilled();  // hit and killed
+        else // hit but not killed
+        {
+            // audio
+            _audioPlayer.Stream = _hitSound; // load hit sound
+            _audioPlayer.Play(); // play hit sound
+            _animationSprite.Play("damaged");
+            await ToSignal(_animationSprite, "animation_finished");
+        }
     }
     
     // When enemy is killed
@@ -30,7 +37,8 @@ public partial class Enemy : CharacterBody2D
     {
         _audioPlayer.Stream = _deathSound;
         _audioPlayer.Play();
-        await ToSignal(_audioPlayer, "finished");
+        _animationSprite.Play("die");
+        await ToSignal(_animationSprite, "animation_finished");
         QueueFree();
     }
     

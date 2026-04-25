@@ -256,21 +256,20 @@ animations = [{
 radius = 7.0
 height = 22.0
 
-[node name="Skeleton" type="CharacterBody2D" unique_id=1203677379 node_paths=PackedStringArray("_audioPlayer")]
+[node name="Skeleton" type="CharacterBody2D" unique_id=1203677379 node_paths=PackedStringArray("_animationSprite", "_audioPlayer")]
 collision_layer = 8
 collision_mask = 7
 script = ExtResource("1_txkty")
-_health = 1
+_health = 2
 _hitSound = ExtResource("2_ivqcw")
 _deathSound = ExtResource("3_bnirc")
+_animationSprite = NodePath("AnimatedSprite2D")
 _audioPlayer = NodePath("SkeletonAudioStreamPlayer")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1541854412]
 sprite_frames = SubResource("SpriteFrames_6yhqa")
-animation = &"attack"
+animation = &"damaged"
 autoplay = "idle"
-frame = 12
-frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1255705275]
 position = Vector2(0, -3)
