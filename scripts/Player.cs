@@ -194,7 +194,7 @@ public partial class Player : CharacterBody2D
 	}
 
 	// Attack animation
-	private void AnimateAttack()
+	private async void AnimateAttack()
 	{
 		if (_weapon == EquippedWeapon.Sword && !_playerSprite.IsPlaying())
 		{
@@ -204,9 +204,29 @@ public partial class Player : CharacterBody2D
 		// bow animation here
 		if (_weapon == EquippedWeapon.Bow && !_playerSprite.IsPlaying()) 
 		{
-			if (Direction == PlayerDirection.Up) _playerSprite.Play("bow_attack_up");
-			else _playerSprite.Play("bow_attack");
-			_bowSprite.Play("shoot");
+			switch (Direction)
+			{
+				case PlayerDirection.Up:
+					_playerSprite.Play("bow_attack_up");
+					_bowSprite.Visible = false;
+					await ToSignal(_playerSprite, PlayerAnimations.SignalName.AnimationFinished);
+					_bowSprite.Visible = true;
+					//_bowSprite.Play("shoot_up");
+					break;
+				case PlayerDirection.Down:
+					_playerSprite.Play("bow_attack_down");
+					_bowSprite.Play("shoot_down");
+					await ToSignal(_bowSprite, PlayerAnimations.SignalName.AnimationFinished);
+					_bowSprite.Animation = "equipped";
+					break;
+				default:
+					_playerSprite.Play("bow_attack");
+					_bowSprite.Play("shoot_side");
+					break;
+			}
+					
+			//_playerSprite.Play("bow_attack");
+			//_bowSprite.Play("shoot_side");
 			// _bowSprite.Visible = false;
 		} 
 	}
@@ -237,7 +257,7 @@ public partial class Player : CharacterBody2D
 			_state = State.Idle;
 		}
 
-		if (animationName == "bow_attack" || animationName == "bow_attack_up")
+		if (animationName.Contains("bow_attack"))
 		{
 			_readyToShoot = true;
 		}

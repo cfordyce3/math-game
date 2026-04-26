@@ -236,9 +236,9 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ua5cf")
 }],
-"loop": true,
+"loop": false,
 "name": &"bow_attack_down",
-"speed": 5.0
+"speed": 12.0
 }, {
 "frames": [{
 "duration": 1.0,
