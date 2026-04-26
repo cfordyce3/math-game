@@ -93,7 +93,7 @@ public partial class PlayerAnimations : AnimatedSprite2D
 		EmitSignal(SignalName.GetAnimationDetails, Animation, Frame);
 		
 		// When bow is ready to release
-		if (Animation == "bow_attack" && Frame == 3) EmitSignal(SignalName.BowReleased);
+		if (Animation.ToString().Contains("bow_attack") && Frame == 3)  EmitSignal(SignalName.BowReleased);
 		
 		// When swinging sword
 		if (Animation == "sword_attack") HandleSwordSwing();

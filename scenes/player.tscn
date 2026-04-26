@@ -393,7 +393,8 @@ _bowStringVolume = -12
 sprite_frames = SubResource("SpriteFrames_g2els")
 animation = &"bow_attack_up"
 autoplay = "idle"
-frame_progress = 0.35657308
+frame = 8
+frame_progress = 1.0
 script = ExtResource("3_dqkch")
 
 [node name="SwordSwingHitbox" type="ShapeCast2D" parent="AnimatedSprite2D" unique_id=1499933215]

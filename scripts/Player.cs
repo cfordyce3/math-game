@@ -183,12 +183,12 @@ public partial class Player : CharacterBody2D
 	{
 		if (_weapon == EquippedWeapon.Bow)
 		{
-			if (Velocity.Y < 0) _bowSprite.ZIndex = -1;
+			if (Direction == PlayerDirection.Up) _bowSprite.ZIndex = -1;
 			else _bowSprite.ZIndex = 1;
 		}
 		if (_weapon != EquippedWeapon.Bow)
 		{
-			if (Velocity.Y < 0) _bowSprite.ZIndex = 1;
+			if (Direction == PlayerDirection.Up) _bowSprite.ZIndex = 1;
 			else _bowSprite.ZIndex = -1;
 		}
 	}
@@ -202,9 +202,10 @@ public partial class Player : CharacterBody2D
 			_playerSprite.Play("sword_attack");
 		}
 		// bow animation here
-		if (_weapon == EquippedWeapon.Bow && !_playerSprite.IsPlaying()) //_state = State.Idle; // temporary until bow animation is finished
+		if (_weapon == EquippedWeapon.Bow && !_playerSprite.IsPlaying()) 
 		{
-			_playerSprite.Play("bow_attack");
+			if (Direction == PlayerDirection.Up) _playerSprite.Play("bow_attack_up");
+			else _playerSprite.Play("bow_attack");
 			_bowSprite.Play("shoot");
 			// _bowSprite.Visible = false;
 		} 
@@ -236,7 +237,7 @@ public partial class Player : CharacterBody2D
 			_state = State.Idle;
 		}
 
-		if (animationName == "bow_attack")
+		if (animationName == "bow_attack" || animationName == "bow_attack_up")
 		{
 			_readyToShoot = true;
 		}
@@ -293,7 +294,7 @@ public partial class Player : CharacterBody2D
 
 	public void EquipWeapon()
 	{
-		if ((_playerSprite.Animation.ToString() != "sword_attack" && _playerSprite.Animation.ToString() != "bow_attack"))
+		if ((_playerSprite.Animation.ToString() != "sword_attack" && !_playerSprite.Animation.ToString().Contains("bow_attack")))
 		{
 			if (Input.IsActionJustPressed("equip_sword") && _weapon != EquippedWeapon.Sword) 
 			{
