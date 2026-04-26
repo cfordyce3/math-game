@@ -18,6 +18,8 @@ public partial class Enemy : CharacterBody2D
     
     [Export] private ProgressBar _healthBar;
 
+    private Player _player;
+
     
     // When enemy takes a hit
     public async void OnHit(int damage)
@@ -30,7 +32,6 @@ public partial class Enemy : CharacterBody2D
         if (_health < 1) OnKilled();  // hit and killed
         else // hit but not killed
         {
-            
             _audioPlayer.Stream = _hitSound; // load hit sound
             _audioPlayer.Play(); // play hit sound
             
@@ -43,7 +44,8 @@ public partial class Enemy : CharacterBody2D
     // When enemy is killed
     public async void OnKilled()
     {
-        _healthBar.GetNode<Label>("../Label").Text = "";
+        _player.Call(Player.MethodName.KilledEnemy);
+        _healthBar.GetNode<Label>("../Label").Text = ""; // update label
         _primaryCollisionShape.SetDeferred("disabled", true); // disable hitbox
         
         _audioPlayer.Stream = _deathSound;
@@ -60,6 +62,8 @@ public partial class Enemy : CharacterBody2D
         _healthBar.MaxValue = _health; 
         _healthBar.Value = _health;
         _healthBar.GetNode<Label>("../Label").Text = _health.ToString();
+        
+        _player = GetNode<Player>("/root/Game/Player");
     }
     
     public override void _Ready()

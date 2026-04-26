@@ -306,6 +306,11 @@ public partial class Player : CharacterBody2D
 			// more weapons? magic staff?
 		}
 	}
+
+	private void KilledEnemy()
+	{
+		Ammo++;
+	}
 	
 	public override void _Process(double delta)
 	{
