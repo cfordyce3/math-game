@@ -267,15 +267,18 @@ public partial class Player : CharacterBody2D
 
 	public void EquipWeapon()
 	{
-		if (Input.IsActionJustPressed("equip_sword") && _weapon != EquippedWeapon.Sword) 
+		if ((_playerSprite.Animation.ToString() != "sword_attack" && _playerSprite.Animation.ToString() != "bow_attack"))
 		{
-			_weapon = EquippedWeapon.Sword;
-			_bowSprite.Play("unequipped");
-		}
-		else if (Input.IsActionJustPressed("equip_bow") && _weapon != EquippedWeapon.Bow) 
-		{
-			_weapon = EquippedWeapon.Bow;
-			_bowSprite.Play("equipped");
+			if (Input.IsActionJustPressed("equip_sword") && _weapon != EquippedWeapon.Sword) 
+			{
+				_weapon = EquippedWeapon.Sword;
+				_bowSprite.Play("unequipped");
+			}
+			else if (Input.IsActionJustPressed("equip_bow") && _weapon != EquippedWeapon.Bow) 
+			{
+				_weapon = EquippedWeapon.Bow;
+				_bowSprite.Play("equipped");
+			}
 		}
 	}
 

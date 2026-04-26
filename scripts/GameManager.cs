@@ -3,6 +3,7 @@ using System;
 
 public partial class GameManager : Node
 {
+    [Export] private bool _debugMode = false;
     public override void _Ready()
     {
         
