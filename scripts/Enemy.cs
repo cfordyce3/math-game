@@ -14,6 +14,7 @@ public partial class Enemy : CharacterBody2D
     [Export] private AudioStreamPlayer _audioPlayer;
     
     [Export] private AnimatedSprite2D _animationSprite;
+    [Export] private CollisionShape2D _primaryCollisionShape;
     
     [Export] private ProgressBar _healthBar;
 
@@ -28,6 +29,7 @@ public partial class Enemy : CharacterBody2D
         if (_health < 1) OnKilled();  // hit and killed
         else // hit but not killed
         {
+            
             _audioPlayer.Stream = _hitSound; // load hit sound
             _audioPlayer.Play(); // play hit sound
             
@@ -40,8 +42,11 @@ public partial class Enemy : CharacterBody2D
     // When enemy is killed
     public async void OnKilled()
     {
+        _primaryCollisionShape.SetDeferred("disabled", true); // disable hitbox
+        
         _audioPlayer.Stream = _deathSound;
         _audioPlayer.Play();
+        
         _animationSprite.Play("die");
         await ToSignal(_animationSprite, "animation_finished");
         QueueFree();

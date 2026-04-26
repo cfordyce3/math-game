@@ -186,7 +186,7 @@ animations = [{
 radius = 6.0
 height = 18.0
 
-[node name="Orc" type="CharacterBody2D" unique_id=2076559756 node_paths=PackedStringArray("_audioPlayer", "_animationSprite", "_healthBar")]
+[node name="Orc" type="CharacterBody2D" unique_id=2076559756 node_paths=PackedStringArray("_audioPlayer", "_animationSprite", "_primaryCollisionShape", "_healthBar")]
 collision_layer = 8
 collision_mask = 7
 script = ExtResource("1_bfp0d")
@@ -195,6 +195,7 @@ _hitSound = ExtResource("2_s5mlm")
 _deathSound = ExtResource("2_hu8b3")
 _audioPlayer = NodePath("AudioStreamPlayer")
 _animationSprite = NodePath("AnimatedSprite2D")
+_primaryCollisionShape = NodePath("CollisionShape2D")
 _healthBar = NodePath("Control/ProgressBar")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1656830099]
