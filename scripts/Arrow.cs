@@ -1,12 +1,12 @@
 using Godot;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
 public partial class Arrow : Area2D
 {
 	[Export] private float _speed = 200;
 	public int flip;
+	public int vflip;
 	private bool _moving = false;
 	private bool _broken = false;
 	
@@ -96,7 +96,7 @@ public partial class Arrow : Area2D
 		}
 	}
 
-	private void MoveArrow(float delta)
+	private void MoveArrowHorizontal(float delta)
 	{
 		Vector2 pos = GlobalPosition;
 		if (flip == -1)
@@ -108,10 +108,21 @@ public partial class Arrow : Area2D
 		GlobalPosition = pos;
 	}
 
+	private void MoveArrowVertical(float delta)
+	{
+		Vector2 pos = GlobalPosition;
+		if (vflip  == -1)
+		{
+			pos.Y -= _speed * delta;
+		}
+		else pos.Y += _speed * delta;
+		GlobalPosition = pos;
+	}
+
 	// bow_attack frame=3
 	public override void _Process(double delta)
 	{
-		if (_moving) MoveArrow((float)delta);
+		if (_moving) MoveArrowHorizontal((float)delta);
 		else if (_arrowSpawnTimeFromAnimation.Frame == 3)
 		{
 			Show();

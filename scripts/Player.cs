@@ -149,6 +149,7 @@ public partial class Player : CharacterBody2D
 		_bowSprite.Visible = true;
 		if (_inputDirection.X > 0) // go right
 		{
+			if (_weapon == EquippedWeapon.Bow) _bowSprite.Animation = "equipped";
 			if (_inputDirection.Y < 0) _playerSprite.Play("run_up"); // up right
 			else if (_inputDirection.Y > 0) _playerSprite.Play("run_down"); // down right
 			else _playerSprite.Play("run_side"); // just right
@@ -156,6 +157,7 @@ public partial class Player : CharacterBody2D
 
 		if (_inputDirection.X < 0) // go left
 		{
+			if (_weapon == EquippedWeapon.Bow) _bowSprite.Animation = "equipped";
 			if (_inputDirection.Y < 0) _playerSprite.Play("run_up"); // up left
 			else if (_inputDirection.Y > 0) _playerSprite.Play("run_down"); // down left
 			else _playerSprite.Play("run_side"); // just left
@@ -163,18 +165,22 @@ public partial class Player : CharacterBody2D
 
 		if (_inputDirection.Y < 0)
 		{
+			if (_weapon == EquippedWeapon.Bow) _bowSprite.Animation = "equipped";
 			_playerSprite.Play("run_up");
 		} // just up
 
 		if (_inputDirection.Y > 0)
 		{
+			if (_weapon == EquippedWeapon.Bow) _bowSprite.Animation = "equipped_down";
 			_playerSprite.Play("run_down");
 		} // just down
 
 		if (_inputDirection.Length() == 0 && _state == State.Idle)
 		{
+			if (Direction != PlayerDirection.Down) _bowSprite.Animation = "equipped";
 			if (Direction != PlayerDirection.Up) _playerSprite.Play("idle");
 			else _playerSprite.Play("idle_up");
+
 		} // no movement
 
 	}
@@ -185,6 +191,7 @@ public partial class Player : CharacterBody2D
 		{
 			if (Direction == PlayerDirection.Up) _bowSprite.ZIndex = -1;
 			else _bowSprite.ZIndex = 1;
+			
 		}
 		if (_weapon != EquippedWeapon.Bow)
 		{
@@ -217,7 +224,7 @@ public partial class Player : CharacterBody2D
 					_playerSprite.Play("bow_attack_down");
 					_bowSprite.Play("shoot_down");
 					await ToSignal(_bowSprite, PlayerAnimations.SignalName.AnimationFinished);
-					_bowSprite.Animation = "equipped";
+					_bowSprite.Animation = "equipped_down";
 					break;
 				default:
 					_playerSprite.Play("bow_attack");
@@ -324,7 +331,8 @@ public partial class Player : CharacterBody2D
 			else if (Input.IsActionJustPressed("equip_bow") && _weapon != EquippedWeapon.Bow) 
 			{
 				_weapon = EquippedWeapon.Bow;
-				_bowSprite.Play("equipped");
+				if (Direction == PlayerDirection.Down) _bowSprite.Play("equipped_down");
+				else _bowSprite.Play("equipped");
 			}
 		}
 	}
