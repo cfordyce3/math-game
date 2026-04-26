@@ -50,6 +50,14 @@ region = Rect2(0, 0, 32, 32)
 atlas = ExtResource("1_3vyb7")
 region = Rect2(32, 0, 32, 32)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_bj30b"]
+atlas = ExtResource("1_3vyb7")
+region = Rect2(0, 224, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jc3p3"]
+atlas = ExtResource("1_3vyb7")
+region = Rect2(32, 224, 32, 32)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_dqkch"]
 atlas = ExtResource("1_3vyb7")
 region = Rect2(0, 192, 32, 32)
@@ -137,6 +145,17 @@ animations = [{
 }],
 "loop": true,
 "name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bj30b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jc3p3")
+}],
+"loop": true,
+"name": &"idle_up",
 "speed": 5.0
 }, {
 "frames": [{
@@ -304,7 +323,7 @@ _bowStringVolume = -12
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1828036840]
 sprite_frames = SubResource("SpriteFrames_g2els")
-animation = &"bow_attack"
+animation = &"idle_up"
 autoplay = "idle"
 script = ExtResource("3_dqkch")
 
