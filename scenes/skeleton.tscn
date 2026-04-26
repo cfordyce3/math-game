@@ -256,15 +256,16 @@ animations = [{
 radius = 7.0
 height = 22.0
 
-[node name="Skeleton" type="CharacterBody2D" unique_id=1203677379 node_paths=PackedStringArray("_animationSprite", "_audioPlayer")]
+[node name="Skeleton" type="CharacterBody2D" unique_id=1203677379 node_paths=PackedStringArray("_audioPlayer", "_animationSprite", "_healthBar")]
 collision_layer = 8
 collision_mask = 7
 script = ExtResource("1_txkty")
-_health = 2
+_health = 5
 _hitSound = ExtResource("2_ivqcw")
 _deathSound = ExtResource("3_bnirc")
-_animationSprite = NodePath("AnimatedSprite2D")
 _audioPlayer = NodePath("SkeletonAudioStreamPlayer")
+_animationSprite = NodePath("AnimatedSprite2D")
+_healthBar = NodePath("Control/ProgressBar")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1541854412]
 sprite_frames = SubResource("SpriteFrames_6yhqa")
@@ -276,3 +277,15 @@ position = Vector2(0, -3)
 shape = SubResource("CapsuleShape2D_pbvs3")
 
 [node name="SkeletonAudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1235608199]
+
+[node name="Control" type="Control" parent="." unique_id=1343875886]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="ProgressBar" type="ProgressBar" parent="Control" unique_id=391218638]
+layout_mode = 0
+offset_left = -10.0
+offset_top = -18.0
+offset_right = 10.0
+offset_bottom = -14.0
+show_percentage = false

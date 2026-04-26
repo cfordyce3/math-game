@@ -8,7 +8,6 @@
 [ext_resource type="Texture2D" uid="uid://b5gpl4bmggmls" path="res://assets/sprites/bg_tileset.png" id="3_lbhrr"]
 [ext_resource type="PackedScene" uid="uid://dfyafpu6v0ooh" path="res://scenes/skeleton.tscn" id="6_p57ef"]
 [ext_resource type="PackedScene" uid="uid://mkvhg87bx05t" path="res://scenes/orc.tscn" id="7_u5sy4"]
-[ext_resource type="AudioStream" uid="uid://d2yfxbag0dxkt" path="res://assets/sounds/orc_hit1.wav" id="10_vtaks"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_iywne"]
 texture = ExtResource("3_lbhrr")
@@ -124,5 +123,3 @@ position = Vector2(218, 71)
 
 [node name="Orc" parent="." unique_id=2076559756 instance=ExtResource("7_u5sy4")]
 position = Vector2(48, 94)
-_health = 2
-_hitSound = ExtResource("10_vtaks")
