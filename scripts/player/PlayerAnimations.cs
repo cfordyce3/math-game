@@ -82,7 +82,7 @@ public partial class PlayerAnimations : AnimatedSprite2D
 			{
 				//_enemiesList.Remove(collidedWith); // remove from the list of enemies generated at _EnterTree
 				_hitAgain = false;
-				collidedWith.Call(Enemy.MethodName.OnHit); // calls the QueueFree function on found enemy
+				collidedWith.Call(Enemy.MethodName.OnHit, 1); // deals 1 damage
 			}
 		}
 	}

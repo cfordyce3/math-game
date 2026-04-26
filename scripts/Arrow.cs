@@ -90,7 +90,7 @@ public partial class Arrow : Area2D
 				ArrowBreak();
 				break;
 			case Enemy: // if hit an enemy
-				body.Call(Enemy.MethodName.OnHit);
+				body.Call(Enemy.MethodName.OnHit, 2);
 				QueueFree();
 				break;
 		}

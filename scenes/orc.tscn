@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://b5qrjy3767uxy" path="res://assets/sprites/orc.png" id="1_2byfh"]
 [ext_resource type="Script" uid="uid://g3y2tr1nvyhq" path="res://scripts/Orc.cs" id="1_bfp0d"]
 [ext_resource type="AudioStream" uid="uid://c63nd3lj6cr2j" path="res://assets/sounds/orc_dying.wav" id="2_hu8b3"]
-[ext_resource type="Texture2D" uid="uid://cea3lxnvf3xdr" path="res://assets/sprites/heart.png" id="4_s5mlm"]
+[ext_resource type="AudioStream" uid="uid://d2yfxbag0dxkt" path="res://assets/sounds/orc_hit1.wav" id="2_s5mlm"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2byfh"]
 atlas = ExtResource("1_2byfh")
@@ -186,56 +186,16 @@ animations = [{
 radius = 6.0
 height = 18.0
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_n4pcg"]
-atlas = ExtResource("4_s5mlm")
-region = Rect2(0, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_tqo13"]
-atlas = ExtResource("4_s5mlm")
-region = Rect2(16, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_4r2hw"]
-atlas = ExtResource("4_s5mlm")
-region = Rect2(32, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_81lim"]
-atlas = ExtResource("4_s5mlm")
-region = Rect2(48, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_m770b"]
-atlas = ExtResource("4_s5mlm")
-region = Rect2(64, 0, 16, 16)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_hu8b3"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_n4pcg")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_tqo13")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_4r2hw")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_81lim")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_m770b")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
-
-[node name="Orc" type="CharacterBody2D" unique_id=2076559756 node_paths=PackedStringArray("_animationSprite", "_audioPlayer")]
+[node name="Orc" type="CharacterBody2D" unique_id=2076559756 node_paths=PackedStringArray("_audioPlayer", "_animationSprite", "_healthBar")]
 collision_layer = 8
 collision_mask = 7
 script = ExtResource("1_bfp0d")
+_health = 3
+_hitSound = ExtResource("2_s5mlm")
 _deathSound = ExtResource("2_hu8b3")
-_animationSprite = NodePath("AnimatedSprite2D")
 _audioPlayer = NodePath("AudioStreamPlayer")
+_animationSprite = NodePath("AnimatedSprite2D")
+_healthBar = NodePath("Control/ProgressBar")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1656830099]
 sprite_frames = SubResource("SpriteFrames_s5mlm")
@@ -248,31 +208,14 @@ shape = SubResource("CapsuleShape2D_nvs4g")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1538853118]
 
-[node name="Hearts" type="Control" parent="." unique_id=379567151]
+[node name="Control" type="Control" parent="." unique_id=2088673348]
 layout_mode = 3
 anchors_preset = 0
-offset_left = -1.0
-offset_right = 39.0
-offset_bottom = 40.0
 
-[node name="Heart1" type="AnimatedSprite2D" parent="Hearts" unique_id=274179613]
-position = Vector2(-7, -16)
-scale = Vector2(0.3, 0.3)
-sprite_frames = SubResource("SpriteFrames_hu8b3")
-frame = 4
-frame_progress = 0.3754481
-
-[node name="Heart2" type="AnimatedSprite2D" parent="Hearts" unique_id=560191644]
-position = Vector2(-2, -16)
-scale = Vector2(0.3, 0.3)
-sprite_frames = SubResource("SpriteFrames_hu8b3")
-
-[node name="Heart3" type="AnimatedSprite2D" parent="Hearts" unique_id=612440422]
-position = Vector2(3, -16)
-scale = Vector2(0.3, 0.3)
-sprite_frames = SubResource("SpriteFrames_hu8b3")
-
-[node name="Heart4" type="AnimatedSprite2D" parent="Hearts" unique_id=766872537]
-position = Vector2(8, -16)
-scale = Vector2(0.3, 0.3)
-sprite_frames = SubResource("SpriteFrames_hu8b3")
+[node name="ProgressBar" type="ProgressBar" parent="Control" unique_id=1315481811]
+layout_mode = 0
+offset_left = -10.0
+offset_top = -18.0
+offset_right = 10.0
+offset_bottom = -14.0
+show_percentage = false
