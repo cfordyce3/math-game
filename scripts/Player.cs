@@ -20,6 +20,15 @@ public partial class Player : CharacterBody2D
 		Bow
 	}
 	
+	// Player direction
+	public enum PlayerDirection
+	{
+		Up,
+		Down,
+		Left,
+		Right
+	}
+	
 	// Get Player Child Nodes
 	private PlayerAnimations _playerSprite;
 	private AnimatedSprite2D _bowSprite;
@@ -52,6 +61,7 @@ public partial class Player : CharacterBody2D
 	[Export] public int Level = 0;
 	[Export] public int Armor = 0;
 	[Export] public bool Flipped = false;
+	public PlayerDirection Direction = PlayerDirection.Right;
 
 	// Velocity and direction
 	private Vector2 _velocity = Vector2.Zero;
@@ -125,6 +135,12 @@ public partial class Player : CharacterBody2D
 		
 		if (Velocity != Vector2.Zero) _moving = true;
 		else _moving = false;
+		
+		if (Velocity.X > 0) Direction =  PlayerDirection.Right;
+		if (Velocity.X < 0) Direction =  PlayerDirection.Left;
+		if (Velocity.Y < 0) Direction =  PlayerDirection.Up;
+		if (Velocity.Y > 0) Direction =  PlayerDirection.Down;
+		GD.Print(Direction.ToString());
 	}
 
 	// Movement animation
@@ -145,11 +161,21 @@ public partial class Player : CharacterBody2D
 			else _playerSprite.Play("run_side"); // just left
 		}
 
-		if (_inputDirection.Y < 0) { _playerSprite.Play("run_up"); } // just up
+		if (_inputDirection.Y < 0)
+		{
+			_playerSprite.Play("run_up");
+		} // just up
 
-		if (_inputDirection.Y > 0) { _playerSprite.Play("run_down"); } // just down
+		if (_inputDirection.Y > 0)
+		{
+			_playerSprite.Play("run_down");
+		} // just down
 
-		if (_inputDirection.Length() == 0 && _state == State.Idle) { _playerSprite.Play("idle"); } // no movement
+		if (_inputDirection.Length() == 0 && _state == State.Idle)
+		{
+			if (Direction != PlayerDirection.Up) _playerSprite.Play("idle");
+			else _playerSprite.Play("idle_up");
+		} // no movement
 
 	}
 
