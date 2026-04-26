@@ -356,6 +356,10 @@ height = 10.0
 atlas = ExtResource("4_qlg0r")
 region = Rect2(32, 0, 32, 32)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_2gdjj"]
+atlas = ExtResource("4_qlg0r")
+region = Rect2(64, 224, 32, 32)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_holxr"]
 atlas = ExtResource("4_qlg0r")
 region = Rect2(0, 192, 32, 32)
@@ -375,10 +379,6 @@ region = Rect2(96, 192, 32, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_6e8lb"]
 atlas = ExtResource("4_qlg0r")
 region = Rect2(128, 192, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_2gdjj"]
-atlas = ExtResource("4_qlg0r")
-region = Rect2(160, 192, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sc3ue"]
 atlas = ExtResource("4_qlg0r")
@@ -444,6 +444,14 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_2gdjj")
+}],
+"loop": false,
+"name": &"equipped_down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_holxr")
 }, {
 "duration": 1.0,
@@ -457,9 +465,6 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_6e8lb")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_2gdjj")
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_sc3ue")
@@ -542,7 +547,7 @@ collision_mask = 8
 [node name="bowAnimations" type="AnimatedSprite2D" parent="." unique_id=1313247664]
 z_index = -1
 sprite_frames = SubResource("SpriteFrames_a8ls1")
-animation = &"equipped"
+animation = &"equipped_down"
 autoplay = "unequipped"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=916413204]
