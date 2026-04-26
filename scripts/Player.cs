@@ -158,6 +158,7 @@ public partial class Player : CharacterBody2D
 		if (_inputDirection.X < 0) // go left
 		{
 			if (_weapon == EquippedWeapon.Bow) _bowSprite.Animation = "equipped";
+			else _bowSprite.Animation = "unequipped";
 			if (_inputDirection.Y < 0) _playerSprite.Play("run_up"); // up left
 			else if (_inputDirection.Y > 0) _playerSprite.Play("run_down"); // down left
 			else _playerSprite.Play("run_side"); // just left
@@ -166,21 +167,26 @@ public partial class Player : CharacterBody2D
 		if (_inputDirection.Y < 0)
 		{
 			if (_weapon == EquippedWeapon.Bow) _bowSprite.Animation = "equipped";
+			else _bowSprite.Animation = "unequipped";
 			_playerSprite.Play("run_up");
 		} // just up
 
 		if (_inputDirection.Y > 0)
 		{
 			if (_weapon == EquippedWeapon.Bow) _bowSprite.Animation = "equipped_down";
+			else _bowSprite.Animation = "unequipped";
 			_playerSprite.Play("run_down");
 		} // just down
 
 		if (_inputDirection.Length() == 0 && _state == State.Idle)
 		{
-			if (Direction != PlayerDirection.Down) _bowSprite.Animation = "equipped";
+			if (Direction != PlayerDirection.Down)
+			{
+				if (_weapon == EquippedWeapon.Bow) _bowSprite.Animation = "equipped";
+				else  _bowSprite.Animation = "unequipped";
+			}
 			if (Direction != PlayerDirection.Up) _playerSprite.Play("idle");
 			else _playerSprite.Play("idle_up");
-
 		} // no movement
 
 	}
