@@ -25,6 +25,7 @@ public partial class Enemy : CharacterBody2D
         // on hit
         _health -= damage;
         _healthBar.Value = _health;
+        _healthBar.GetNode<Label>("../Label").Text = _health.ToString();
         
         if (_health < 1) OnKilled();  // hit and killed
         else // hit but not killed
@@ -42,6 +43,7 @@ public partial class Enemy : CharacterBody2D
     // When enemy is killed
     public async void OnKilled()
     {
+        _healthBar.GetNode<Label>("../Label").Text = "";
         _primaryCollisionShape.SetDeferred("disabled", true); // disable hitbox
         
         _audioPlayer.Stream = _deathSound;
@@ -54,13 +56,13 @@ public partial class Enemy : CharacterBody2D
 
     public override void _EnterTree()
     {
-        //
+        // Set healthbar to max
+        _healthBar.MaxValue = _health; 
+        _healthBar.Value = _health;
+        _healthBar.GetNode<Label>("../Label").Text = _health.ToString();
     }
     
     public override void _Ready()
     {
-        // Set healthbar to max
-        _healthBar.MaxValue = _health; 
-        _healthBar.Value = _health;
     }
 }

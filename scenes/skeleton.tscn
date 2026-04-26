@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://c5pj6x81rs1j7" path="res://scripts/Skeleton.cs" id="1_txkty"]
 [ext_resource type="AudioStream" uid="uid://b0k5pg7e261n2" path="res://assets/sounds/skeleton_hit1.wav" id="2_ivqcw"]
 [ext_resource type="AudioStream" uid="uid://de6oevxbwby2c" path="res://assets/sounds/skeleton_dying.wav" id="3_bnirc"]
+[ext_resource type="FontFile" uid="uid://bvtp60rl2bqae" path="res://assets/fonts/RasterForgeRegular-JpBgm.ttf" id="5_5pgwy"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pbvs3"]
 atlas = ExtResource("1_pbvs3")
@@ -256,6 +257,10 @@ animations = [{
 radius = 7.0
 height = 22.0
 
+[sub_resource type="LabelSettings" id="LabelSettings_ssl1b"]
+font = ExtResource("5_5pgwy")
+font_size = 4
+
 [node name="Skeleton" type="CharacterBody2D" unique_id=1203677379 node_paths=PackedStringArray("_audioPlayer", "_animationSprite", "_primaryCollisionShape", "_healthBar")]
 collision_layer = 8
 collision_mask = 7
@@ -290,3 +295,11 @@ offset_top = -18.0
 offset_right = 10.0
 offset_bottom = -14.0
 show_percentage = false
+
+[node name="Label" type="Label" parent="Control" unique_id=984958626]
+layout_mode = 0
+offset_left = -14.0
+offset_top = -18.0
+offset_right = 6.0
+offset_bottom = 5.0
+label_settings = SubResource("LabelSettings_ssl1b")
