@@ -70,7 +70,7 @@ public partial class Arrow : Area2D
 	// When arrow exits the screen
 	private void OnScreenExitedSignal()
 	{
-		QueueFree(); // remove arrow
+		//QueueFree(); // remove arrow
 	}
 
 	// Play arrow break animation
