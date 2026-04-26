@@ -547,8 +547,10 @@ collision_mask = 8
 [node name="bowAnimations" type="AnimatedSprite2D" parent="." unique_id=1313247664]
 z_index = -1
 sprite_frames = SubResource("SpriteFrames_a8ls1")
-animation = &"unequipped"
+animation = &"shoot_down"
 autoplay = "unequipped"
+frame = 7
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=916413204]
 visible = false
@@ -556,7 +558,7 @@ position = Vector2(0, 1)
 shape = SubResource("CapsuleShape2D_g2els")
 
 [node name="ArrowSpawnLocation" type="Node2D" parent="." unique_id=1627385822]
-position = Vector2(3, 1)
+position = Vector2(0, 4)
 
 [node name="FootstepAudioPlayer" type="AudioStreamPlayer" parent="." unique_id=1403772693]
 script = ExtResource("3_qhqgy")

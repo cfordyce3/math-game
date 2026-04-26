@@ -46,7 +46,8 @@ public partial class Arrow : Area2D
 		GlobalPosition = _arrowSpawnLocation.GlobalPosition;
 		
 		// Flip arrow if player is flipped
-		flip = _player.ShootDirection;
+		flip = _player.ShootDirectionLR;
+		vflip = _player.ShootDirectionUD;
 		
 		// If arrow collides with a body (Node)
 		BodyEntered += OnBodyEnteredSignal;
@@ -111,18 +112,25 @@ public partial class Arrow : Area2D
 	private void MoveArrowVertical(float delta)
 	{
 		Vector2 pos = GlobalPosition;
+		_arrowSprite.FlipH = (flip == -1);
 		if (vflip  == -1)
 		{
 			pos.Y -= _speed * delta;
+			RotationDegrees = -90;
 		}
-		else pos.Y += _speed * delta;
+		else
+		{
+			RotationDegrees = 90;
+			pos.Y += _speed * delta;
+		}
 		GlobalPosition = pos;
 	}
 
 	// bow_attack frame=3
 	public override void _Process(double delta)
 	{
-		if (_moving) MoveArrowHorizontal((float)delta);
+		if (_moving && vflip == 0) MoveArrowHorizontal((float)delta);
+		else if (_moving && vflip != 0) MoveArrowVertical((float)delta);
 		else if (_arrowSpawnTimeFromAnimation.Frame == 3)
 		{
 			Show();

@@ -74,7 +74,8 @@ public partial class Player : CharacterBody2D
 	// Arrow variables
 	private PackedScene _arrowPreload;
 	private Node _arrowInstance;
-	public int ShootDirection;
+	public int ShootDirectionLR;
+	public int ShootDirectionUD;
 
 	// Custom Events (Signals)
 	[Signal] public delegate void MovingEventHandler(int volume); // ALL custom signals must include EventHandler suffix
@@ -140,7 +141,6 @@ public partial class Player : CharacterBody2D
 		if (Velocity.X < 0) Direction =  PlayerDirection.Left;
 		if (Velocity.Y < 0) Direction =  PlayerDirection.Up;
 		if (Velocity.Y > 0) Direction =  PlayerDirection.Down;
-		GD.Print(Direction.ToString());
 	}
 
 	// Movement animation
@@ -297,19 +297,26 @@ public partial class Player : CharacterBody2D
 		}
 	}
 
-	// Flips the arrow spawn
+	// Determines the arrow spawn
 	private Vector2 _arrowSpawnPosition;
-	private void FlipArrowSpawn()
+	private void SetArrowSpawn()
 	{
-		if (!Flipped) // facing right
+		switch (Direction) // spawn based on direction
 		{
-			_arrowSpawnPosition = new Vector2(5, 1);
+			case PlayerDirection.Up:
+				_arrowSpawnPosition = (Flipped) ? new Vector2(-2, -7) : new Vector2(-1, -7);
+				break;
+			case PlayerDirection.Down:
+				_arrowSpawnPosition = (Flipped) ? new Vector2(1, 4) : new Vector2(2, 4);
+				break;
+			case PlayerDirection.Left:
+				_arrowSpawnPosition = new Vector2(-5, 1);
+				break;
+			case PlayerDirection.Right:
+				_arrowSpawnPosition = new Vector2(5, 1);
+				break;
 		}
-		else // facing left
-		{
-			_arrowSpawnPosition = new Vector2(-5, 1);
-		}
-
+		
 		_arrowSpawnLocation.Position = _arrowSpawnPosition;
 	}
 
@@ -345,14 +352,15 @@ public partial class Player : CharacterBody2D
 
 	public async void Attack()
 	{
-		ShootDirection = (Flipped) ? -1 : 1; // -1 for left, 1 for right
-		// switch-case statements are perfect for enums!	
-		switch (_weapon) // basically says "inspect this variable", in this case, "_weapon" defined at the top
-		{                // and match it one of the listed options
-			case EquippedWeapon.Sword: // equivalent to if (_weapon == EquippedWeapon.Sword)
-				// sword behavior
-				break; // have to "break out" of the switch statement after matching otherwise the game will 
-					   // go down to the next case
+		ShootDirectionLR = (Flipped) ? -1 : 1; // -1 for left, 1 for right
+		if (Direction == PlayerDirection.Up) ShootDirectionUD = -1; // -1 for up
+		else if (Direction == PlayerDirection.Down) ShootDirectionUD = 1; // 1 for down
+		else ShootDirectionUD = 0; // 0 for left or right
+		switch (_weapon)
+		{
+			case EquippedWeapon.Sword:
+				// sword behavior handled in PlayerAnimations.cs
+				break; 
 			case EquippedWeapon.Bow:
 				if (Ammo > 0 && _readyToShoot) // only shoot if there's ammo
 				{
@@ -370,7 +378,7 @@ public partial class Player : CharacterBody2D
 
 	private void KilledEnemy()
 	{
-		Ammo++;
+		if (Ammo < 10) Ammo++;
 	}
 	
 	public override void _Process(double delta)
@@ -386,7 +394,7 @@ public partial class Player : CharacterBody2D
 		
 		// Animation logic
 		FlipSprite();
-		FlipArrowSpawn();
+		SetArrowSpawn();
 		AnimateBow();
 
 		if (_state == State.Attacking) AnimateAttack();
