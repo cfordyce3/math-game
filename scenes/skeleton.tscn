@@ -275,8 +275,10 @@ _healthBar = NodePath("Control/ProgressBar")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1541854412]
 sprite_frames = SubResource("SpriteFrames_6yhqa")
-animation = &"damaged"
+animation = &"attack"
 autoplay = "idle"
+frame = 12
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1255705275]
 position = Vector2(0, -3)
