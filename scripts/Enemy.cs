@@ -29,6 +29,7 @@ public partial class Enemy : CharacterBody2D
             _audioPlayer.Play(); // play hit sound
             _animationSprite.Play("damaged");
             await ToSignal(_animationSprite, "animation_finished");
+            _animationSprite.Play("idle");
         }
     }
     
