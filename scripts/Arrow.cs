@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 
 public partial class Arrow : Area2D
 {
@@ -8,6 +9,8 @@ public partial class Arrow : Area2D
 	public int flip;
 	private bool _moving = false;
 	private bool _broken = false;
+	
+	private List<Object> _enemiesList = [];
 	
 	private VisibleOnScreenNotifier2D _visibleOnScreenNotifier2D;
 	private AnimatedSprite2D _arrowSprite;
@@ -22,7 +25,15 @@ public partial class Arrow : Area2D
 
 	public override void _EnterTree()
 	{
-		// Hide(); // wait for correct animation frame
+		// get a list of enemies to match when hitting entity
+		foreach (var node in GetTree().Root.GetNode("Game").GetChildren())
+		{
+			if (node.Name.ToString().Contains("Skeleton") || node.Name.ToString().Contains("Orc"))
+			{
+				_enemiesList.Add(node);
+			}
+		}
+		
 		_arrowSpawnTimeFromAnimation = GetNode<AnimatedSprite2D>("../Player/AnimatedSprite2D");
 		_arrowSpawnLocation = GetNode<Node2D>("../Player/ArrowSpawnLocation");
 		_shootSoundTimer = GetNode<Timer>("ShootSoundTimer");
@@ -58,7 +69,7 @@ public partial class Arrow : Area2D
 	// When arrow exits the screen
 	private void OnScreenExitedSignal()
 	{
-		QueueFree();
+		QueueFree(); // remove arrow
 	}
 
 	// Play arrow break animation
@@ -66,29 +77,22 @@ public partial class Arrow : Area2D
 	{
 		_broken = true;
 		_arrowSprite.Play("arrowBroken");
-		GD.Print("Arrow Broke");
 		await ToSignal(GetTree().CreateTimer(0.25), SceneTreeTimer.SignalName.Timeout);
 		QueueFree();
 	}
 
 	private void OnBodyEnteredSignal(Node body)
 	{
-		// if hitting enemy logic here
-		_moving = false;
-		GD.Print(body.GetClass());
-		EmitSignal(SignalName.ObjectHit, body);
+		_moving = false; // stop moving arrow after hitting something
 		switch (body)
 		{
-			case TileMapLayer:
-				// other logic for hitting tilemap
+			case TileMapLayer: // if hit an environment object
 				ArrowBreak();
 				break;
-			case Enemy:
-				// other logic for hitting enemies
-				//body.Call(Enemy.MethodName.OnKilled);
+			case Enemy: // if hit an enemy
+				body.Call(Enemy.MethodName.OnHit);
 				QueueFree();
 				break;
-			// other cases for other things it can hit
 		}
 	}
 
