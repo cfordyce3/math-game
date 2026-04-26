@@ -179,7 +179,8 @@ public partial class Player : CharacterBody2D
 		if (_weapon == EquippedWeapon.Bow && !_playerSprite.IsPlaying()) //_state = State.Idle; // temporary until bow animation is finished
 		{
 			_playerSprite.Play("bow_attack");
-			_bowSprite.Visible = false;
+			_bowSprite.Play("shoot");
+			// _bowSprite.Visible = false;
 		} 
 	}
 
