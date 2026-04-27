@@ -96,7 +96,7 @@ public partial class PlayerAnimations : AnimatedSprite2D
 		if (Animation.ToString().Contains("bow_attack") && Frame == 3)  EmitSignal(SignalName.BowReleased);
 		
 		// When swinging sword
-		if (Animation == "sword_attack") HandleSwordSwing();
+		if (Animation.ToString().Contains("sword_attack")) HandleSwordSwing();
 		else
 		{
 			_hitAgain = true;

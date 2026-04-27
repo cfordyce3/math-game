@@ -185,8 +185,24 @@ public partial class Player : CharacterBody2D
 				if (_weapon == EquippedWeapon.Bow) _bowSprite.Animation = "equipped";
 				else  _bowSprite.Animation = "unequipped";
 			}
-			if (Direction != PlayerDirection.Up) _playerSprite.Play("idle");
-			else _playerSprite.Play("idle_up");
+			// if (Direction != PlayerDirection.Up) _playerSprite.Play("idle");
+			// else _playerSprite.Play("idle_up");
+
+// changed this to a switch case since there are now 3 idle animations/states
+			switch (Direction)
+			{
+				case PlayerDirection.Up:
+					_playerSprite.Play("idle_up");
+				break;
+
+				case PlayerDirection.Down:
+					_playerSprite.Play("idle_down");
+				break;
+
+				default:
+					_playerSprite.Play("idle");
+				break;
+			}
 		} // no movement
 
 	}
@@ -209,39 +225,68 @@ public partial class Player : CharacterBody2D
 	// Attack animation
 	private async void AnimateAttack()
 	{
-		if (_weapon == EquippedWeapon.Sword && !_playerSprite.IsPlaying())
+		// attack animations here
+
+// refactored a bit since the sword has multiple animations now, feel free to change as you see fit
+		switch (Direction)
 		{
-			PlaySwordSwingAudio();
-			_playerSprite.Play("sword_attack");
-		}
-		// bow animation here
-		if (_weapon == EquippedWeapon.Bow && !_playerSprite.IsPlaying()) 
-		{
-			switch (Direction)
-			{
-				case PlayerDirection.Up:
+			// up animations
+			case PlayerDirection.Up:
+				// sword animation
+				if (_weapon == EquippedWeapon.Sword && !_playerSprite.IsPlaying())
+				{
+					PlaySwordSwingAudio();
+					_playerSprite.Play("sword_attack_up");
+					await ToSignal(_playerSprite, PlayerAnimations.SignalName.AnimationFinished);
+				}
+				// bow animation
+				if (_weapon == EquippedWeapon.Bow && !_playerSprite.IsPlaying()) 
+				{
 					_playerSprite.Play("bow_attack_up");
 					_bowSprite.Visible = false;
 					await ToSignal(_playerSprite, PlayerAnimations.SignalName.AnimationFinished);
 					_bowSprite.Visible = true;
 					//_bowSprite.Play("shoot_up");
-					break;
-				case PlayerDirection.Down:
+				}
+			break;
+			// down animations
+			case PlayerDirection.Down:
+				// sword animation
+				if (_weapon == EquippedWeapon.Sword && !_playerSprite.IsPlaying())
+				{
+					PlaySwordSwingAudio();
+					_playerSprite.Play("sword_attack_down");
+					await ToSignal(_playerSprite, PlayerAnimations.SignalName.AnimationFinished);
+				}
+				// bow animation
+				if (_weapon == EquippedWeapon.Bow && !_playerSprite.IsPlaying())
+				{
 					_playerSprite.Play("bow_attack_down");
 					_bowSprite.Play("shoot_down");
 					await ToSignal(_bowSprite, PlayerAnimations.SignalName.AnimationFinished);
 					_bowSprite.Animation = "equipped_down";
-					break;
-				default:
-					_playerSprite.Play("bow_attack");
+				}
+			break;
+			// side animations
+			default:
+				// sword animation
+				if (_weapon == EquippedWeapon.Sword && !_playerSprite.IsPlaying())
+				{
+					PlaySwordSwingAudio();
+					_playerSprite.Play("sword_attack_side");
+				}
+				// bow animation
+				if (_weapon == EquippedWeapon.Bow && !_playerSprite.IsPlaying())
+				{
+					_playerSprite.Play("bow_attack_side");
 					_bowSprite.Play("shoot_side");
-					break;
-			}
+				}
+			break;
+		}
 					
 			//_playerSprite.Play("bow_attack");
 			//_bowSprite.Play("shoot_side");
-			// _bowSprite.Visible = false;
-		} 
+			// _bowSprite.Visible = false; 
 	}
 
 	private void PlaySwordSwingAudio()
@@ -334,7 +379,7 @@ public partial class Player : CharacterBody2D
 
 	public void EquipWeapon()
 	{
-		if ((_playerSprite.Animation.ToString() != "sword_attack" && !_playerSprite.Animation.ToString().Contains("bow_attack")))
+		if (!_playerSprite.Animation.ToString().Contains("sword_attack") && !_playerSprite.Animation.ToString().Contains("bow_attack"))
 		{
 			if (Input.IsActionJustPressed("equip_sword") && _weapon != EquippedWeapon.Sword) 
 			{
