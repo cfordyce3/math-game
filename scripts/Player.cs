@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Numerics;
 using Vector2 = Godot.Vector2;
 
@@ -35,6 +36,7 @@ public partial class Player : CharacterBody2D
 	private CollisionShape2D _playerCollisionBox;
 	private AudioStreamPlayer _playerSoundPlayer;
 	private Node2D _arrowSpawnLocation;
+	private AnimationPlayer _swordHitboxAnimation;
 	
 	// Camera ScreenSize
 	public Vector2 ScreenSize;
@@ -88,7 +90,8 @@ public partial class Player : CharacterBody2D
 		ScreenSize = GetViewportRect().Size;
 		_playerSprite = GetNode<PlayerAnimations>("AnimatedSprite2D"); // gets AnimatedSprite child node
 		_bowSprite = GetNode<AnimatedSprite2D>("bowAnimations"); // gets AnimatedSprite child node for bow
-		
+		_swordHitboxAnimation = GetNode<AnimationPlayer>("SwordHitbox");
+
 		// Audio config
 		// Get audio-related nodes
 		_playerSoundPlayer = GetNode<AudioStreamPlayer>("PlayerAudioPlayer"); // gets AudioStreamPlayer child node
@@ -235,6 +238,8 @@ public partial class Player : CharacterBody2D
 				// sword animation
 				if (_weapon == EquippedWeapon.Sword && !_playerSprite.IsPlaying())
 				{
+					if (!Flipped) _swordHitboxAnimation.Play("sword_attack_up");
+					else _swordHitboxAnimation.PlayBackwards("sword_attack_up");
 					PlaySwordSwingAudio();
 					_playerSprite.Play("sword_attack_up");
 					await ToSignal(_playerSprite, PlayerAnimations.SignalName.AnimationFinished);
@@ -248,12 +253,14 @@ public partial class Player : CharacterBody2D
 					_bowSprite.Visible = true;
 					//_bowSprite.Play("shoot_up");
 				}
-			break;
+				break;
 			// down animations
 			case PlayerDirection.Down:
 				// sword animation
 				if (_weapon == EquippedWeapon.Sword && !_playerSprite.IsPlaying())
 				{
+					if (!Flipped) _swordHitboxAnimation.Play("sword_attack_down");
+					else _swordHitboxAnimation.PlayBackwards("sword_attack_down");
 					PlaySwordSwingAudio();
 					_playerSprite.Play("sword_attack_down");
 					await ToSignal(_playerSprite, PlayerAnimations.SignalName.AnimationFinished);
@@ -266,12 +273,14 @@ public partial class Player : CharacterBody2D
 					await ToSignal(_bowSprite, PlayerAnimations.SignalName.AnimationFinished);
 					_bowSprite.Animation = "equipped_down";
 				}
-			break;
+				break;
 			// side animations
 			default:
 				// sword animation
 				if (_weapon == EquippedWeapon.Sword && !_playerSprite.IsPlaying())
 				{
+					if (!Flipped) _swordHitboxAnimation.Play("sword_attack_right");
+					else _swordHitboxAnimation.Play("sword_attack_left");
 					PlaySwordSwingAudio();
 					_playerSprite.Play("sword_attack_side");
 				}
@@ -281,7 +290,7 @@ public partial class Player : CharacterBody2D
 					_playerSprite.Play("bow_attack_side");
 					_bowSprite.Play("shoot_side");
 				}
-			break;
+				break;
 		}
 					
 			//_playerSprite.Play("bow_attack");

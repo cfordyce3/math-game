@@ -50,29 +50,29 @@ public partial class PlayerAnimations : AnimatedSprite2D
 	private bool _hitAgain = true;
 	public void HandleSwordSwing()
 	{
-		// Track whether player is flipped or not
-		bool flipped = _player.Flipped;
+		// // Track whether player is flipped or not
+		// bool flipped = _player.Flipped;
 			
-		// Sets root (rotation point) position
-		_swordSwingHitbox.Position = (flipped) ? new Vector2(-3, 1) : new Vector2(3, 1);
+		// // Sets root (rotation point) position
+		// _swordSwingHitbox.Position = (flipped) ? new Vector2(-3, 1) : new Vector2(3, 1);
 			
-		// Set rotation based on animation frame
-		switch (Frame)
-		{
-			case 0:
-			case 1:
-				break;
-			case 2: // frame 2
-				_swordSwingHitbox.Enabled = true; // enables hitbox on first frame
-				_swordSwingHitbox.RotationDegrees = (flipped) ? 55 : -60;
-				break;
-			case 3: // frame 3
-				_swordSwingHitbox.RotationDegrees = (flipped) ? 130 : -130;
-				break;
-			case 4: // frame 4
-				_swordSwingHitbox.RotationDegrees = (flipped) ? 155 : -160;
-				break;
-		}
+		// // Set rotation based on animation frame
+		// switch (Frame)
+		// {
+		// 	case 0:
+		// 	case 1:
+		// 		break;
+		// 	case 2: // frame 2
+		// 		_swordSwingHitbox.Enabled = true; // enables hitbox on first frame
+		// 		_swordSwingHitbox.RotationDegrees = (flipped) ? 55 : -60;
+		// 		break;
+		// 	case 3: // frame 3
+		// 		_swordSwingHitbox.RotationDegrees = (flipped) ? 130 : -130;
+		// 		break;
+		// 	case 4: // frame 4
+		// 		_swordSwingHitbox.RotationDegrees = (flipped) ? 155 : -160;
+		// 		break;
+		// }
 
 		if (_swordSwingHitbox.IsColliding())
 		{
@@ -100,7 +100,7 @@ public partial class PlayerAnimations : AnimatedSprite2D
 		else
 		{
 			_hitAgain = true;
-			_swordSwingHitbox.Enabled = false; // if not attacking, no sword hitbox
+			// _swordSwingHitbox.Enabled = false; // if not attacking, no sword hitbox
 		}
 
 	}
