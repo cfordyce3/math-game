@@ -4,6 +4,7 @@
 addons/
 .vscode/
 .idea/
+.zed/
 
 # Audacity working project files
 */*.aup3-shm
