@@ -247,4 +247,6 @@ shape = SubResource("CircleShape2D_nvs4g")
 [node name="FollowMovement" type="Node" parent="." unique_id=47279077]
 script = ExtResource("6_xme4o")
 
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1748812750]
+
 [connection signal="area_entered" from="DetectionArea" to="FollowMovement" method="_on_detection_area_area_entered"]
