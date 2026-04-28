@@ -5,6 +5,7 @@
 [ext_resource type="AudioStream" uid="uid://c63nd3lj6cr2j" path="res://assets/sounds/orc_dying.wav" id="2_hu8b3"]
 [ext_resource type="AudioStream" uid="uid://d2yfxbag0dxkt" path="res://assets/sounds/orc_hit1.wav" id="2_s5mlm"]
 [ext_resource type="FontFile" uid="uid://bvtp60rl2bqae" path="res://assets/fonts/RasterForgeRegular-JpBgm.ttf" id="5_nvs4g"]
+[ext_resource type="Script" uid="uid://ca4nrgxml1cm7" path="res://scenes/FollowMovement.cs" id="6_xme4o"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2byfh"]
 atlas = ExtResource("1_2byfh")
@@ -191,6 +192,9 @@ height = 18.0
 font = ExtResource("5_nvs4g")
 font_size = 4
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_nvs4g"]
+radius = 42.0119
+
 [node name="Orc" type="CharacterBody2D" unique_id=2076559756 node_paths=PackedStringArray("_audioPlayer", "_animationSprite", "_primaryCollisionShape", "_healthBar")]
 collision_layer = 8
 collision_mask = 7
@@ -233,3 +237,15 @@ offset_top = -18.0
 offset_right = 6.0
 offset_bottom = 5.0
 label_settings = SubResource("LabelSettings_s5mlm")
+
+[node name="DetectionArea" type="Area2D" parent="." unique_id=2114904781]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=1265313211]
+shape = SubResource("CircleShape2D_nvs4g")
+
+[node name="FollowMovement" type="Node" parent="." unique_id=47279077 node_paths=PackedStringArray("_target")]
+script = ExtResource("6_xme4o")
+_target = NodePath("")
+
+[connection signal="area_entered" from="DetectionArea" to="FollowMovement" method="_on_detection_area_area_entered"]
