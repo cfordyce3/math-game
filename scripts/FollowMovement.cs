@@ -30,8 +30,8 @@ public partial class FollowMovement : Node
     public override void _Ready()
     {
         _targetInArea = false;
-        _parent = GetNode<CharacterBody2D>("/root/Game/Orc");
-        _detectionArea = GetNode<Area2D>("/root/Game/Orc/DetectionArea");
+        _parent = GetParent<CharacterBody2D>();
+        _detectionArea = GetNode<Area2D>("../DetectionArea");
         _startPosition = _parent.GlobalPosition;
         _overshootLimit = 2;
         _directionToStart = _startPosition - _parent.GlobalPosition;
@@ -39,7 +39,6 @@ public partial class FollowMovement : Node
         _detectionArea.BodyEntered += OnBodyEntered;
         _detectionArea.BodyExited += OnBodyExited;
     }
-
     
     private void OnBodyEntered(Node2D body)
     {
@@ -51,6 +50,7 @@ public partial class FollowMovement : Node
     private async void OnBodyExited(Node2D body)
     {
         _targetInArea = false;
+        // issues with this await when the orc dies or game exits
         await ToSignal(GetTree().CreateTimer(_followTime), SceneTreeTimer.SignalName.Timeout);
         if (!_targetInArea) _target = null;
     }
