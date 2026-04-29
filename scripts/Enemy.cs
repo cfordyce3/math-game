@@ -15,6 +15,7 @@ public partial class Enemy : CharacterBody2D
     
     [Export] private AnimatedSprite2D _animationSprite;
     [Export] private CollisionShape2D _primaryCollisionShape;
+    [Export] private CollisionShape2D _detectionArea;
     
     [Export] private ProgressBar _healthBar;
 
@@ -47,6 +48,7 @@ public partial class Enemy : CharacterBody2D
         _player.Call(Player.MethodName.KilledEnemy);
         _healthBar.GetNode<Label>("../Label").Text = ""; // update label
         _primaryCollisionShape.SetDeferred("disabled", true); // disable hitbox
+        _detectionArea.SetDeferred("disabled", true); // disable detection area
         
         _audioPlayer.Stream = _deathSound;
         _audioPlayer.Play();

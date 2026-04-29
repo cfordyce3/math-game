@@ -6,8 +6,8 @@ using System.Runtime.CompilerServices;
 public partial class FollowMovement : Node
 {
     [Export] public int _speed = 50;
-    [Export] public int _followTime = 2;
-    [Export] public int _waitTime = 2;
+    [Export] public float _followTime = 2.0f;
+    [Export] public float _waitTime = 2.0f;
 
     public Player _target;
     private CharacterBody2D _parent;
@@ -16,6 +16,8 @@ public partial class FollowMovement : Node
     private bool _targetInArea;
     private int _overshootLimit;
     private Vector2 _directionToStart;
+    private Timer _followTimer;
+    private Timer _waitTimer;
 
     private enum State
     {
@@ -35,6 +37,17 @@ public partial class FollowMovement : Node
         _startPosition = _parent.GlobalPosition;
         _overshootLimit = 2;
         _directionToStart = _startPosition - _parent.GlobalPosition;
+        
+        // initialize timers
+        _waitTimer = new Timer();
+        AddChild(_waitTimer);
+        _waitTimer.WaitTime = _waitTime;
+        _waitTimer.OneShot = true;
+
+        _followTimer = new Timer();
+        AddChild(_followTimer);
+        _waitTimer.WaitTime = _followTime;
+        _waitTimer.OneShot = true;
 
         _detectionArea.BodyEntered += OnBodyEntered;
         _detectionArea.BodyExited += OnBodyExited;
@@ -50,8 +63,9 @@ public partial class FollowMovement : Node
     private async void OnBodyExited(Node2D body)
     {
         _targetInArea = false;
-        // issues with this await when the orc dies or game exits
-        await ToSignal(GetTree().CreateTimer(_followTime), SceneTreeTimer.SignalName.Timeout);
+        _followTimer.Start();
+        await ToSignal(_followTimer, Timer.SignalName.Timeout);
+        // await ToSignal(GetTree().CreateTimer(_followTime), SceneTreeTimer.SignalName.Timeout);
         if (!_targetInArea) _target = null;
     }
 
@@ -67,7 +81,9 @@ public partial class FollowMovement : Node
                 // if there is no target then return to start position
                 if (_target == null)
                 {
-                    await ToSignal(GetTree().CreateTimer(_waitTime), SceneTreeTimer.SignalName.Timeout);
+                    _waitTimer.Start();
+                    await ToSignal(_waitTimer, Timer.SignalName.Timeout);
+                    // await ToSignal(GetTree().CreateTimer(_waitTime), SceneTreeTimer.SignalName.Timeout);
                     _currentState = State.Search;
                     return;
                 }
@@ -81,7 +97,9 @@ public partial class FollowMovement : Node
                 break;
             case State.Search:
                 _parent.Velocity = Vector2.Zero;
-                await ToSignal(GetTree().CreateTimer(_waitTime), SceneTreeTimer.SignalName.Timeout);
+                _waitTimer.Start();
+                await ToSignal(_waitTimer, Timer.SignalName.Timeout);
+                // await ToSignal(GetTree().CreateTimer(_waitTime), SceneTreeTimer.SignalName.Timeout);
                 _currentState = State.Return;
                 break;
             case State.Return:
