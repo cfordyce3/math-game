@@ -5,6 +5,7 @@
 [ext_resource type="AudioStream" uid="uid://b0k5pg7e261n2" path="res://assets/sounds/skeleton_hit1.wav" id="2_ivqcw"]
 [ext_resource type="AudioStream" uid="uid://de6oevxbwby2c" path="res://assets/sounds/skeleton_dying.wav" id="3_bnirc"]
 [ext_resource type="FontFile" uid="uid://bvtp60rl2bqae" path="res://assets/fonts/RasterForgeRegular-JpBgm.ttf" id="5_5pgwy"]
+[ext_resource type="Script" uid="uid://c7b4th4uo0ie0" path="res://scripts/FollowMovement.cs" id="6_ssl1b"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pbvs3"]
 atlas = ExtResource("1_pbvs3")
@@ -261,7 +262,10 @@ height = 22.0
 font = ExtResource("5_5pgwy")
 font_size = 4
 
-[node name="Skeleton" type="CharacterBody2D" unique_id=1203677379 node_paths=PackedStringArray("_audioPlayer", "_animationSprite", "_primaryCollisionShape", "_healthBar")]
+[sub_resource type="CircleShape2D" id="CircleShape2D_w4hcs"]
+radius = 74.02702
+
+[node name="Skeleton" type="CharacterBody2D" unique_id=1203677379 node_paths=PackedStringArray("_audioPlayer", "_animationSprite", "_primaryCollisionShape", "_detectionArea", "_followMovement", "_healthBar")]
 collision_layer = 8
 collision_mask = 7
 script = ExtResource("1_txkty")
@@ -271,6 +275,8 @@ _deathSound = ExtResource("3_bnirc")
 _audioPlayer = NodePath("SkeletonAudioStreamPlayer")
 _animationSprite = NodePath("AnimatedSprite2D")
 _primaryCollisionShape = NodePath("CollisionShape2D")
+_detectionArea = NodePath("DetectionArea/CollisionShape2D")
+_followMovement = NodePath("FollowMovement")
 _healthBar = NodePath("Control/ProgressBar")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1541854412]
@@ -305,3 +311,12 @@ offset_top = -18.0
 offset_right = 6.0
 offset_bottom = 5.0
 label_settings = SubResource("LabelSettings_ssl1b")
+
+[node name="DetectionArea" type="Area2D" parent="." unique_id=1414402551]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=1129246055]
+shape = SubResource("CircleShape2D_w4hcs")
+
+[node name="FollowMovement" type="Node" parent="." unique_id=966339564]
+script = ExtResource("6_ssl1b")

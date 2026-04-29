@@ -195,7 +195,7 @@ font_size = 4
 [sub_resource type="CircleShape2D" id="CircleShape2D_nvs4g"]
 radius = 42.0119
 
-[node name="Orc" type="CharacterBody2D" unique_id=2076559756 node_paths=PackedStringArray("_audioPlayer", "_animationSprite", "_primaryCollisionShape", "_detectionArea", "_healthBar")]
+[node name="Orc" type="CharacterBody2D" unique_id=2076559756 node_paths=PackedStringArray("_audioPlayer", "_animationSprite", "_primaryCollisionShape", "_detectionArea", "_followMovement", "_healthBar")]
 collision_layer = 8
 collision_mask = 7
 script = ExtResource("1_bfp0d")
@@ -206,6 +206,7 @@ _audioPlayer = NodePath("AudioStreamPlayer")
 _animationSprite = NodePath("AnimatedSprite2D")
 _primaryCollisionShape = NodePath("CollisionShape2D")
 _detectionArea = NodePath("DetectionArea/CollisionShape2D")
+_followMovement = NodePath("FollowMovement")
 _healthBar = NodePath("Control/ProgressBar")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1656830099]

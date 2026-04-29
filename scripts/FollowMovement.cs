@@ -16,18 +16,17 @@ public partial class FollowMovement : Node
     private bool _targetInArea;
     private int _overshootLimit;
     private Vector2 _directionToStart;
-    private Timer _followTimer;
-    private Timer _waitTimer;
 
-    private enum State
+    public enum State
     {
         Idle,
         Follow,
         Search,
-        Return
+        Return,
+        Dying
     }
 
-    private State _currentState = State.Idle;
+    public State _currentState = State.Idle;
 
     public override void _Ready()
     {
@@ -37,17 +36,6 @@ public partial class FollowMovement : Node
         _startPosition = _parent.GlobalPosition;
         _overshootLimit = 2;
         _directionToStart = _startPosition - _parent.GlobalPosition;
-        
-        // initialize timers
-        _waitTimer = new Timer();
-        AddChild(_waitTimer);
-        _waitTimer.WaitTime = _waitTime;
-        _waitTimer.OneShot = true;
-
-        _followTimer = new Timer();
-        AddChild(_followTimer);
-        _waitTimer.WaitTime = _followTime;
-        _waitTimer.OneShot = true;
 
         _detectionArea.BodyEntered += OnBodyEntered;
         _detectionArea.BodyExited += OnBodyExited;
@@ -63,9 +51,7 @@ public partial class FollowMovement : Node
     private async void OnBodyExited(Node2D body)
     {
         _targetInArea = false;
-        _followTimer.Start();
-        await ToSignal(_followTimer, Timer.SignalName.Timeout);
-        // await ToSignal(GetTree().CreateTimer(_followTime), SceneTreeTimer.SignalName.Timeout);
+        await ToSignal(GetTree().CreateTimer(_followTime), SceneTreeTimer.SignalName.Timeout);
         if (!_targetInArea) _target = null;
     }
 
@@ -81,9 +67,6 @@ public partial class FollowMovement : Node
                 // if there is no target then return to start position
                 if (_target == null)
                 {
-                    _waitTimer.Start();
-                    await ToSignal(_waitTimer, Timer.SignalName.Timeout);
-                    // await ToSignal(GetTree().CreateTimer(_waitTime), SceneTreeTimer.SignalName.Timeout);
                     _currentState = State.Search;
                     return;
                 }
@@ -97,9 +80,7 @@ public partial class FollowMovement : Node
                 break;
             case State.Search:
                 _parent.Velocity = Vector2.Zero;
-                _waitTimer.Start();
-                await ToSignal(_waitTimer, Timer.SignalName.Timeout);
-                // await ToSignal(GetTree().CreateTimer(_waitTime), SceneTreeTimer.SignalName.Timeout);
+                await ToSignal(GetTree().CreateTimer(_waitTime), SceneTreeTimer.SignalName.Timeout);
                 _currentState = State.Return;
                 break;
             case State.Return:
@@ -117,7 +98,9 @@ public partial class FollowMovement : Node
 
                 // move toward start
                 _parent.Velocity = _directionToStart.Normalized() * _speed;
-
+                break;
+            case State.Dying:
+                _parent.Velocity = Vector2.Zero;
                 break;
         }
     }

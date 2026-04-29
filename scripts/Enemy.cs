@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Data;
 
 // Generic enemy class of type CharacterBody2D
 [GlobalClass]
@@ -16,6 +17,7 @@ public partial class Enemy : CharacterBody2D
     [Export] private AnimatedSprite2D _animationSprite;
     [Export] private CollisionShape2D _primaryCollisionShape;
     [Export] private CollisionShape2D _detectionArea;
+    [Export] public FollowMovement _followMovement;
     
     [Export] private ProgressBar _healthBar;
 
@@ -49,6 +51,7 @@ public partial class Enemy : CharacterBody2D
         _healthBar.GetNode<Label>("../Label").Text = ""; // update label
         _primaryCollisionShape.SetDeferred("disabled", true); // disable hitbox
         _detectionArea.SetDeferred("disabled", true); // disable detection area
+        _followMovement._currentState = FollowMovement.State.Dying;
         
         _audioPlayer.Stream = _deathSound;
         _audioPlayer.Play();
