@@ -22,8 +22,7 @@ public partial class FollowMovement : Node
         Idle,
         Follow,
         Search,
-        Return,
-        Dying
+        Return
     }
 
     public State _currentState = State.Idle;
@@ -98,9 +97,6 @@ public partial class FollowMovement : Node
 
                 // move toward start
                 _parent.Velocity = _directionToStart.Normalized() * _speed;
-                break;
-            case State.Dying:
-                _parent.Velocity = Vector2.Zero;
                 break;
         }
     }

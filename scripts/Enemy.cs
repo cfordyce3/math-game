@@ -53,7 +53,6 @@ public partial class Enemy : CharacterBody2D
         _healthBar.GetNode<Label>("../Label").Text = ""; // update label
         _primaryCollisionShape.SetDeferred("disabled", true); // disable hitbox
         _detectionArea.SetDeferred("disabled", true); // disable detection area
-        _followMovement._currentState = FollowMovement.State.Dying;
         
         _audioPlayer.Stream = _deathSound;
         _audioPlayer.Play();
