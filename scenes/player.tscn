@@ -613,8 +613,8 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g2els"]
-radius = 5.0
-height = 14.0
+radius = 2.0
+height = 10.0
 
 [sub_resource type="Animation" id="Animation_qlg0r"]
 length = 0.001
@@ -781,6 +781,7 @@ autoplay = "idle"
 script = ExtResource("3_dqkch")
 
 [node name="SwordSwingHitbox" type="ShapeCast2D" parent="AnimatedSprite2D" unique_id=1499933215]
+visible = false
 position = Vector2(0, 2)
 rotation = 2.3561945
 enabled = false
@@ -798,8 +799,9 @@ frame = 7
 frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=916413204]
-visible = false
-position = Vector2(0, 1)
+z_as_relative = false
+position = Vector2(0, 6)
+rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_g2els")
 
 [node name="ArrowSpawnLocation" type="Node2D" parent="." unique_id=1627385822]

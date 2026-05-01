@@ -90,6 +90,7 @@ physics_layer_0/collision_mask = 0
 sources/0 = SubResource("TileSetAtlasSource_0tnpc")
 
 [node name="Game" type="Node2D" unique_id=1427372036]
+y_sort_enabled = true
 
 [node name="GameManager" type="Node" parent="." unique_id=1132278487]
 script = ExtResource("1_0tnpc")
@@ -100,7 +101,8 @@ follow_viewport_scale = 1.19
 [node name="HUDGraphics" parent="HUD" unique_id=1663265604 instance=ExtResource("2_gee14")]
 
 [node name="Player" parent="." unique_id=979533561 instance=ExtResource("1_uwrxv")]
-z_index = 1
+z_index = 4
+y_sort_enabled = true
 position = Vector2(114, 64)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1152455644]
@@ -114,6 +116,7 @@ tile_set = SubResource("TileSet_p57ef")
 
 [node name="AccessoriesTilemap" type="TileMapLayer" parent="." unique_id=844678148]
 z_index = 2
+y_sort_enabled = true
 tile_map_data = PackedByteArray("AAABAAUAAAACAAcAAAABAAYAAAACAAgAAAAGAAEAAAABAAcAAAACAAcAAAABAAgAAAAEAAIAAAABAAgAAAAIAAYAAAABAAgAAAAWAAcAAAABAAgAAAAaAAIAAAABAAgAAAAaAA0AAAABAAgAAAAWAAsAAAABAAgAAAASAA8AAAABAAgAAAAPAAwAAAABAAcAAAAKAAsAAAABAAcAAAANAAgAAAABAAcAAAARAAMAAAABAAcAAAAMAA0AAAABAAcAAAACAAsAAAACAAcAAAACAAwAAAACAAgAAAAEAAoAAAACAAcAAAAEAAsAAAACAAgAAAAGAAwAAAACAAcAAAAGAA0AAAACAAgAAAAGAAkAAAACAAcAAAAGAAoAAAACAAgAAAADAAgAAAACAAcAAAADAAkAAAACAAgAAAAIAAsAAAACAAcAAAAIAAwAAAACAAgAAAAFAAcAAAABAAcAAAABAAMAAAABAAcAAAAEAA0AAAABAAgAAAABAAoAAAABAAgAAAAFAAkAAAABAAgAAAAJAAgAAAABAAgAAAAPAAMAAAABAAgAAAAMAAIAAAABAAcAAAAQAAEAAAABAAcAAAA=")
 tile_set = SubResource("TileSet_iywne")
 

@@ -47,6 +47,8 @@ public partial class Enemy : CharacterBody2D
     // When enemy is killed
     public async void OnKilled()
     {
+        _followMovement.Call(Node.MethodName.QueueFree);
+
         _player.Call(Player.MethodName.KilledEnemy);
         _healthBar.GetNode<Label>("../Label").Text = ""; // update label
         _primaryCollisionShape.SetDeferred("disabled", true); // disable hitbox
