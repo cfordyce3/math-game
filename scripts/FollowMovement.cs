@@ -17,7 +17,7 @@ public partial class FollowMovement : Node
     private int _overshootLimit;
     private Vector2 _directionToStart;
 
-    public enum State
+    public enum FollowState
     {
         Idle,
         Follow,
@@ -25,7 +25,7 @@ public partial class FollowMovement : Node
         Return
     }
 
-    public State _currentState = State.Idle;
+    public FollowState _currentState = FollowState.Idle;
 
     public override void _Ready()
     {
@@ -39,12 +39,12 @@ public partial class FollowMovement : Node
         _detectionArea.BodyEntered += OnBodyEntered;
         _detectionArea.BodyExited += OnBodyExited;
     }
-    
+
     private void OnBodyEntered(Node2D body)
     {
         _targetInArea = true;
         _target = GetNode<Player>("/root/Game/Player");
-        _currentState = State.Follow;
+        _currentState = FollowState.Follow;
     }
 
     private async void OnBodyExited(Node2D body)
@@ -58,40 +58,40 @@ public partial class FollowMovement : Node
     {
         switch (_currentState)
         {
-            case State.Idle:
-                    _parent.Velocity = Vector2.Zero;
+            case FollowState.Idle:
+                _parent.Velocity = Vector2.Zero;
                 break;
-            case State.Follow:
-                
+            case FollowState.Follow:
+
                 // if there is no target then return to start position
                 if (_target == null)
                 {
-                    _currentState = State.Search;
+                    _currentState = FollowState.Search;
                     return;
                 }
 
                 // calculate direction to target
                 Vector2 direction = (_target.GlobalPosition - _parent.GlobalPosition).Normalized();
-                
+
                 // move towards target
                 _parent.Velocity = direction * _speed;
 
                 break;
-            case State.Search:
+            case FollowState.Search:
                 _parent.Velocity = Vector2.Zero;
                 await ToSignal(GetTree().CreateTimer(_waitTime), SceneTreeTimer.SignalName.Timeout);
-                _currentState = State.Return;
+                _currentState = FollowState.Return;
                 break;
-            case State.Return:
-                
+            case FollowState.Return:
+
                 // calculate direction to start
                 _directionToStart = _startPosition - _parent.GlobalPosition;
-                
+
                 // stops the enemy once it reaches the start position
                 if (_directionToStart.Length() < _overshootLimit)
                 {
                     _parent.GlobalPosition = _startPosition;
-                    _currentState = State.Idle;
+                    _currentState = FollowState.Idle;
                     return;
                 }
 
@@ -101,10 +101,15 @@ public partial class FollowMovement : Node
         }
     }
 
-    public override void _Process(double delta)
+    public override void _PhysicsProcess(double delta)
     {
         Movement();
         _parent.MoveAndSlide();
+    }
+    public override void _Process(double delta)
+    {
+        // Movement();
+        // _parent.MoveAndSlide();
     }
 
 }
