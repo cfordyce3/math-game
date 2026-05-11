@@ -93,7 +93,7 @@ public partial class Enemy : CharacterBody2D
         switch (_enemyState)
         {
             case EnemyState.Killed:
-                EnemyKilled.Init();
+                //EnemyKilled.Init();
                 break;
             default:
                 break;
